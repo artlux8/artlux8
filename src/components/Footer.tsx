@@ -8,7 +8,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="col-span-2 md:col-span-4 lg:col-span-1">
             <span className="text-2xl font-display font-bold mb-2 block">ARTLUX8</span>
-            <span className="text-xs text-primary-foreground/60 mb-4 block">The luxury of Longevity art</span>
+            <span className="text-xs text-primary-foreground/60 mb-4 block">ART OF THE LUXURY LONGEVITY</span>
             <p className="text-primary-foreground/60 text-sm mb-4 max-w-xs">
               Exclusive longevity art pieces designed for discerning collectors.
             </p>
