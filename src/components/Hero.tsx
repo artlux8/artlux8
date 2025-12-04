@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles, Shield, Dna, Heart } from "lucide-react";
 
 const Hero = () => {
   return (
@@ -24,47 +24,62 @@ const Hero = () => {
           <div className="flex items-center gap-2 mb-6 opacity-0 animate-fade-in" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
             <Sparkles className="w-4 h-4 text-accent" />
             <p className="text-accent font-medium text-sm md:text-base tracking-widest uppercase">
-              Exclusive Collections • Limited Editions
+              Science-Backed Protocols • Premium Supplements
             </p>
           </div>
 
           {/* Main Headline */}
           <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground leading-[1.1] mb-6 opacity-0 animate-slide-up" style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}>
-            Art That Transcends
+            Live Longer.
             <br />
-            <span className="text-accent">Time Itself.</span>
+            <span className="text-accent">Live Better.</span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-primary-foreground/80 text-lg md:text-xl max-w-xl mb-10 opacity-0 animate-fade-in" style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}>
-            Discover curated masterpieces that embody the essence of longevity. 
-            Each piece is a timeless investment in beauty, legacy, and eternal elegance.
+            Unlock your body's full potential with cutting-edge longevity protocols and 
+            pharmaceutical-grade supplements designed to optimize healthspan and reverse biological aging.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 opacity-0 animate-fade-in" style={{ animationDelay: "0.6s", animationFillMode: "forwards" }}>
             <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 text-base px-8 py-6 rounded-full font-semibold group">
-              Explore Collection
+              Shop Protocols
               <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
             <Button size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 text-base px-8 py-6 rounded-full font-semibold">
-              Private Viewing
+              Take the Quiz
             </Button>
           </div>
 
           {/* Stats */}
           <div className="flex flex-wrap gap-8 md:gap-12 mt-16 opacity-0 animate-fade-in" style={{ animationDelay: "0.8s", animationFillMode: "forwards" }}>
-            <div>
-              <p className="text-3xl md:text-4xl font-bold text-primary-foreground">200+</p>
-              <p className="text-primary-foreground/60 text-sm">Exclusive Pieces</p>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center">
+                <Dna className="w-5 h-5 text-accent" />
+              </div>
+              <div>
+                <p className="text-2xl md:text-3xl font-bold text-primary-foreground">50+</p>
+                <p className="text-primary-foreground/60 text-sm">Active Compounds</p>
+              </div>
             </div>
-            <div>
-              <p className="text-3xl md:text-4xl font-bold text-primary-foreground">45</p>
-              <p className="text-primary-foreground/60 text-sm">Global Artists</p>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center">
+                <Shield className="w-5 h-5 text-accent" />
+              </div>
+              <div>
+                <p className="text-2xl md:text-3xl font-bold text-primary-foreground">500+</p>
+                <p className="text-primary-foreground/60 text-sm">Clinical Studies</p>
+              </div>
             </div>
-            <div>
-              <p className="text-3xl md:text-4xl font-bold text-primary-foreground">12K+</p>
-              <p className="text-primary-foreground/60 text-sm">Collectors Worldwide</p>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center">
+                <Heart className="w-5 h-5 text-accent" />
+              </div>
+              <div>
+                <p className="text-2xl md:text-3xl font-bold text-primary-foreground">25K+</p>
+                <p className="text-primary-foreground/60 text-sm">Happy Customers</p>
+              </div>
             </div>
           </div>
         </div>
@@ -74,13 +89,13 @@ const Hero = () => {
       <div className="hidden lg:block absolute right-0 top-0 w-1/2 h-full">
         <div className="absolute inset-0 bg-gradient-to-l from-transparent to-primary z-10" />
         <div 
-          className="w-full h-full bg-cover bg-center opacity-50"
+          className="w-full h-full bg-cover bg-center opacity-40"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1541367777708-7905fe3296c0?q=80&w=1920&auto=format&fit=crop')`
+            backgroundImage: `url('https://images.unsplash.com/photo-1505751172876-fa1923c5c528?q=80&w=1920&auto=format&fit=crop')`
           }}
         />
-        {/* Floating gold frame accent */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-80 border-2 border-accent/20 z-20" />
+        {/* Floating accent element */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-80 border border-accent/20 rounded-3xl z-20" />
       </div>
     </section>
   );
