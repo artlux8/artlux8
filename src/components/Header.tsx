@@ -27,7 +27,7 @@ const Header = () => {
                 ARTLUX8
               </span>
               <span className="text-[10px] md:text-xs text-muted-foreground tracking-wide">
-                The luxury of Longevity art
+                ART OF THE LUXURY LONGEVITY
               </span>
             </a>
 
