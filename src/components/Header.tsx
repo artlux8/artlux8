@@ -23,11 +23,11 @@ const Header = () => {
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
             <a href="/" className="flex flex-col">
-              <span className="text-2xl md:text-3xl font-display font-bold tracking-tight text-foreground">
-                ARTLUX8
+              <span className="text-2xl md:text-3xl font-logo font-semibold tracking-[0.2em] text-foreground">
+                ARTLUX<span className="text-primary">∞</span>
               </span>
-              <span className="text-[10px] md:text-xs text-muted-foreground tracking-wide">
-                ART OF THE LUXURY LONGEVITY
+              <span className="text-[10px] md:text-xs text-muted-foreground tracking-[0.15em] uppercase">
+                Art of the Luxury Longevity
               </span>
             </a>
 
