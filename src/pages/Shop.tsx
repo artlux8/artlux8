@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -321,7 +322,7 @@ const Shop = () => {
                   className="group bg-card rounded-2xl border border-border overflow-hidden hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5 transition-all duration-300"
                 >
                   {/* Product Image */}
-                  <div className="relative aspect-square bg-secondary/30 overflow-hidden">
+                  <Link to={`/product/${product.id}`} className="block relative aspect-square bg-secondary/30 overflow-hidden">
                     <img
                       src={product.image}
                       alt={product.name}
@@ -332,7 +333,7 @@ const Shop = () => {
                         {product.badge}
                       </Badge>
                     )}
-                  </div>
+                  </Link>
 
                   {/* Product Info */}
                   <div className="p-5">
@@ -343,9 +344,11 @@ const Shop = () => {
                       <span className="text-sm text-muted-foreground">({product.reviews.toLocaleString()})</span>
                     </div>
 
-                    <h3 className="font-display text-lg font-semibold text-foreground mb-2 group-hover:text-accent transition-colors">
-                      {product.name}
-                    </h3>
+                    <Link to={`/product/${product.id}`}>
+                      <h3 className="font-display text-lg font-semibold text-foreground mb-2 group-hover:text-accent transition-colors">
+                        {product.name}
+                      </h3>
+                    </Link>
                     
                     <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
                       {product.description}
