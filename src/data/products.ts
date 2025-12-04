@@ -1,4 +1,5 @@
-import { Heart, Brain, Moon, Zap, Leaf, Shield } from 'lucide-react';
+import { Heart, Brain, Moon, Zap, Leaf, Shield, Sparkles, Target, Clock, Activity } from 'lucide-react';
+import { LucideIcon } from 'lucide-react';
 
 export interface Ingredient {
   name: string;
@@ -592,4 +593,137 @@ export const getRelatedProducts = (productId: number, limit: number = 4): Produc
   return products
     .filter(p => p.category === product.category && p.id !== productId)
     .slice(0, limit);
+};
+
+// Protocol Bundles
+export interface ProtocolBundle {
+  id: string;
+  name: string;
+  tagline: string;
+  description: string;
+  icon: LucideIcon;
+  productIds: number[];
+  originalPrice: number;
+  bundlePrice: number;
+  savings: number;
+  savingsPercent: number;
+  badge?: string;
+  benefits: string[];
+  protocol: string;
+  duration: string;
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
+  image: string;
+}
+
+export const protocolBundles: ProtocolBundle[] = [
+  {
+    id: 'longevity-essentials',
+    name: 'Longevity Essentials Stack',
+    tagline: 'The Foundation Protocol',
+    description: 'The fundamental supplements for anyone serious about extending healthspan. Based on the core recommendations from leading longevity researchers.',
+    icon: Sparkles,
+    productIds: [1, 2, 3, 11], // Essential Multi+, Omega-3 Ultra, D3+K2, CoQ10
+    originalPrice: 196.00,
+    bundlePrice: 156.80,
+    savings: 39.20,
+    savingsPercent: 20,
+    badge: 'Most Popular',
+    benefits: ['Foundational Health', 'Cellular Energy', 'Immune Support', 'Heart Health'],
+    protocol: 'Take daily with breakfast. D3+K2 and CoQ10 require fat for absorption.',
+    duration: '30-day supply',
+    difficulty: 'Beginner',
+    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&h=600&fit=crop',
+  },
+  {
+    id: 'cognitive-optimizer',
+    name: 'Cognitive Optimizer Stack',
+    tagline: 'Peak Mental Performance',
+    description: 'A comprehensive nootropic stack designed for enhanced focus, memory, and neuroplasticity. Inspired by protocols used by top performers and biohackers.',
+    icon: Brain,
+    productIds: [4, 5, 6, 2], // NeuroFocus Pro, Lion's Mane, Phosphatidylserine, Omega-3
+    originalPrice: 211.00,
+    bundlePrice: 168.80,
+    savings: 42.20,
+    savingsPercent: 20,
+    badge: 'Best for Focus',
+    benefits: ['Mental Clarity', 'Memory Enhancement', 'Neurogenesis', 'Brain Health'],
+    protocol: 'Take cognitive supplements in the morning. Omega-3 with any meal.',
+    duration: '30-day supply',
+    difficulty: 'Intermediate',
+    image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=800&h=600&fit=crop',
+  },
+  {
+    id: 'sleep-recovery',
+    name: 'Deep Recovery Stack',
+    tagline: 'Optimize Your Sleep',
+    description: 'Complete sleep and recovery optimization. Supports deep, restorative sleep and accelerates physical recovery for peak performance.',
+    icon: Moon,
+    productIds: [7, 8, 9], // Deep Sleep Formula, Magnesium Complex, Recovery Matrix
+    originalPrice: 141.00,
+    bundlePrice: 112.80,
+    savings: 28.20,
+    savingsPercent: 20,
+    benefits: ['Sleep Quality', 'Muscle Recovery', 'Stress Reduction', 'HRV Improvement'],
+    protocol: 'Take 30-60 minutes before bed. Recovery Matrix can also be taken post-workout.',
+    duration: '30-day supply',
+    difficulty: 'Beginner',
+    image: 'https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=800&h=600&fit=crop',
+  },
+  {
+    id: 'anti-aging-advanced',
+    name: 'Advanced Anti-Aging Stack',
+    tagline: 'Cellular Rejuvenation',
+    description: 'The most advanced longevity stack featuring NAD+ precursors, sirtuin activators, and autophagy inducers. For those committed to maximizing lifespan.',
+    icon: Target,
+    productIds: [13, 14, 16, 11], // NMN Premium, Resveratrol Elite, Spermidine, CoQ10
+    originalPrice: 331.00,
+    bundlePrice: 248.25,
+    savings: 82.75,
+    savingsPercent: 25,
+    badge: 'Premium',
+    benefits: ['NAD+ Optimization', 'Sirtuin Activation', 'Autophagy', 'Cellular Health'],
+    protocol: 'NMN morning on empty stomach. Resveratrol with fat. Spermidine before bed.',
+    duration: '30-day supply',
+    difficulty: 'Advanced',
+    image: 'https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=800&h=600&fit=crop',
+  },
+  {
+    id: 'energy-metabolism',
+    name: 'Metabolic Performance Stack',
+    tagline: 'All-Day Energy',
+    description: 'Optimize your metabolism and sustain energy throughout the day without stimulants. Supports healthy blood sugar and mitochondrial function.',
+    icon: Zap,
+    productIds: [10, 11, 12, 1], // Metabolic Fire, CoQ10, B-Complex, Essential Multi+
+    originalPrice: 206.00,
+    bundlePrice: 164.80,
+    savings: 41.20,
+    savingsPercent: 20,
+    benefits: ['Sustained Energy', 'Metabolism Support', 'Blood Sugar Balance', 'Mitochondrial Health'],
+    protocol: 'Take with breakfast. B-Complex can be split AM/PM if desired.',
+    duration: '30-day supply',
+    difficulty: 'Beginner',
+    image: 'https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=800&h=600&fit=crop',
+  },
+  {
+    id: 'complete-protocol',
+    name: 'Complete Longevity Protocol',
+    tagline: 'The Ultimate Stack',
+    description: 'Our most comprehensive protocol combining foundational health, cognitive enhancement, sleep optimization, and advanced anti-aging compounds.',
+    icon: Activity,
+    productIds: [1, 2, 3, 4, 7, 13, 14], // Multi, Omega, D3K2, NeuroFocus, Sleep, NMN, Resveratrol
+    originalPrice: 443.00,
+    bundlePrice: 310.10,
+    savings: 132.90,
+    savingsPercent: 30,
+    badge: 'Best Value',
+    benefits: ['Complete Coverage', 'Maximum Longevity', 'Peak Performance', 'Optimal Health'],
+    protocol: 'Morning: Multi, Omega-3, D3K2, NeuroFocus, NMN. Evening: Resveratrol, Sleep Formula.',
+    duration: '30-day supply',
+    difficulty: 'Advanced',
+    image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=800&h=600&fit=crop',
+  },
+];
+
+export const getBundleProducts = (bundle: ProtocolBundle): Product[] => {
+  return bundle.productIds.map(id => getProductById(id)).filter((p): p is Product => p !== undefined);
 };
