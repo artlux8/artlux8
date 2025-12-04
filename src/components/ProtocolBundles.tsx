@@ -176,13 +176,20 @@ const ProtocolBundles = () => {
                         Save ${bundle.savings.toFixed(2)} ({bundle.savingsPercent}% off)
                       </p>
                     </div>
-                    <Button
-                      onClick={() => handleAddBundle(bundle)}
-                      className="bg-accent hover:bg-accent/90 text-accent-foreground"
-                    >
-                      <ShoppingCart className="w-4 h-4 mr-2" />
-                      Add Bundle
-                    </Button>
+                    <div className="flex gap-2">
+                      <Link to={`/bundle/${bundle.id}`}>
+                        <Button variant="outline" size="sm" className="border-accent/50 text-accent hover:bg-accent/10">
+                          View Details
+                        </Button>
+                      </Link>
+                      <Button
+                        onClick={() => handleAddBundle(bundle)}
+                        className="bg-accent hover:bg-accent/90 text-accent-foreground"
+                      >
+                        <ShoppingCart className="w-4 h-4 mr-2" />
+                        Add Bundle
+                      </Button>
+                    </div>
                   </div>
 
                   {/* Protocol Note */}
