@@ -39,7 +39,7 @@ const Header = () => {
               <a href="#science" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
                 Science
               </a>
-              <a href="#protocols" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+              <a href="/protocols" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
                 Protocols
               </a>
               <a href="/about" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
@@ -86,7 +86,7 @@ const Header = () => {
             <nav className="container mx-auto px-4 py-6 flex flex-col gap-4">
               <a href="#products" className="text-lg font-medium py-2 border-b border-border">Products</a>
               <a href="#science" className="text-lg font-medium py-2 border-b border-border">Science</a>
-              <a href="#protocols" className="text-lg font-medium py-2 border-b border-border">Protocols</a>
+              <a href="/protocols" className="text-lg font-medium py-2 border-b border-border">Protocols</a>
               <a href="/about" className="text-lg font-medium py-2 border-b border-border">About</a>
               {user ? (
                 <Button onClick={() => signOut()} variant="outline" className="mt-4 w-full">Sign Out</Button>
