@@ -7,9 +7,10 @@ const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
           {/* Brand */}
           <div className="col-span-2 md:col-span-4 lg:col-span-1">
-            <span className="text-2xl font-display font-bold mb-4 block">VITALITY</span>
+            <span className="text-2xl font-display font-bold mb-2 block">ARTLUX8</span>
+            <span className="text-xs text-primary-foreground/60 mb-4 block">The luxury of Longevity art</span>
             <p className="text-primary-foreground/60 text-sm mb-6 max-w-xs">
-              Science-backed health solutions designed for your biology.
+              Exclusive longevity art pieces designed for discerning collectors.
             </p>
             <div className="flex gap-4">
               <a href="#" className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
@@ -76,7 +77,7 @@ const Footer = () => {
         {/* Bottom */}
         <div className="border-t border-primary-foreground/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-primary-foreground/40 text-sm">
-            © 2024 Vitality. All rights reserved.
+            © 2024 ARTLUX8. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-primary-foreground/40">
             <a href="#" className="hover:text-primary-foreground transition-colors">Privacy Policy</a>
