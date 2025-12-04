@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Heart, Brain, Flame, Snowflake, Users, Target } from "lucide-react";
+import { Heart, Brain, Flame, Snowflake, Users, Target, Dna, Activity, FlaskConical } from "lucide-react";
 
 const About = () => {
   return (
@@ -92,57 +92,147 @@ const About = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {/* Gary Brecka */}
-            <div className="bg-card border border-border/50 rounded-lg p-8 hover:border-gold/30 transition-colors">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center">
-                  <Brain className="w-8 h-8 text-gold" />
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+            {/* Bryan Johnson */}
+            <div className="bg-card border border-border/50 rounded-lg p-6 hover:border-gold/30 transition-colors">
+              <div className="flex items-center gap-4 mb-5">
+                <div className="w-14 h-14 rounded-full bg-gold/10 flex items-center justify-center">
+                  <Target className="w-7 h-7 text-gold" />
                 </div>
                 <div>
-                  <h4 className="text-xl font-logo font-semibold">Gary Brecka</h4>
-                  <p className="text-sm text-gold">Human Biologist & Biohacker</p>
+                  <h4 className="text-lg font-logo font-semibold">Bryan Johnson</h4>
+                  <p className="text-xs text-gold">Blueprint Founder</p>
                 </div>
               </div>
-              <div className="space-y-4 text-muted-foreground text-sm">
+              <div className="space-y-3 text-muted-foreground text-sm">
                 <p>
-                  Gary Brecka is a professional Human Biologist and Co-Founder of 10X Health System. His revolutionary work in genetic testing and personalized supplementation has transformed how we understand individual health optimization.
+                  After selling Braintree Venmo for $800 million, Bryan Johnson dedicated his life to becoming the most measured human in history. His Blueprint protocol has achieved the world's best biomarkers.
                 </p>
-                <p>
-                  With over two decades of experience studying mortality prediction and life expectancy, Brecka discovered that the human body has an extraordinary capacity for self-healing when given the precise nutrients it needs.
-                </p>
-                <blockquote className="border-l-2 border-gold/50 pl-4 italic text-foreground">
-                  "The goal is not just to extend life, but to empower people to become the best version of themselves."
+                <blockquote className="border-l-2 border-gold/50 pl-3 italic text-foreground text-xs">
+                  "Don't die. Don't kill each other. Don't destroy the planet."
                 </blockquote>
                 <p>
-                  His approach of identifying genetic weaknesses and addressing them through targeted supplementation has helped countless individuals—from elite athletes to everyday people—achieve unprecedented levels of health and performance.
+                  With 30+ medical professionals monitoring every aspect of his biology, Johnson proves that aging can be slowed and even reversed through rigorous protocol adherence.
+                </p>
+              </div>
+            </div>
+
+            {/* Gary Brecka */}
+            <div className="bg-card border border-border/50 rounded-lg p-6 hover:border-gold/30 transition-colors">
+              <div className="flex items-center gap-4 mb-5">
+                <div className="w-14 h-14 rounded-full bg-gold/10 flex items-center justify-center">
+                  <Brain className="w-7 h-7 text-gold" />
+                </div>
+                <div>
+                  <h4 className="text-lg font-logo font-semibold">Gary Brecka</h4>
+                  <p className="text-xs text-gold">Human Biologist</p>
+                </div>
+              </div>
+              <div className="space-y-3 text-muted-foreground text-sm">
+                <p>
+                  Co-Founder of 10X Health System, Brecka's work in genetic testing and personalized supplementation has revolutionized individual health optimization.
+                </p>
+                <blockquote className="border-l-2 border-gold/50 pl-3 italic text-foreground text-xs">
+                  "The goal is to empower people to become the best version of themselves."
+                </blockquote>
+                <p>
+                  His approach identifies genetic weaknesses and addresses them through targeted supplementation, helping elite athletes and everyday people achieve peak performance.
                 </p>
               </div>
             </div>
 
             {/* Wim Hof */}
-            <div className="bg-card border border-border/50 rounded-lg p-8 hover:border-gold/30 transition-colors">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center">
-                  <Snowflake className="w-8 h-8 text-gold" />
+            <div className="bg-card border border-border/50 rounded-lg p-6 hover:border-gold/30 transition-colors">
+              <div className="flex items-center gap-4 mb-5">
+                <div className="w-14 h-14 rounded-full bg-gold/10 flex items-center justify-center">
+                  <Snowflake className="w-7 h-7 text-gold" />
                 </div>
                 <div>
-                  <h4 className="text-xl font-logo font-semibold">Wim Hof</h4>
-                  <p className="text-sm text-gold">The Iceman</p>
+                  <h4 className="text-lg font-logo font-semibold">Wim Hof</h4>
+                  <p className="text-xs text-gold">The Iceman</p>
                 </div>
               </div>
-              <div className="space-y-4 text-muted-foreground text-sm">
+              <div className="space-y-3 text-muted-foreground text-sm">
                 <p>
-                  Dutch extreme athlete Wim Hof earned his nickname "The Iceman" by breaking numerous records related to cold exposure—climbing Mount Kilimanjaro in shorts, running a half marathon above the Arctic Circle barefoot, and standing submerged in ice for nearly two hours.
+                  "The Iceman" proved humans can consciously influence their autonomic nervous system through breathing techniques and cold exposure—previously thought impossible.
                 </p>
-                <p>
-                  But beyond the spectacular feats lies a profound discovery: through specific breathing techniques and cold exposure, humans can consciously influence their autonomic nervous system and immune response—something previously thought impossible.
-                </p>
-                <blockquote className="border-l-2 border-gold/50 pl-4 italic text-foreground">
+                <blockquote className="border-l-2 border-gold/50 pl-3 italic text-foreground text-xs">
                   "I'm not afraid of death. I'm afraid not to have lived fully."
                 </blockquote>
                 <p>
-                  The Wim Hof Method has since been validated by multiple scientific studies, proving that with proper training, anyone can develop extraordinary control over their body's inflammatory response and stress resilience.
+                  His scientifically-validated method enables anyone to develop extraordinary control over inflammation and stress resilience.
+                </p>
+              </div>
+            </div>
+
+            {/* Peter Attia */}
+            <div className="bg-card border border-border/50 rounded-lg p-6 hover:border-gold/30 transition-colors">
+              <div className="flex items-center gap-4 mb-5">
+                <div className="w-14 h-14 rounded-full bg-gold/10 flex items-center justify-center">
+                  <Activity className="w-7 h-7 text-gold" />
+                </div>
+                <div>
+                  <h4 className="text-lg font-logo font-semibold">Peter Attia</h4>
+                  <p className="text-xs text-gold">Longevity Physician</p>
+                </div>
+              </div>
+              <div className="space-y-3 text-muted-foreground text-sm">
+                <p>
+                  Stanford-trained physician and author of "Outlive," Dr. Attia focuses on extending lifespan while improving healthspan through evidence-based medicine.
+                </p>
+                <blockquote className="border-l-2 border-gold/50 pl-3 italic text-foreground text-xs">
+                  "Medicine 3.0 is about delaying the onset of chronic disease and extending healthspan."
+                </blockquote>
+                <p>
+                  His framework for longevity—combining exercise, nutrition, sleep, and emotional health—has become the gold standard for preventive medicine.
+                </p>
+              </div>
+            </div>
+
+            {/* David Sinclair */}
+            <div className="bg-card border border-border/50 rounded-lg p-6 hover:border-gold/30 transition-colors">
+              <div className="flex items-center gap-4 mb-5">
+                <div className="w-14 h-14 rounded-full bg-gold/10 flex items-center justify-center">
+                  <Dna className="w-7 h-7 text-gold" />
+                </div>
+                <div>
+                  <h4 className="text-lg font-logo font-semibold">David Sinclair</h4>
+                  <p className="text-xs text-gold">Harvard Geneticist</p>
+                </div>
+              </div>
+              <div className="space-y-3 text-muted-foreground text-sm">
+                <p>
+                  Harvard professor and author of "Lifespan," Dr. Sinclair's research on sirtuins and NAD+ has fundamentally changed our understanding of why we age.
+                </p>
+                <blockquote className="border-l-2 border-gold/50 pl-3 italic text-foreground text-xs">
+                  "Aging is a disease, and that disease is treatable."
+                </blockquote>
+                <p>
+                  His Information Theory of Aging suggests that aging is caused by loss of epigenetic information—and that it can be reversed.
+                </p>
+              </div>
+            </div>
+
+            {/* Andrew Huberman */}
+            <div className="bg-card border border-border/50 rounded-lg p-6 hover:border-gold/30 transition-colors">
+              <div className="flex items-center gap-4 mb-5">
+                <div className="w-14 h-14 rounded-full bg-gold/10 flex items-center justify-center">
+                  <FlaskConical className="w-7 h-7 text-gold" />
+                </div>
+                <div>
+                  <h4 className="text-lg font-logo font-semibold">Andrew Huberman</h4>
+                  <p className="text-xs text-gold">Neuroscientist</p>
+                </div>
+              </div>
+              <div className="space-y-3 text-muted-foreground text-sm">
+                <p>
+                  Stanford neuroscientist whose Huberman Lab podcast has democratized cutting-edge science on sleep, focus, and performance optimization.
+                </p>
+                <blockquote className="border-l-2 border-gold/50 pl-3 italic text-foreground text-xs">
+                  "The nervous system is the most powerful pharmacy in the world."
+                </blockquote>
+                <p>
+                  His protocols for leveraging light, cold, heat, and supplementation have helped millions optimize their daily routines for peak performance.
                 </p>
               </div>
             </div>
