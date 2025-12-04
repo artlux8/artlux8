@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Star, ShoppingCart, Plus, Minus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 
 const products = [
@@ -54,6 +55,9 @@ const FeaturedProducts = () => {
   const [quantities, setQuantities] = useState<Record<number, number>>(
     products.reduce((acc, p) => ({ ...acc, [p.id]: 1 }), {})
   );
+  const [subscriptions, setSubscriptions] = useState<Record<number, boolean>>(
+    products.reduce((acc, p) => ({ ...acc, [p.id]: false }), {})
+  );
 
   const updateQuantity = (id: number, delta: number) => {
     setQuantities((prev) => ({
@@ -62,9 +66,21 @@ const FeaturedProducts = () => {
     }));
   };
 
-  const addToCart = (productName: string) => {
-    toast.success(`Added to cart`, {
-      description: `${productName} has been added to your cart.`,
+  const toggleSubscription = (id: number) => {
+    setSubscriptions((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
+  const getPrice = (product: typeof products[0]) => {
+    const basePrice = product.price;
+    return subscriptions[product.id] ? basePrice * 0.85 : basePrice;
+  };
+
+  const addToCart = (productName: string, isSubscription: boolean) => {
+    toast.success(isSubscription ? "Subscription added" : "Added to cart", {
+      description: `${productName} has been added ${isSubscription ? "as a monthly subscription" : "to your cart"}.`,
     });
   };
 
@@ -134,14 +150,31 @@ const FeaturedProducts = () => {
                   {product.description}
                 </p>
 
+                {/* Subscribe & Save Toggle */}
+                <div className="flex items-center justify-between mb-3 p-2 bg-secondary/50 rounded-lg">
+                  <div className="flex flex-col">
+                    <span className="text-xs font-medium text-foreground">Subscribe & Save</span>
+                    <span className="text-xs text-accent font-semibold">15% off + Free Shipping</span>
+                  </div>
+                  <Switch
+                    checked={subscriptions[product.id]}
+                    onCheckedChange={() => toggleSubscription(product.id)}
+                  />
+                </div>
+
                 {/* Price */}
                 <div className="flex items-center gap-2 mb-4">
                   <span className="text-xl font-bold text-foreground">
-                    ${product.price.toFixed(2)}
+                    ${getPrice(product).toFixed(2)}
                   </span>
-                  {product.originalPrice && (
+                  {(product.originalPrice || subscriptions[product.id]) && (
                     <span className="text-sm text-muted-foreground line-through">
-                      ${product.originalPrice.toFixed(2)}
+                      ${(subscriptions[product.id] ? product.price : product.originalPrice)?.toFixed(2)}
+                    </span>
+                  )}
+                  {subscriptions[product.id] && (
+                    <span className="text-xs bg-accent/20 text-accent px-2 py-0.5 rounded-full font-medium">
+                      -15%
                     </span>
                   )}
                 </div>
@@ -166,11 +199,11 @@ const FeaturedProducts = () => {
                     </button>
                   </div>
                   <Button
-                    onClick={() => addToCart(product.name)}
+                    onClick={() => addToCart(product.name, subscriptions[product.id])}
                     className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg"
                   >
                     <ShoppingCart className="w-4 h-4 mr-2" />
-                    Add
+                    {subscriptions[product.id] ? "Subscribe" : "Add"}
                   </Button>
                 </div>
               </div>
