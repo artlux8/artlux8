@@ -33,8 +33,8 @@ const Header = () => {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-8">
-              <a href="#products" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-                Products
+              <a href="/shop" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                Shop
               </a>
               <a href="#science" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
                 Science
@@ -67,7 +67,7 @@ const Header = () => {
                 </button>
               )}
               <CartSheet />
-              <Button className="hidden md:flex bg-primary text-primary-foreground hover:bg-primary/90">
+              <Button onClick={() => navigate('/shop')} className="hidden md:flex bg-primary text-primary-foreground hover:bg-primary/90">
                 Shop Now
               </Button>
               <button
@@ -84,7 +84,7 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden bg-background border-t border-border">
             <nav className="container mx-auto px-4 py-6 flex flex-col gap-4">
-              <a href="#products" className="text-lg font-medium py-2 border-b border-border">Products</a>
+              <a href="/shop" className="text-lg font-medium py-2 border-b border-border">Shop</a>
               <a href="#science" className="text-lg font-medium py-2 border-b border-border">Science</a>
               <a href="/protocols" className="text-lg font-medium py-2 border-b border-border">Protocols</a>
               <a href="/about" className="text-lg font-medium py-2 border-b border-border">About</a>
