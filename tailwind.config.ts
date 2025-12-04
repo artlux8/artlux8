@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['DM Sans', 'system-ui', 'sans-serif'],
-        display: ['Playfair Display', 'Georgia', 'serif'],
+        sans: ['Outfit', 'system-ui', 'sans-serif'],
+        display: ['Cormorant Garamond', 'Georgia', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -61,6 +61,18 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        gold: {
+          50: "#fffbeb",
+          100: "#fef3c7",
+          200: "#fde68a",
+          300: "#fcd34d",
+          400: "#fbbf24",
+          500: "#d4a012",
+          600: "#b8860b",
+          700: "#92400e",
+          800: "#78350f",
+          900: "#451a03",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -88,6 +100,10 @@ export default {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
         },
+        "shimmer": {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -95,6 +111,7 @@ export default {
         "fade-in": "fade-in 0.6s ease-out forwards",
         "slide-up": "slide-up 0.8s ease-out forwards",
         "marquee": "marquee 30s linear infinite",
+        "shimmer": "shimmer 2s linear infinite",
       },
     },
   },
