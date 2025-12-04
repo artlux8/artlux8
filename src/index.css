@@ -2,93 +2,87 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
 @layer base {
   :root {
-    /* Luxury Light Theme - Cream & Gold */
-    --background: 40 30% 97%;
-    --foreground: 30 10% 15%;
+    --background: 0 0% 100%;
+    --foreground: 220 30% 10%;
 
-    --card: 40 25% 99%;
-    --card-foreground: 30 10% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 30% 10%;
 
-    --popover: 40 25% 99%;
-    --popover-foreground: 30 10% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 30% 10%;
 
-    /* Deep charcoal primary */
-    --primary: 30 10% 12%;
-    --primary-foreground: 40 30% 97%;
+    --primary: 220 60% 20%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 40 20% 94%;
-    --secondary-foreground: 30 10% 15%;
+    --secondary: 220 20% 96%;
+    --secondary-foreground: 220 30% 10%;
 
-    --muted: 40 15% 92%;
-    --muted-foreground: 30 8% 45%;
+    --muted: 220 20% 96%;
+    --muted-foreground: 220 10% 45%;
 
-    /* Rich Gold accent */
-    --accent: 43 74% 49%;
-    --accent-foreground: 30 10% 10%;
+    --accent: 175 60% 45%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 40 15% 88%;
-    --input: 40 15% 88%;
-    --ring: 43 74% 49%;
+    --border: 220 20% 90%;
+    --input: 220 20% 90%;
+    --ring: 220 60% 20%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 40 25% 98%;
-    --sidebar-foreground: 30 10% 15%;
-    --sidebar-primary: 30 10% 12%;
-    --sidebar-primary-foreground: 40 30% 97%;
-    --sidebar-accent: 40 20% 94%;
-    --sidebar-accent-foreground: 30 10% 15%;
-    --sidebar-border: 40 15% 88%;
-    --sidebar-ring: 43 74% 49%;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    /* Luxury Dark Theme - Deep Black & Gold */
-    --background: 30 15% 6%;
-    --foreground: 40 20% 95%;
+    --background: 220 30% 6%;
+    --foreground: 0 0% 98%;
 
-    --card: 30 15% 9%;
-    --card-foreground: 40 20% 95%;
+    --card: 220 30% 8%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 30 15% 9%;
-    --popover-foreground: 40 20% 95%;
+    --popover: 220 30% 8%;
+    --popover-foreground: 0 0% 98%;
 
-    /* Rich dark primary */
-    --primary: 30 12% 10%;
-    --primary-foreground: 40 20% 95%;
+    --primary: 175 60% 45%;
+    --primary-foreground: 220 30% 6%;
 
-    --secondary: 30 12% 14%;
-    --secondary-foreground: 40 20% 95%;
+    --secondary: 220 30% 12%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 30 10% 18%;
-    --muted-foreground: 40 10% 55%;
+    --muted: 220 30% 15%;
+    --muted-foreground: 220 10% 60%;
 
-    /* Champagne Gold accent */
-    --accent: 43 74% 55%;
-    --accent-foreground: 30 15% 6%;
+    --accent: 175 60% 45%;
+    --accent-foreground: 220 30% 6%;
 
-    --destructive: 0 62% 40%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 30 10% 18%;
-    --input: 30 10% 18%;
-    --ring: 43 74% 55%;
+    --border: 220 30% 15%;
+    --input: 220 30% 15%;
+    --ring: 175 60% 45%;
 
-    --sidebar-background: 30 15% 8%;
-    --sidebar-foreground: 40 20% 95%;
-    --sidebar-primary: 43 74% 55%;
-    --sidebar-primary-foreground: 30 15% 6%;
-    --sidebar-accent: 30 12% 14%;
-    --sidebar-accent-foreground: 40 20% 95%;
-    --sidebar-border: 30 10% 18%;
-    --sidebar-ring: 43 74% 55%;
+    --sidebar-background: 220 30% 8%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 175 60% 45%;
+    --sidebar-primary-foreground: 220 30% 6%;
+    --sidebar-accent: 220 30% 12%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 220 30% 15%;
+    --sidebar-ring: 175 60% 45%;
   }
 }
 
@@ -99,11 +93,6 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-  }
-
-  /* Gold text gradient utility */
-  .text-gold-gradient {
-    @apply bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 bg-clip-text text-transparent;
   }
 }
 
