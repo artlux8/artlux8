@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import ProtocolBundles from '@/components/ProtocolBundles';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ShoppingCart, Star, Leaf, Brain, Moon, Zap, Heart, Shield } from 'lucide-react';
@@ -411,6 +412,9 @@ const Shop = () => {
           </div>
         </div>
       </section>
+
+      {/* Protocol Bundles */}
+      <ProtocolBundles />
 
       {/* Benefits Banner */}
       <section className="py-16 bg-secondary/30">
