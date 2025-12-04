@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Star, ShoppingCart, Plus, Minus } from "lucide-react";
+import { Star, ShoppingCart, Plus, Minus, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { useCart } from "@/contexts/CartContext";
@@ -7,47 +7,51 @@ import { useCart } from "@/contexts/CartContext";
 const products = [
   {
     id: 1,
-    name: "Omega-3 Ultra",
-    description: "High-potency fish oil for brain & heart health",
-    price: 49.99,
-    originalPrice: 59.99,
-    rating: 4.9,
-    reviews: 2847,
-    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?q=80&w=600&auto=format&fit=crop",
-    badge: "Best Seller",
-  },
-  {
-    id: 2,
-    name: "Vitamin D3 + K2",
-    description: "Optimal bone density & immune support",
-    price: 34.99,
-    originalPrice: null,
-    rating: 4.8,
-    reviews: 1923,
-    image: "https://images.unsplash.com/photo-1550572017-edd951aa8f72?q=80&w=600&auto=format&fit=crop",
-    badge: null,
-  },
-  {
-    id: 3,
-    name: "Magnesium Complex",
-    description: "7 forms of magnesium for complete absorption",
-    price: 39.99,
-    originalPrice: 49.99,
-    rating: 4.9,
-    reviews: 3156,
-    image: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?q=80&w=600&auto=format&fit=crop",
-    badge: "20% Off",
-  },
-  {
-    id: 4,
     name: "Longevity Stack",
-    description: "NMN, Resveratrol & CoQ10 for cellular health",
+    description: "NMN 500mg + Trans-Resveratrol + CoQ10 for cellular rejuvenation",
     price: 129.99,
     originalPrice: 149.99,
     rating: 5.0,
+    reviews: 2847,
+    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?q=80&w=600&auto=format&fit=crop",
+    badge: "Best Seller",
+    benefits: ["NAD+ Support", "Sirtuin Activation"],
+  },
+  {
+    id: 2,
+    name: "Essential Multi+",
+    description: "Complete daily foundation with methylated B-vitamins & minerals",
+    price: 49.99,
+    originalPrice: null,
+    rating: 4.9,
+    reviews: 3156,
+    image: "https://images.unsplash.com/photo-1550572017-edd951aa8f72?q=80&w=600&auto=format&fit=crop",
+    badge: "Foundation",
+    benefits: ["Methylation", "Energy"],
+  },
+  {
+    id: 3,
+    name: "Omega-3 Ultra",
+    description: "High-potency EPA/DHA/DPA for brain, heart & inflammation",
+    price: 54.99,
+    originalPrice: 64.99,
+    rating: 4.9,
+    reviews: 1923,
+    image: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?q=80&w=600&auto=format&fit=crop",
+    badge: "Top Rated",
+    benefits: ["Brain Health", "Heart Health"],
+  },
+  {
+    id: 4,
+    name: "Sleep Optimizer",
+    description: "Magnesium glycinate, L-theanine & apigenin for deep restorative sleep",
+    price: 44.99,
+    originalPrice: null,
+    rating: 4.8,
     reviews: 892,
     image: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?q=80&w=600&auto=format&fit=crop",
-    badge: "Premium",
+    badge: "Sleep",
+    benefits: ["Sleep Quality", "Recovery"],
   },
 ];
 
@@ -88,21 +92,23 @@ const FeaturedProducts = () => {
   };
 
   return (
-    <section className="py-20 md:py-32 bg-background">
+    <section id="products" className="py-20 md:py-32 bg-background">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
-          <div>
-            <p className="text-accent font-medium text-sm tracking-widest uppercase mb-2">
-              Featured Products
+        <div className="text-center mb-16">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <Sparkles className="w-5 h-5 text-gold" />
+            <p className="text-gold font-medium text-sm tracking-widest uppercase">
+              Premium Supplements
             </p>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground">
-              Bestsellers & Staff Picks
-            </h2>
           </div>
-          <Button variant="outline" className="w-fit border-border text-foreground hover:bg-secondary rounded-full px-6">
-            View All Products
-          </Button>
+          <h2 className="font-logo text-3xl md:text-5xl font-bold text-foreground mb-4">
+            Science-Backed Formulations
+          </h2>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            Pharmaceutical-grade ingredients in clinically effective doses. 
+            Every formula is third-party tested for purity and potency.
+          </p>
         </div>
 
         {/* Products Grid */}
@@ -110,7 +116,7 @@ const FeaturedProducts = () => {
           {products.map((product) => (
             <div
               key={product.id}
-              className="group bg-card border border-border rounded-2xl overflow-hidden hover:shadow-lg transition-shadow"
+              className="group bg-card border border-border rounded-2xl overflow-hidden hover:border-gold/30 hover:shadow-xl hover:shadow-gold/5 transition-all duration-300"
             >
               {/* Image */}
               <div className="relative aspect-square bg-secondary overflow-hidden">
@@ -120,7 +126,7 @@ const FeaturedProducts = () => {
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 {product.badge && (
-                  <span className="absolute top-3 left-3 bg-accent text-accent-foreground text-xs font-semibold px-3 py-1 rounded-full">
+                  <span className="absolute top-3 left-3 bg-gold text-primary text-xs font-semibold px-3 py-1 rounded-full">
                     {product.badge}
                   </span>
                 )}
@@ -136,7 +142,7 @@ const FeaturedProducts = () => {
                         key={i}
                         className={`w-3.5 h-3.5 ${
                           i < Math.floor(product.rating)
-                            ? "fill-accent text-accent"
+                            ? "fill-gold text-gold"
                             : "fill-muted text-muted"
                         }`}
                       />
@@ -149,15 +155,24 @@ const FeaturedProducts = () => {
 
                 {/* Title & Description */}
                 <h3 className="font-semibold text-foreground mb-1">{product.name}</h3>
-                <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
                   {product.description}
                 </p>
+
+                {/* Benefit Tags */}
+                <div className="flex flex-wrap gap-1 mb-3">
+                  {product.benefits.map((benefit) => (
+                    <span key={benefit} className="text-xs bg-gold/10 text-gold px-2 py-0.5 rounded-full">
+                      {benefit}
+                    </span>
+                  ))}
+                </div>
 
                 {/* Subscribe & Save Toggle */}
                 <div className="flex items-center justify-between mb-3 p-2 bg-secondary/50 rounded-lg">
                   <div className="flex flex-col">
                     <span className="text-xs font-medium text-foreground">Subscribe & Save</span>
-                    <span className="text-xs text-accent font-semibold">15% off + Free Shipping</span>
+                    <span className="text-xs text-gold font-semibold">15% off + Free Shipping</span>
                   </div>
                   <Switch
                     checked={subscriptions[product.id]}
@@ -176,7 +191,7 @@ const FeaturedProducts = () => {
                     </span>
                   )}
                   {subscriptions[product.id] && (
-                    <span className="text-xs bg-accent/20 text-accent px-2 py-0.5 rounded-full font-medium">
+                    <span className="text-xs bg-gold/20 text-gold px-2 py-0.5 rounded-full font-medium">
                       -15%
                     </span>
                   )}
@@ -212,6 +227,13 @@ const FeaturedProducts = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* View All Button */}
+        <div className="text-center mt-12">
+          <Button variant="outline" className="border-gold/30 text-foreground hover:bg-gold/10 rounded-full px-8">
+            View All Products
+          </Button>
         </div>
       </div>
     </section>
