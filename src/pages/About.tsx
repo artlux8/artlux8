@@ -1,6 +1,80 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Heart, Brain, Flame, Snowflake, Users, Target, Dna, Activity, FlaskConical } from "lucide-react";
+import { Heart, Brain, Flame, Snowflake, Users, Target, Dna, Activity, FlaskConical, LucideIcon } from "lucide-react";
+
+interface Pioneer {
+  name: string;
+  initials: string;
+  title: string;
+  icon: LucideIcon;
+  gradient: string;
+  description: string;
+  quote: string;
+  detail: string;
+}
+
+const pioneers: Pioneer[] = [
+  {
+    name: "Bryan Johnson",
+    initials: "BJ",
+    title: "Blueprint Founder",
+    icon: Target,
+    gradient: "from-amber-500 to-orange-600",
+    description: "After selling Braintree Venmo for $800 million, Bryan Johnson dedicated his life to becoming the most measured human in history. His Blueprint protocol has achieved the world's best biomarkers.",
+    quote: "Don't die. Don't kill each other. Don't destroy the planet.",
+    detail: "With 30+ medical professionals monitoring every aspect of his biology, Johnson proves that aging can be slowed and even reversed through rigorous protocol adherence."
+  },
+  {
+    name: "Gary Brecka",
+    initials: "GB",
+    title: "Human Biologist",
+    icon: Brain,
+    gradient: "from-emerald-500 to-teal-600",
+    description: "Co-Founder of 10X Health System, Brecka's work in genetic testing and personalized supplementation has revolutionized individual health optimization.",
+    quote: "The goal is to empower people to become the best version of themselves.",
+    detail: "His approach identifies genetic weaknesses and addresses them through targeted supplementation, helping elite athletes and everyday people achieve peak performance."
+  },
+  {
+    name: "Wim Hof",
+    initials: "WH",
+    title: "The Iceman",
+    icon: Snowflake,
+    gradient: "from-cyan-500 to-blue-600",
+    description: '"The Iceman" proved humans can consciously influence their autonomic nervous system through breathing techniques and cold exposure—previously thought impossible.',
+    quote: "I'm not afraid of death. I'm afraid not to have lived fully.",
+    detail: "His scientifically-validated method enables anyone to develop extraordinary control over inflammation and stress resilience."
+  },
+  {
+    name: "Peter Attia",
+    initials: "PA",
+    title: "Longevity Physician",
+    icon: Activity,
+    gradient: "from-violet-500 to-purple-600",
+    description: 'Stanford-trained physician and author of "Outlive," Dr. Attia focuses on extending lifespan while improving healthspan through evidence-based medicine.',
+    quote: "Medicine 3.0 is about delaying the onset of chronic disease and extending healthspan.",
+    detail: "His framework for longevity—combining exercise, nutrition, sleep, and emotional health—has become the gold standard for preventive medicine."
+  },
+  {
+    name: "David Sinclair",
+    initials: "DS",
+    title: "Harvard Geneticist",
+    icon: Dna,
+    gradient: "from-rose-500 to-pink-600",
+    description: 'Harvard professor and author of "Lifespan," Dr. Sinclair\'s research on sirtuins and NAD+ has fundamentally changed our understanding of why we age.',
+    quote: "Aging is a disease, and that disease is treatable.",
+    detail: "His Information Theory of Aging suggests that aging is caused by loss of epigenetic information—and that it can be reversed."
+  },
+  {
+    name: "Andrew Huberman",
+    initials: "AH",
+    title: "Neuroscientist",
+    icon: FlaskConical,
+    gradient: "from-indigo-500 to-blue-700",
+    description: "Stanford neuroscientist whose Huberman Lab podcast has democratized cutting-edge science on sleep, focus, and performance optimization.",
+    quote: "The nervous system is the most powerful pharmacy in the world.",
+    detail: "His protocols for leveraging light, cold, heat, and supplementation have helped millions optimize their daily routines for peak performance."
+  }
+];
 
 const About = () => {
   return (
@@ -93,149 +167,34 @@ const About = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-            {/* Bryan Johnson */}
-            <div className="bg-card border border-border/50 rounded-lg p-6 hover:border-gold/30 transition-colors">
-              <div className="flex items-center gap-4 mb-5">
-                <div className="w-14 h-14 rounded-full bg-gold/10 flex items-center justify-center">
-                  <Target className="w-7 h-7 text-gold" />
+            {pioneers.map((pioneer) => (
+              <div key={pioneer.name} className="bg-card border border-border/50 rounded-lg p-6 hover:border-gold/30 transition-all hover:shadow-lg hover:shadow-gold/5 group">
+                <div className="flex items-center gap-4 mb-5">
+                  {/* Stylized Avatar with Initials */}
+                  <div className="relative">
+                    <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${pioneer.gradient} flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform`}>
+                      <span className="text-white font-logo font-bold text-lg tracking-wider">
+                        {pioneer.initials}
+                      </span>
+                    </div>
+                    <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-background border-2 border-gold/50 flex items-center justify-center">
+                      <pioneer.icon className="w-3 h-3 text-gold" />
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-logo font-semibold">{pioneer.name}</h4>
+                    <p className="text-xs text-gold">{pioneer.title}</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-lg font-logo font-semibold">Bryan Johnson</h4>
-                  <p className="text-xs text-gold">Blueprint Founder</p>
-                </div>
-              </div>
-              <div className="space-y-3 text-muted-foreground text-sm">
-                <p>
-                  After selling Braintree Venmo for $800 million, Bryan Johnson dedicated his life to becoming the most measured human in history. His Blueprint protocol has achieved the world's best biomarkers.
-                </p>
-                <blockquote className="border-l-2 border-gold/50 pl-3 italic text-foreground text-xs">
-                  "Don't die. Don't kill each other. Don't destroy the planet."
-                </blockquote>
-                <p>
-                  With 30+ medical professionals monitoring every aspect of his biology, Johnson proves that aging can be slowed and even reversed through rigorous protocol adherence.
-                </p>
-              </div>
-            </div>
-
-            {/* Gary Brecka */}
-            <div className="bg-card border border-border/50 rounded-lg p-6 hover:border-gold/30 transition-colors">
-              <div className="flex items-center gap-4 mb-5">
-                <div className="w-14 h-14 rounded-full bg-gold/10 flex items-center justify-center">
-                  <Brain className="w-7 h-7 text-gold" />
-                </div>
-                <div>
-                  <h4 className="text-lg font-logo font-semibold">Gary Brecka</h4>
-                  <p className="text-xs text-gold">Human Biologist</p>
+                <div className="space-y-3 text-muted-foreground text-sm">
+                  <p>{pioneer.description}</p>
+                  <blockquote className="border-l-2 border-gold/50 pl-3 italic text-foreground text-xs">
+                    "{pioneer.quote}"
+                  </blockquote>
+                  <p>{pioneer.detail}</p>
                 </div>
               </div>
-              <div className="space-y-3 text-muted-foreground text-sm">
-                <p>
-                  Co-Founder of 10X Health System, Brecka's work in genetic testing and personalized supplementation has revolutionized individual health optimization.
-                </p>
-                <blockquote className="border-l-2 border-gold/50 pl-3 italic text-foreground text-xs">
-                  "The goal is to empower people to become the best version of themselves."
-                </blockquote>
-                <p>
-                  His approach identifies genetic weaknesses and addresses them through targeted supplementation, helping elite athletes and everyday people achieve peak performance.
-                </p>
-              </div>
-            </div>
-
-            {/* Wim Hof */}
-            <div className="bg-card border border-border/50 rounded-lg p-6 hover:border-gold/30 transition-colors">
-              <div className="flex items-center gap-4 mb-5">
-                <div className="w-14 h-14 rounded-full bg-gold/10 flex items-center justify-center">
-                  <Snowflake className="w-7 h-7 text-gold" />
-                </div>
-                <div>
-                  <h4 className="text-lg font-logo font-semibold">Wim Hof</h4>
-                  <p className="text-xs text-gold">The Iceman</p>
-                </div>
-              </div>
-              <div className="space-y-3 text-muted-foreground text-sm">
-                <p>
-                  "The Iceman" proved humans can consciously influence their autonomic nervous system through breathing techniques and cold exposure—previously thought impossible.
-                </p>
-                <blockquote className="border-l-2 border-gold/50 pl-3 italic text-foreground text-xs">
-                  "I'm not afraid of death. I'm afraid not to have lived fully."
-                </blockquote>
-                <p>
-                  His scientifically-validated method enables anyone to develop extraordinary control over inflammation and stress resilience.
-                </p>
-              </div>
-            </div>
-
-            {/* Peter Attia */}
-            <div className="bg-card border border-border/50 rounded-lg p-6 hover:border-gold/30 transition-colors">
-              <div className="flex items-center gap-4 mb-5">
-                <div className="w-14 h-14 rounded-full bg-gold/10 flex items-center justify-center">
-                  <Activity className="w-7 h-7 text-gold" />
-                </div>
-                <div>
-                  <h4 className="text-lg font-logo font-semibold">Peter Attia</h4>
-                  <p className="text-xs text-gold">Longevity Physician</p>
-                </div>
-              </div>
-              <div className="space-y-3 text-muted-foreground text-sm">
-                <p>
-                  Stanford-trained physician and author of "Outlive," Dr. Attia focuses on extending lifespan while improving healthspan through evidence-based medicine.
-                </p>
-                <blockquote className="border-l-2 border-gold/50 pl-3 italic text-foreground text-xs">
-                  "Medicine 3.0 is about delaying the onset of chronic disease and extending healthspan."
-                </blockquote>
-                <p>
-                  His framework for longevity—combining exercise, nutrition, sleep, and emotional health—has become the gold standard for preventive medicine.
-                </p>
-              </div>
-            </div>
-
-            {/* David Sinclair */}
-            <div className="bg-card border border-border/50 rounded-lg p-6 hover:border-gold/30 transition-colors">
-              <div className="flex items-center gap-4 mb-5">
-                <div className="w-14 h-14 rounded-full bg-gold/10 flex items-center justify-center">
-                  <Dna className="w-7 h-7 text-gold" />
-                </div>
-                <div>
-                  <h4 className="text-lg font-logo font-semibold">David Sinclair</h4>
-                  <p className="text-xs text-gold">Harvard Geneticist</p>
-                </div>
-              </div>
-              <div className="space-y-3 text-muted-foreground text-sm">
-                <p>
-                  Harvard professor and author of "Lifespan," Dr. Sinclair's research on sirtuins and NAD+ has fundamentally changed our understanding of why we age.
-                </p>
-                <blockquote className="border-l-2 border-gold/50 pl-3 italic text-foreground text-xs">
-                  "Aging is a disease, and that disease is treatable."
-                </blockquote>
-                <p>
-                  His Information Theory of Aging suggests that aging is caused by loss of epigenetic information—and that it can be reversed.
-                </p>
-              </div>
-            </div>
-
-            {/* Andrew Huberman */}
-            <div className="bg-card border border-border/50 rounded-lg p-6 hover:border-gold/30 transition-colors">
-              <div className="flex items-center gap-4 mb-5">
-                <div className="w-14 h-14 rounded-full bg-gold/10 flex items-center justify-center">
-                  <FlaskConical className="w-7 h-7 text-gold" />
-                </div>
-                <div>
-                  <h4 className="text-lg font-logo font-semibold">Andrew Huberman</h4>
-                  <p className="text-xs text-gold">Neuroscientist</p>
-                </div>
-              </div>
-              <div className="space-y-3 text-muted-foreground text-sm">
-                <p>
-                  Stanford neuroscientist whose Huberman Lab podcast has democratized cutting-edge science on sleep, focus, and performance optimization.
-                </p>
-                <blockquote className="border-l-2 border-gold/50 pl-3 italic text-foreground text-xs">
-                  "The nervous system is the most powerful pharmacy in the world."
-                </blockquote>
-                <p>
-                  His protocols for leveraging light, cold, heat, and supplementation have helped millions optimize their daily routines for peak performance.
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
