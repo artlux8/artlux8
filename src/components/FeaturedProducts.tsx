@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Star, ShoppingCart, Plus, Minus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { toast } from "sonner";
+import { useCart } from "@/contexts/CartContext";
 
 const products = [
   {
@@ -58,6 +58,7 @@ const FeaturedProducts = () => {
   const [subscriptions, setSubscriptions] = useState<Record<number, boolean>>(
     products.reduce((acc, p) => ({ ...acc, [p.id]: false }), {})
   );
+  const { addToCart } = useCart();
 
   const updateQuantity = (id: number, delta: number) => {
     setQuantities((prev) => ({
@@ -78,10 +79,12 @@ const FeaturedProducts = () => {
     return subscriptions[product.id] ? basePrice * 0.85 : basePrice;
   };
 
-  const addToCart = (productName: string, isSubscription: boolean) => {
-    toast.success(isSubscription ? "Subscription added" : "Added to cart", {
-      description: `${productName} has been added ${isSubscription ? "as a monthly subscription" : "to your cart"}.`,
-    });
+  const handleAddToCart = (product: typeof products[0]) => {
+    addToCart(
+      { id: product.id, name: product.name, price: product.price },
+      quantities[product.id],
+      subscriptions[product.id]
+    );
   };
 
   return (
@@ -199,7 +202,7 @@ const FeaturedProducts = () => {
                     </button>
                   </div>
                   <Button
-                    onClick={() => addToCart(product.name, subscriptions[product.id])}
+                    onClick={() => handleAddToCart(product)}
                     className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg"
                   >
                     <ShoppingCart className="w-4 h-4 mr-2" />

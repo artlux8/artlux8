@@ -1,9 +1,14 @@
 import { useState } from "react";
-import { Menu, X, ShoppingCart, User } from "lucide-react";
+import { Menu, X, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import CartSheet from "./CartSheet";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -41,15 +46,24 @@ const Header = () => {
 
             {/* Right Actions */}
             <div className="flex items-center gap-3">
-              <button className="hidden md:flex items-center justify-center w-10 h-10 rounded-full hover:bg-secondary transition-colors">
-                <User className="w-5 h-5 text-foreground" />
-              </button>
-              <button className="hidden md:flex items-center justify-center w-10 h-10 rounded-full hover:bg-secondary transition-colors relative">
-                <ShoppingCart className="w-5 h-5 text-foreground" />
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-accent text-accent-foreground text-[10px] font-bold rounded-full flex items-center justify-center">
-                  0
-                </span>
-              </button>
+              {user ? (
+                <button
+                  onClick={() => signOut()}
+                  className="hidden md:flex items-center justify-center w-10 h-10 rounded-full hover:bg-secondary transition-colors"
+                  title="Sign Out"
+                >
+                  <LogOut className="w-5 h-5 text-foreground" />
+                </button>
+              ) : (
+                <button
+                  onClick={() => navigate('/auth')}
+                  className="hidden md:flex items-center justify-center w-10 h-10 rounded-full hover:bg-secondary transition-colors"
+                  title="Sign In"
+                >
+                  <User className="w-5 h-5 text-foreground" />
+                </button>
+              )}
+              <CartSheet />
               <Button className="hidden md:flex bg-primary text-primary-foreground hover:bg-primary/90">
                 Shop Now
               </Button>
@@ -71,7 +85,11 @@ const Header = () => {
               <a href="#science" className="text-lg font-medium py-2 border-b border-border">Science</a>
               <a href="#protocols" className="text-lg font-medium py-2 border-b border-border">Protocols</a>
               <a href="#about" className="text-lg font-medium py-2 border-b border-border">About</a>
-              <Button className="mt-4 w-full bg-primary text-primary-foreground">Shop Now</Button>
+              {user ? (
+                <Button onClick={() => signOut()} variant="outline" className="mt-4 w-full">Sign Out</Button>
+              ) : (
+                <Button onClick={() => navigate('/auth')} className="mt-4 w-full bg-primary text-primary-foreground">Sign In</Button>
+              )}
             </nav>
           </div>
         )}
