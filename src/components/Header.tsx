@@ -22,11 +22,11 @@ const Header = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
-            <a href="/" className="flex flex-col">
-              <span className="text-2xl md:text-3xl font-logo font-semibold tracking-[0.2em] text-foreground">
-                ARTLUX<span className="text-primary">∞</span>
+            <a href="/" className="flex flex-col group">
+              <span className="text-2xl md:text-3xl font-logo font-semibold tracking-[0.25em] text-foreground">
+                ARTLUX<span className="logo-infinity text-3xl md:text-4xl font-bold ml-0.5 group-hover:scale-110 transition-transform inline-block">∞</span>
               </span>
-              <span className="text-[10px] md:text-xs text-muted-foreground tracking-[0.15em] uppercase">
+              <span className="text-[9px] md:text-[10px] text-muted-foreground tracking-[0.2em] uppercase font-medium">
                 The Luxury Longevity
               </span>
             </a>

@@ -7,8 +7,8 @@ const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
           {/* Brand */}
           <div className="col-span-2 md:col-span-4 lg:col-span-1">
-            <span className="text-2xl font-logo font-semibold tracking-[0.2em] mb-2 block">ARTLUX<span className="text-primary-foreground/80">∞</span></span>
-            <span className="text-xs text-primary-foreground/60 mb-4 block tracking-[0.15em] uppercase">The Luxury Longevity</span>
+            <span className="text-2xl font-logo font-semibold tracking-[0.25em] mb-2 block">ARTLUX<span className="logo-infinity-light text-3xl font-bold ml-0.5">∞</span></span>
+            <span className="text-[9px] text-primary-foreground/60 mb-4 block tracking-[0.2em] uppercase font-medium">The Luxury Longevity</span>
             <p className="text-primary-foreground/60 text-sm mb-4 max-w-xs">
               Exclusive longevity art pieces designed for discerning collectors.
             </p>

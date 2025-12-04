@@ -36,6 +36,11 @@
 
     --radius: 0.5rem;
 
+    /* Luxury gold colors */
+    --gold: 45 90% 55%;
+    --gold-light: 45 100% 70%;
+    --gold-dark: 38 80% 40%;
+
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -99,5 +104,33 @@
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+/* Luxury logo styles */
+.logo-infinity {
+  background: linear-gradient(135deg, hsl(45 100% 70%) 0%, hsl(45 90% 55%) 50%, hsl(38 80% 40%) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 8px hsla(45, 90%, 55%, 0.4));
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.logo-infinity-light {
+  background: linear-gradient(135deg, hsl(45 100% 85%) 0%, hsl(45 90% 70%) 50%, hsl(38 80% 55%) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 6px hsla(45, 90%, 70%, 0.5));
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px hsla(45, 90%, 55%, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 16px hsla(45, 90%, 55%, 0.7));
   }
 }
