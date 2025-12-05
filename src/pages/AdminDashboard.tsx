@@ -309,18 +309,27 @@ const AdminDashboard = () => {
       <main className="pt-32 pb-20">
         <div className="container mx-auto px-4">
           {/* Header */}
-          <div className="flex items-center gap-4 mb-8">
-            <div className="w-14 h-14 rounded-full bg-gold/10 flex items-center justify-center">
-              <Shield className="w-7 h-7 text-gold" />
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-full bg-gold/10 flex items-center justify-center">
+                <Shield className="w-7 h-7 text-gold" />
+              </div>
+              <div>
+                <h1 className="font-logo text-3xl font-bold text-foreground">
+                  Admin Dashboard
+                </h1>
+                <p className="text-muted-foreground">
+                  Manage challenge participants and proofs
+                </p>
+              </div>
             </div>
-            <div>
-              <h1 className="font-logo text-3xl font-bold text-foreground">
-                Admin Dashboard
-              </h1>
-              <p className="text-muted-foreground">
-                Manage challenge participants and proofs
-              </p>
-            </div>
+            <Button 
+              onClick={() => navigate("/admin/suppliers")}
+              className="bg-gold/20 text-gold hover:bg-gold/30 border border-gold/30"
+            >
+              <Truck className="w-4 h-4 mr-2" />
+              Supplier Fulfillment
+            </Button>
           </div>
 
           {/* Stats */}
