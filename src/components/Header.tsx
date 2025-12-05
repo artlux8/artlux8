@@ -1,20 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import ShopifyCartDrawer from "./ShopifyCartDrawer";
+import LocalizationSelector from "./LocalizationSelector";
+import GeoRedirectBanner from "./GeoRedirectBanner";
+import { useLocalizationStore } from "@/stores/localizationStore";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+  const { detectAndSetLocale, currency } = useLocalizationStore();
+
+  useEffect(() => {
+    detectAndSetLocale();
+  }, [detectAndSetLocale]);
+
+  const freeShippingThreshold = currency.code === 'GBP' ? '£60' : currency.code === 'EUR' ? '€70' : '$75';
 
   return (
     <>
+      {/* Geo Redirect Banner */}
+      <GeoRedirectBanner />
+      
       {/* Announcement Bar */}
       <div className="bg-primary text-primary-foreground text-center py-2.5 text-sm font-medium">
-        Subscribe & Save 15% on All Protocols • Free Shipping on Orders $75+
+        Subscribe & Save 15% on All Protocols • Free Shipping on Orders {freeShippingThreshold}+
       </div>
 
       {/* Main Header */}
@@ -48,7 +61,8 @@ const Header = () => {
             </nav>
 
             {/* Right Actions */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 md:gap-3">
+              <LocalizationSelector />
               {user ? (
                 <button
                   onClick={() => signOut()}

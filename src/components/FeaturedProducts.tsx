@@ -3,6 +3,7 @@ import { Star, ShoppingCart, Plus, Minus, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { useCart } from "@/contexts/CartContext";
+import { useLocalizationStore } from "@/stores/localizationStore";
 
 const products = [
   {
@@ -63,6 +64,7 @@ const FeaturedProducts = () => {
     products.reduce((acc, p) => ({ ...acc, [p.id]: false }), {})
   );
   const { addToCart } = useCart();
+  const { formatPrice } = useLocalizationStore();
 
   const updateQuantity = (id: number, delta: number) => {
     setQuantities((prev) => ({
@@ -183,11 +185,11 @@ const FeaturedProducts = () => {
                 {/* Price */}
                 <div className="flex items-center gap-2 mb-4">
                   <span className="text-xl font-bold text-foreground">
-                    ${getPrice(product).toFixed(2)}
+                    {formatPrice(getPrice(product))}
                   </span>
                   {(product.originalPrice || subscriptions[product.id]) && (
                     <span className="text-sm text-muted-foreground line-through">
-                      ${(subscriptions[product.id] ? product.price : product.originalPrice)?.toFixed(2)}
+                      {formatPrice(subscriptions[product.id] ? product.price : product.originalPrice || 0)}
                     </span>
                   )}
                   {subscriptions[product.id] && (
