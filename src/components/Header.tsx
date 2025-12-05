@@ -2,16 +2,24 @@ import { useState, useEffect } from "react";
 import { Menu, X, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import ShopifyCartDrawer from "./ShopifyCartDrawer";
 import LocalizationSelector from "./LocalizationSelector";
 import GeoRedirectBanner from "./GeoRedirectBanner";
 import { useLocalizationStore } from "@/stores/localizationStore";
 
+const navLinks = [
+  { href: "/shop", label: "Shop" },
+  { href: "/podcast", label: "Podcast" },
+  { href: "/free-protocol", label: "FREE ARTLUX PROTOCOL" },
+  { href: "/about", label: "About" },
+];
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const { detectAndSetLocale, fetchLiveRates, currency } = useLocalizationStore();
 
   useEffect(() => {
@@ -20,6 +28,8 @@ const Header = () => {
   }, [detectAndSetLocale, fetchLiveRates]);
 
   const freeShippingThreshold = currency.code === 'GBP' ? '£60' : currency.code === 'EUR' ? '€70' : '$75';
+
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <>
@@ -46,19 +56,20 @@ const Header = () => {
             </a>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-8">
-              <a href="/shop" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-                Shop
-              </a>
-              <a href="#science" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-                Science
-              </a>
-              <a href="/protocols" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-                Protocols
-              </a>
-              <a href="/about" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-                About
-              </a>
+            <nav className="hidden md:flex items-center gap-6">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={`text-sm font-medium transition-colors ${
+                    isActive(link.href)
+                      ? "text-gold"
+                      : "text-muted-foreground hover:text-foreground"
+                  } ${link.href === "/free-protocol" ? "text-gold hover:text-gold/80" : ""}`}
+                >
+                  {link.label}
+                </a>
+              ))}
             </nav>
 
             {/* Right Actions */}
@@ -66,11 +77,11 @@ const Header = () => {
               <LocalizationSelector />
               {user ? (
                 <button
-                  onClick={() => signOut()}
+                  onClick={() => navigate('/dashboard')}
                   className="hidden md:flex items-center justify-center w-10 h-10 rounded-full hover:bg-secondary transition-colors"
-                  title="Sign Out"
+                  title="Dashboard"
                 >
-                  <LogOut className="w-5 h-5 text-foreground" />
+                  <User className="w-5 h-5 text-foreground" />
                 </button>
               ) : (
                 <button
@@ -99,14 +110,31 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden bg-background border-t border-border">
             <nav className="container mx-auto px-4 py-6 flex flex-col gap-4">
-              <a href="/shop" className="text-lg font-medium py-2 border-b border-border">Shop</a>
-              <a href="#science" className="text-lg font-medium py-2 border-b border-border">Science</a>
-              <a href="/protocols" className="text-lg font-medium py-2 border-b border-border">Protocols</a>
-              <a href="/about" className="text-lg font-medium py-2 border-b border-border">About</a>
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={`text-lg font-medium py-2 border-b border-border ${
+                    isActive(link.href) ? "text-gold" : ""
+                  } ${link.href === "/free-protocol" ? "text-gold" : ""}`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {link.label}
+                </a>
+              ))}
               {user ? (
-                <Button onClick={() => signOut()} variant="outline" className="mt-4 w-full">Sign Out</Button>
+                <>
+                  <a href="/dashboard" className="text-lg font-medium py-2 border-b border-border" onClick={() => setIsMenuOpen(false)}>
+                    Dashboard
+                  </a>
+                  <Button onClick={() => { signOut(); setIsMenuOpen(false); }} variant="outline" className="mt-4 w-full">
+                    Sign Out
+                  </Button>
+                </>
               ) : (
-                <Button onClick={() => navigate('/auth')} className="mt-4 w-full bg-primary text-primary-foreground">Sign In</Button>
+                <Button onClick={() => { navigate('/auth'); setIsMenuOpen(false); }} className="mt-4 w-full bg-primary text-primary-foreground">
+                  Sign In
+                </Button>
               )}
             </nav>
           </div>
