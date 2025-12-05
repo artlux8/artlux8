@@ -1,4 +1,4 @@
-import { Globe, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,12 +17,12 @@ const LocalizationSelector = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="sm" className="gap-1.5 text-muted-foreground hover:text-foreground">
-          <Globe className="w-4 h-4" />
-          <span className="hidden sm:inline text-xs">{currency.code}</span>
+          <span className="text-base">{currency.flag}</span>
+          <span className="hidden sm:inline text-xs font-medium">{currency.code}</span>
           <ChevronDown className="w-3 h-3" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56 max-h-80 overflow-y-auto bg-background border-border">
+      <DropdownMenuContent align="end" className="w-64 max-h-80 overflow-y-auto bg-background border-border z-50">
         <DropdownMenuLabel className="text-xs text-muted-foreground uppercase tracking-wider">Currency</DropdownMenuLabel>
         {CURRENCIES.map((c) => (
           <DropdownMenuItem
@@ -30,8 +30,9 @@ const LocalizationSelector = () => {
             onClick={() => setCurrency(c)}
             className={`cursor-pointer ${currency.code === c.code ? 'bg-primary/10 text-primary' : ''}`}
           >
-            <span className="w-8 font-medium">{c.symbol}</span>
-            <span>{c.code}</span>
+            <span className="text-base mr-2">{c.flag}</span>
+            <span className="w-10 font-medium">{c.symbol}</span>
+            <span className="w-10">{c.code}</span>
             <span className="ml-auto text-xs text-muted-foreground">{c.name}</span>
           </DropdownMenuItem>
         ))}

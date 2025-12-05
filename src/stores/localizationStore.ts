@@ -6,6 +6,7 @@ export interface Currency {
   symbol: string;
   name: string;
   rate: number; // Exchange rate from USD
+  flag: string; // Country flag emoji
 }
 
 export interface Language {
@@ -15,16 +16,16 @@ export interface Language {
 }
 
 export const CURRENCIES: Currency[] = [
-  { code: 'USD', symbol: '$', name: 'US Dollar', rate: 1 },
-  { code: 'GBP', symbol: '£', name: 'British Pound', rate: 0.79 },
-  { code: 'EUR', symbol: '€', name: 'Euro', rate: 0.92 },
-  { code: 'CAD', symbol: 'C$', name: 'Canadian Dollar', rate: 1.36 },
-  { code: 'AUD', symbol: 'A$', name: 'Australian Dollar', rate: 1.53 },
-  { code: 'HKD', symbol: 'HK$', name: 'Hong Kong Dollar', rate: 7.82 },
-  { code: 'SGD', symbol: 'S$', name: 'Singapore Dollar', rate: 1.34 },
-  { code: 'AED', symbol: 'د.إ', name: 'UAE Dirham', rate: 3.67 },
-  { code: 'SAR', symbol: '﷼', name: 'Saudi Riyal', rate: 3.75 },
-  { code: 'QAR', symbol: 'ر.ق', name: 'Qatari Riyal', rate: 3.64 },
+  { code: 'USD', symbol: '$', name: 'US Dollar', rate: 1, flag: '🇺🇸' },
+  { code: 'GBP', symbol: '£', name: 'British Pound', rate: 0.79, flag: '🇬🇧' },
+  { code: 'EUR', symbol: '€', name: 'Euro', rate: 0.92, flag: '🇪🇺' },
+  { code: 'CAD', symbol: 'C$', name: 'Canadian Dollar', rate: 1.36, flag: '🇨🇦' },
+  { code: 'AUD', symbol: 'A$', name: 'Australian Dollar', rate: 1.53, flag: '🇦🇺' },
+  { code: 'HKD', symbol: 'HK$', name: 'Hong Kong Dollar', rate: 7.82, flag: '🇭🇰' },
+  { code: 'SGD', symbol: 'S$', name: 'Singapore Dollar', rate: 1.34, flag: '🇸🇬' },
+  { code: 'AED', symbol: 'د.إ', name: 'UAE Dirham', rate: 3.67, flag: '🇦🇪' },
+  { code: 'SAR', symbol: '﷼', name: 'Saudi Riyal', rate: 3.75, flag: '🇸🇦' },
+  { code: 'QAR', symbol: 'ر.ق', name: 'Qatari Riyal', rate: 3.64, flag: '🇶🇦' },
 ];
 
 export const LANGUAGES: Language[] = [
