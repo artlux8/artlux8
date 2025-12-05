@@ -9,6 +9,7 @@ import { ShoppingCart, Star, Leaf, Brain, Moon, Zap, Heart, Shield, Loader2 } fr
 import { useCartStore } from '@/stores/cartStore';
 import { fetchProducts, ShopifyProduct } from '@/lib/shopify';
 import { toast } from 'sonner';
+import { useLocalizationStore } from '@/stores/localizationStore';
 
 const categories = [
   { id: 'all', name: 'All Products', icon: Shield },
@@ -24,6 +25,7 @@ const Shop = () => {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const { addItem } = useCartStore();
+  const { formatPrice } = useLocalizationStore();
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -56,12 +58,6 @@ const Shop = () => {
     });
   };
 
-  const formatPrice = (amount: string, currencyCode: string) => {
-    return new Intl.NumberFormat('en-GB', {
-      style: 'currency',
-      currency: currencyCode
-    }).format(parseFloat(amount));
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -174,7 +170,7 @@ const Shop = () => {
                         {/* Price & Add to Cart */}
                         <div className="flex items-center justify-between">
                           <span className="text-2xl font-bold text-foreground">
-                            {formatPrice(price.amount, price.currencyCode)}
+                            {formatPrice(parseFloat(price.amount))}
                           </span>
                           <Button 
                             size="sm" 

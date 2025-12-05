@@ -3,16 +3,17 @@ import { useEffect, useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, ShoppingCart, Minus, Plus, Loader2 } from 'lucide-react';
 import { useCartStore } from '@/stores/cartStore';
 import { fetchProductByHandle, ShopifyProduct } from '@/lib/shopify';
 import { toast } from 'sonner';
+import { useLocalizationStore } from '@/stores/localizationStore';
 
 const ShopifyProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
   const navigate = useNavigate();
   const { addItem } = useCartStore();
+  const { formatPrice, convertPrice } = useLocalizationStore();
   
   const [product, setProduct] = useState<ShopifyProduct['node'] | null>(null);
   const [loading, setLoading] = useState(true);
@@ -64,13 +65,6 @@ const ShopifyProductDetail = () => {
   const price = selectedVariant?.price || product.priceRange.minVariantPrice;
   const mainImage = product.images.edges[0]?.node;
 
-  const formatPrice = (amount: string, currencyCode: string) => {
-    return new Intl.NumberFormat('en-GB', {
-      style: 'currency',
-      currency: currencyCode
-    }).format(parseFloat(amount));
-  };
-
   const handleAddToCart = () => {
     if (!selectedVariant) {
       toast.error('Please select a variant');
@@ -95,7 +89,7 @@ const ShopifyProductDetail = () => {
     });
   };
 
-  const totalPrice = parseFloat(price.amount) * quantity;
+  const totalPrice = convertPrice(parseFloat(price.amount)) * quantity;
 
   return (
     <div className="min-h-screen bg-background">
@@ -194,7 +188,7 @@ const ShopifyProductDetail = () => {
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground">Total</span>
                 <span className="text-3xl font-bold text-foreground">
-                  {formatPrice(totalPrice.toString(), price.currencyCode)}
+                  {formatPrice(totalPrice, false)}
                 </span>
               </div>
             </div>

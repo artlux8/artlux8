@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/sheet";
 import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
+import { useLocalizationStore } from "@/stores/localizationStore";
 import { toast } from "sonner";
 
 export const ShopifyCartDrawer = () => {
@@ -25,6 +26,7 @@ export const ShopifyCartDrawer = () => {
     getTotalItems,
     getTotalPrice
   } = useCartStore();
+  const { formatPrice, convertPrice } = useLocalizationStore();
   
   const totalItems = getTotalItems();
   const totalPrice = getTotalPrice();
@@ -99,7 +101,7 @@ export const ShopifyCartDrawer = () => {
                           </p>
                         )}
                         <p className="font-semibold text-accent">
-                          {item.price.currencyCode} {parseFloat(item.price.amount).toFixed(2)}
+                          {formatPrice(parseFloat(item.price.amount))}
                         </p>
                       </div>
                       
@@ -143,7 +145,7 @@ export const ShopifyCartDrawer = () => {
                 <div className="flex justify-between items-center">
                   <span className="text-lg font-semibold text-foreground">Total</span>
                   <span className="text-xl font-bold text-accent">
-                    {items[0]?.price.currencyCode || 'GBP'} {totalPrice.toFixed(2)}
+                    {formatPrice(totalPrice)}
                   </span>
                 </div>
                 

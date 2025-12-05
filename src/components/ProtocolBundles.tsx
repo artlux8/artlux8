@@ -7,6 +7,7 @@ import { protocolBundles, getBundleProducts, type ProtocolBundle } from '@/data/
 import { useCart } from '@/contexts/CartContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
+import { useLocalizationStore } from '@/stores/localizationStore';
 
 const difficultyColors = {
   Beginner: 'bg-emerald-500/10 text-emerald-500',
@@ -18,6 +19,7 @@ const ProtocolBundles = () => {
   const [expandedBundle, setExpandedBundle] = useState<string | null>(null);
   const { addToCart } = useCart();
   const { user } = useAuth();
+  const { formatPrice } = useLocalizationStore();
 
   const handleAddBundle = (bundle: ProtocolBundle) => {
     if (!user) {
@@ -125,8 +127,8 @@ const ProtocolBundles = () => {
                             <p className="text-sm font-medium truncate group-hover/item:text-accent transition-colors">
                               {product.name}
                             </p>
-                            <p className="text-xs text-muted-foreground">
-                              ${product.price.toFixed(2)}
+                          <p className="text-xs text-muted-foreground">
+                              {formatPrice(product.price)}
                             </p>
                           </div>
                           <ChevronRight className="w-4 h-4 text-muted-foreground group-hover/item:text-accent transition-colors" />
@@ -162,18 +164,18 @@ const ProtocolBundles = () => {
 
                 {/* Footer - Pricing & CTA */}
                 <div className="p-6 pt-4 border-t border-border/50 bg-secondary/20">
-                  <div className="flex items-end justify-between">
+                <div className="flex items-end justify-between">
                     <div>
                       <div className="flex items-center gap-2 mb-1">
                         <span className="text-2xl font-bold text-foreground">
-                          ${bundle.bundlePrice.toFixed(2)}
+                          {formatPrice(bundle.bundlePrice)}
                         </span>
                         <span className="text-sm text-muted-foreground line-through">
-                          ${bundle.originalPrice.toFixed(2)}
+                          {formatPrice(bundle.originalPrice)}
                         </span>
                       </div>
                       <p className="text-sm text-accent font-medium">
-                        Save ${bundle.savings.toFixed(2)} ({bundle.savingsPercent}% off)
+                        Save {formatPrice(bundle.savings)} ({bundle.savingsPercent}% off)
                       </p>
                     </div>
                     <div className="flex gap-2">
