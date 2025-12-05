@@ -166,6 +166,75 @@ export type Database = {
         }
         Relationships: []
       }
+      order_fulfillments: {
+        Row: {
+          carrier: string | null
+          created_at: string
+          currency: string | null
+          customer_email: string | null
+          customer_name: string | null
+          delivered_at: string | null
+          id: string
+          line_items: Json | null
+          notes: string | null
+          order_id: string
+          shipped_at: string | null
+          shipping_address: Json | null
+          shopify_order_id: string | null
+          status: string
+          supplier: string
+          supplier_order_id: string | null
+          total_amount: number | null
+          tracking_number: string | null
+          tracking_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          carrier?: string | null
+          created_at?: string
+          currency?: string | null
+          customer_email?: string | null
+          customer_name?: string | null
+          delivered_at?: string | null
+          id?: string
+          line_items?: Json | null
+          notes?: string | null
+          order_id: string
+          shipped_at?: string | null
+          shipping_address?: Json | null
+          shopify_order_id?: string | null
+          status?: string
+          supplier: string
+          supplier_order_id?: string | null
+          total_amount?: number | null
+          tracking_number?: string | null
+          tracking_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          carrier?: string | null
+          created_at?: string
+          currency?: string | null
+          customer_email?: string | null
+          customer_name?: string | null
+          delivered_at?: string | null
+          id?: string
+          line_items?: Json | null
+          notes?: string | null
+          order_id?: string
+          shipped_at?: string | null
+          shipping_address?: Json | null
+          shopify_order_id?: string | null
+          status?: string
+          supplier?: string
+          supplier_order_id?: string | null
+          total_amount?: number | null
+          tracking_number?: string | null
+          tracking_url?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           age: number | null
@@ -211,6 +280,45 @@ export type Database = {
           shipping_country?: string | null
           shipping_postal_code?: string | null
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      supplier_integrations: {
+        Row: {
+          api_status: string | null
+          created_at: string
+          id: string
+          is_connected: boolean | null
+          last_sync_at: string | null
+          settings: Json | null
+          supplier: string
+          updated_at: string
+          webhook_secret: string | null
+          webhook_url: string | null
+        }
+        Insert: {
+          api_status?: string | null
+          created_at?: string
+          id?: string
+          is_connected?: boolean | null
+          last_sync_at?: string | null
+          settings?: Json | null
+          supplier: string
+          updated_at?: string
+          webhook_secret?: string | null
+          webhook_url?: string | null
+        }
+        Update: {
+          api_status?: string | null
+          created_at?: string
+          id?: string
+          is_connected?: boolean | null
+          last_sync_at?: string | null
+          settings?: Json | null
+          supplier?: string
+          updated_at?: string
+          webhook_secret?: string | null
+          webhook_url?: string | null
         }
         Relationships: []
       }
