@@ -11,6 +11,7 @@ import { useLocalizationStore } from "@/stores/localizationStore";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/shop", label: "Shop" },
+  { href: "/wholesale", label: "Wholesale" },
   { href: "/podcast", label: "Podcast" },
   { href: "/free-protocol", label: "FREE ARTLUX PROTOCOL" },
   { href: "/about", label: "About" },

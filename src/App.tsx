@@ -19,6 +19,7 @@ import Dashboard from "./pages/Dashboard";
 import ChallengeProgress from "./pages/ChallengeProgress";
 import UploadProof from "./pages/UploadProof";
 import NotFound from "./pages/NotFound";
+import WholesaleCatalog from "./pages/WholesaleCatalog";
 import NewsletterPopup from "./components/NewsletterPopup";
 
 const queryClient = new QueryClient();
@@ -46,6 +47,7 @@ const App = () => (
               <Route path="/dashboard/challenge" element={<ChallengeProgress />} />
               <Route path="/dashboard/upload" element={<UploadProof />} />
               <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/wholesale" element={<WholesaleCatalog />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
