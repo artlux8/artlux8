@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { supabase } from '@/integrations/supabase/client';
 
 export interface Currency {
   code: string;
@@ -53,6 +54,8 @@ interface LocalizationStore {
   geoData: GeoData | null;
   showRedirectBanner: boolean;
   hasCheckedGeo: boolean;
+  ratesLastUpdated: string | null;
+  isLoadingRates: boolean;
   
   setCurrency: (currency: Currency) => void;
   setLanguage: (language: Language) => void;
@@ -61,6 +64,8 @@ interface LocalizationStore {
   formatPrice: (amount: number | string, round?: boolean) => string;
   convertPrice: (usdAmount: number | string) => number;
   detectAndSetLocale: () => Promise<void>;
+  fetchLiveRates: () => Promise<void>;
+  updateCurrencyRates: (rates: Record<string, number>) => void;
 }
 
 // Round to attractive price points
@@ -71,6 +76,10 @@ const roundToAttractive = (price: number): number => {
   return Math.round(price / 25) * 25;
 };
 
+// Store mutable rates that can be updated
+let currentRates: Record<string, number> = {};
+CURRENCIES.forEach(c => { currentRates[c.code] = c.rate; });
+
 export const useLocalizationStore = create<LocalizationStore>()(
   persist(
     (set, get) => ({
@@ -79,16 +88,67 @@ export const useLocalizationStore = create<LocalizationStore>()(
       geoData: null,
       showRedirectBanner: false,
       hasCheckedGeo: false,
+      ratesLastUpdated: null,
+      isLoadingRates: false,
 
       setCurrency: (currency) => set({ currency }),
       setLanguage: (language) => set({ language }),
       setGeoData: (geoData) => set({ geoData }),
       dismissRedirectBanner: () => set({ showRedirectBanner: false }),
+      
+      updateCurrencyRates: (rates) => {
+        // Update mutable rates object
+        Object.assign(currentRates, rates);
+        
+        // Update the current currency with new rate if available
+        const { currency } = get();
+        if (rates[currency.code]) {
+          set({ 
+            currency: { ...currency, rate: rates[currency.code] },
+            ratesLastUpdated: new Date().toISOString()
+          });
+        }
+      },
+
+      fetchLiveRates: async () => {
+        const { isLoadingRates, ratesLastUpdated, updateCurrencyRates } = get();
+        
+        // Only fetch if not already loading and rates are older than 1 hour
+        if (isLoadingRates) return;
+        
+        const oneHourAgo = Date.now() - 60 * 60 * 1000;
+        if (ratesLastUpdated && new Date(ratesLastUpdated).getTime() > oneHourAgo) {
+          console.log('Using cached exchange rates');
+          return;
+        }
+
+        set({ isLoadingRates: true });
+        
+        try {
+          const { data, error } = await supabase.functions.invoke('exchange-rates');
+          
+          if (error) {
+            console.error('Error fetching exchange rates:', error);
+            return;
+          }
+
+          if (data?.rates) {
+            console.log('Live exchange rates loaded:', data.rates);
+            updateCurrencyRates(data.rates);
+          }
+        } catch (error) {
+          console.error('Failed to fetch live rates:', error);
+        } finally {
+          set({ isLoadingRates: false });
+        }
+      },
 
       formatPrice: (amount, round = true) => {
         const { currency } = get();
         const numAmount = typeof amount === 'string' ? parseFloat(amount) : amount;
-        const converted = numAmount * currency.rate;
+        // Use live rate from currentRates if available
+        const rate = currentRates[currency.code] || currency.rate;
+        const converted = numAmount * rate;
         const finalAmount = round ? roundToAttractive(converted) : converted;
         
         return `${currency.symbol}${finalAmount.toLocaleString('en-US', {
@@ -100,7 +160,9 @@ export const useLocalizationStore = create<LocalizationStore>()(
       convertPrice: (usdAmount) => {
         const { currency } = get();
         const numAmount = typeof usdAmount === 'string' ? parseFloat(usdAmount) : usdAmount;
-        return roundToAttractive(numAmount * currency.rate);
+        // Use live rate from currentRates if available
+        const rate = currentRates[currency.code] || currency.rate;
+        return roundToAttractive(numAmount * rate);
       },
 
       detectAndSetLocale: async () => {

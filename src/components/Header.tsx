@@ -12,11 +12,12 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
-  const { detectAndSetLocale, currency } = useLocalizationStore();
+  const { detectAndSetLocale, fetchLiveRates, currency } = useLocalizationStore();
 
   useEffect(() => {
     detectAndSetLocale();
-  }, [detectAndSetLocale]);
+    fetchLiveRates();
+  }, [detectAndSetLocale, fetchLiveRates]);
 
   const freeShippingThreshold = currency.code === 'GBP' ? '£60' : currency.code === 'EUR' ? '€70' : '$75';
 
