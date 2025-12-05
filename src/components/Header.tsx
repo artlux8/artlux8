@@ -9,6 +9,7 @@ import GeoRedirectBanner from "./GeoRedirectBanner";
 import { useLocalizationStore } from "@/stores/localizationStore";
 
 const navLinks = [
+  { href: "/", label: "Home" },
   { href: "/shop", label: "Shop" },
   { href: "/podcast", label: "Podcast" },
   { href: "/free-protocol", label: "FREE ARTLUX PROTOCOL" },
