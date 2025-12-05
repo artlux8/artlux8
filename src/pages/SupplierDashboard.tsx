@@ -10,7 +10,9 @@ import {
   ExternalLink,
   Settings,
   Link2,
-  Link2Off
+  Link2Off,
+  Mail,
+  Send
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -33,6 +35,7 @@ interface SupplierIntegration {
   webhook_url: string | null;
 }
 
+
 interface OrderFulfillment {
   id: string;
   order_id: string;
@@ -43,10 +46,12 @@ interface OrderFulfillment {
   tracking_url: string | null;
   carrier: string | null;
   customer_name: string | null;
+  customer_email: string | null;
   total_amount: number | null;
   currency: string;
   created_at: string;
   shipped_at: string | null;
+  notes: string | null;
 }
 
 const statusConfig: Record<string, { icon: React.ElementType; color: string; label: string }> = {
@@ -110,6 +115,39 @@ const SupplierDashboard = () => {
     } catch (error) {
       console.error("Error updating integration:", error);
       toast.error("Failed to update integration status");
+    }
+  };
+
+  const sendStatusEmail = async (order: OrderFulfillment, status: "shipped" | "delivered") => {
+    if (!order.customer_email) {
+      toast.error("No customer email on this order");
+      return;
+    }
+
+    try {
+      toast.loading(`Sending ${status} notification...`, { id: "email-sending" });
+      
+      const { data, error } = await supabase.functions.invoke("order-status-email", {
+        body: {
+          order_id: order.order_id,
+          status: status,
+          customer_email: order.customer_email,
+          customer_name: order.customer_name || "Valued Customer",
+          tracking_number: order.tracking_number,
+          tracking_url: order.tracking_url,
+          carrier: order.carrier,
+          order_total: order.total_amount,
+          currency: order.currency,
+        },
+      });
+
+      if (error) throw error;
+
+      toast.success(`${status === "shipped" ? "Shipped" : "Delivered"} email sent!`, { id: "email-sending" });
+      fetchData();
+    } catch (error: any) {
+      console.error("Error sending email:", error);
+      toast.error(`Failed to send email: ${error.message}`, { id: "email-sending" });
     }
   };
 
@@ -313,12 +351,14 @@ const SupplierDashboard = () => {
                       <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Amount</th>
                       <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Tracking</th>
                       <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Date</th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Notify</th>
                     </tr>
                   </thead>
                   <tbody>
                     {filteredFulfillments.map((order) => {
                       const StatusIcon = statusConfig[order.status]?.icon || Clock;
                       const statusColor = statusConfig[order.status]?.color || "text-muted-foreground";
+                      const hasEmailSent = order.notes?.includes("email sent");
                       return (
                         <tr key={order.id} className="border-b border-border hover:bg-secondary/30">
                           <td className="py-3 px-4 text-sm font-mono text-foreground">
@@ -336,7 +376,12 @@ const SupplierDashboard = () => {
                             </div>
                           </td>
                           <td className="py-3 px-4 text-sm text-foreground">
-                            {order.customer_name || "—"}
+                            <div>
+                              {order.customer_name || "—"}
+                              {order.customer_email && (
+                                <div className="text-xs text-muted-foreground">{order.customer_email}</div>
+                              )}
+                            </div>
                           </td>
                           <td className="py-3 px-4 text-sm text-foreground">
                             {order.total_amount 
@@ -360,6 +405,39 @@ const SupplierDashboard = () => {
                           </td>
                           <td className="py-3 px-4 text-sm text-muted-foreground">
                             {new Date(order.created_at).toLocaleDateString()}
+                          </td>
+                          <td className="py-3 px-4">
+                            <div className="flex items-center gap-1">
+                              {(order.status === "shipped" || order.status === "processing") && (
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  className="h-7 px-2 text-purple-500 hover:text-purple-600 hover:bg-purple-500/10"
+                                  onClick={() => sendStatusEmail(order, "shipped")}
+                                  title="Send shipped notification"
+                                >
+                                  <Truck className="w-3 h-3 mr-1" />
+                                  <Mail className="w-3 h-3" />
+                                </Button>
+                              )}
+                              {order.status === "delivered" && (
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  className="h-7 px-2 text-green-500 hover:text-green-600 hover:bg-green-500/10"
+                                  onClick={() => sendStatusEmail(order, "delivered")}
+                                  title="Send delivered notification"
+                                >
+                                  <CheckCircle className="w-3 h-3 mr-1" />
+                                  <Mail className="w-3 h-3" />
+                                </Button>
+                              )}
+                              {hasEmailSent && (
+                                <Badge variant="outline" className="text-xs text-green-500 border-green-500/30">
+                                  Sent
+                                </Badge>
+                              )}
+                            </div>
                           </td>
                         </tr>
                       );
