@@ -50,15 +50,206 @@ export type Database = {
         }
         Relationships: []
       }
+      challenge_enrollments: {
+        Row: {
+          completed_days: number | null
+          created_at: string | null
+          id: string
+          medical_disclaimer_accepted: boolean | null
+          start_date: string | null
+          status: string | null
+          terms_accepted: boolean | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          completed_days?: number | null
+          created_at?: string | null
+          id?: string
+          medical_disclaimer_accepted?: boolean | null
+          start_date?: string | null
+          status?: string | null
+          terms_accepted?: boolean | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          completed_days?: number | null
+          created_at?: string | null
+          id?: string
+          medical_disclaimer_accepted?: boolean | null
+          start_date?: string | null
+          status?: string | null
+          terms_accepted?: boolean | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      daily_proofs: {
+        Row: {
+          admin_notes: string | null
+          day_number: number
+          enrollment_id: string
+          id: string
+          notes: string | null
+          proof_type: string | null
+          proof_url: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string | null
+          submitted_at: string | null
+          user_id: string
+          wake_time: string | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          day_number: number
+          enrollment_id: string
+          id?: string
+          notes?: string | null
+          proof_type?: string | null
+          proof_url?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          user_id: string
+          wake_time?: string | null
+        }
+        Update: {
+          admin_notes?: string | null
+          day_number?: number
+          enrollment_id?: string
+          id?: string
+          notes?: string | null
+          proof_type?: string | null
+          proof_url?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          user_id?: string
+          wake_time?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "daily_proofs_enrollment_id_fkey"
+            columns: ["enrollment_id"]
+            isOneToOne: false
+            referencedRelation: "challenge_enrollments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      newsletter_subscribers: {
+        Row: {
+          discount_code: string | null
+          email: string
+          has_used_discount: boolean | null
+          id: string
+          subscribed_at: string | null
+        }
+        Insert: {
+          discount_code?: string | null
+          email: string
+          has_used_discount?: boolean | null
+          id?: string
+          subscribed_at?: string | null
+        }
+        Update: {
+          discount_code?: string | null
+          email?: string
+          has_used_discount?: boolean | null
+          id?: string
+          subscribed_at?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          age: number | null
+          avatar_url: string | null
+          created_at: string | null
+          email: string | null
+          full_name: string | null
+          id: string
+          motivation: string | null
+          phone: string | null
+          shipping_address: string | null
+          shipping_city: string | null
+          shipping_country: string | null
+          shipping_postal_code: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          age?: number | null
+          avatar_url?: string | null
+          created_at?: string | null
+          email?: string | null
+          full_name?: string | null
+          id: string
+          motivation?: string | null
+          phone?: string | null
+          shipping_address?: string | null
+          shipping_city?: string | null
+          shipping_country?: string | null
+          shipping_postal_code?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          age?: number | null
+          avatar_url?: string | null
+          created_at?: string | null
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          motivation?: string | null
+          phone?: string | null
+          shipping_address?: string | null
+          shipping_city?: string | null
+          shipping_country?: string | null
+          shipping_postal_code?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "moderator" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -185,6 +376,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "moderator", "user"],
+    },
   },
 } as const
