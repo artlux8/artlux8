@@ -14,6 +14,7 @@ import {
   ArrowRight,
   CheckCircle2,
   Clock,
+  Shield,
 } from "lucide-react";
 
 interface Profile {
@@ -38,6 +39,7 @@ const Dashboard = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [enrollment, setEnrollment] = useState<Enrollment | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     if (!user) {
@@ -68,6 +70,13 @@ const Dashboard = () => {
         if (enrollmentData) {
           setEnrollment(enrollmentData);
         }
+
+        // Check if user is admin
+        const { data: hasRole } = await supabase.rpc("has_role", {
+          _user_id: user.id,
+          _role: "admin",
+        });
+        setIsAdmin(!!hasRole);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -138,6 +147,25 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
+
+            {/* Admin Link */}
+            {isAdmin && (
+              <Link
+                to="/admin"
+                className="mb-8 p-4 bg-card rounded-xl border border-gold/30 flex items-center justify-between hover:border-gold/50 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-gold/10 flex items-center justify-center">
+                    <Shield className="w-5 h-5 text-gold" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground">Admin Dashboard</p>
+                    <p className="text-sm text-muted-foreground">Manage challenges & proofs</p>
+                  </div>
+                </div>
+                <ArrowRight className="w-5 h-5 text-gold" />
+              </Link>
+            )}
 
             {/* Challenge Status */}
             {enrollment && (

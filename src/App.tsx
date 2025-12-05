@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/toaster";
+import AdminDashboard from "./pages/AdminDashboard";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -44,6 +45,7 @@ const App = () => (
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/dashboard/challenge" element={<ChallengeProgress />} />
               <Route path="/dashboard/upload" element={<UploadProof />} />
+              <Route path="/admin" element={<AdminDashboard />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
