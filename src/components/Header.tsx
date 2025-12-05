@@ -3,7 +3,7 @@ import { Menu, X, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import CartSheet from "./CartSheet";
+import ShopifyCartDrawer from "./ShopifyCartDrawer";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -66,7 +66,7 @@ const Header = () => {
                   <User className="w-5 h-5 text-foreground" />
                 </button>
               )}
-              <CartSheet />
+              <ShopifyCartDrawer />
               <Button onClick={() => navigate('/shop')} className="hidden md:flex bg-primary text-primary-foreground hover:bg-primary/90">
                 Shop Now
               </Button>
