@@ -65,10 +65,10 @@ const Footer = () => {
             <h4 className="font-semibold mb-4">Shop</h4>
             <ul className="space-y-3 text-sm text-primary-foreground/60">
               <li><a href="/shop" className="hover:text-primary-foreground transition-colors">Supplements</a></li>
-              <li><a href="/shop" className="hover:text-primary-foreground transition-colors">Health Tests</a></li>
-              <li><a href="/protocols" className="hover:text-primary-foreground transition-colors">Protocols</a></li>
-              <li><a href="/shop" className="hover:text-primary-foreground transition-colors">Skincare</a></li>
-              <li><a href="/shop" className="hover:text-primary-foreground transition-colors">Bundles</a></li>
+              <li><a href="/hydrogen-water-bottles" className="hover:text-primary-foreground transition-colors">Hydrogen Bottles</a></li>
+              <li><a href="/cold-plunge" className="hover:text-primary-foreground transition-colors">Cold Plunge</a></li>
+              <li><a href="/grounding" className="hover:text-primary-foreground transition-colors">Grounding</a></li>
+              <li><a href="/bundles" className="hover:text-primary-foreground transition-colors">Bundles</a></li>
             </ul>
           </div>
 
@@ -76,10 +76,11 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Learn</h4>
             <ul className="space-y-3 text-sm text-primary-foreground/60">
-              <li><a href="/about" className="hover:text-primary-foreground transition-colors">About Us</a></li>
+              <li><a href="/longevity-protocol" className="hover:text-primary-foreground transition-colors">Longevity Protocol</a></li>
               <li><a href="/podcast" className="hover:text-primary-foreground transition-colors">Podcast</a></li>
               <li><a href="/free-protocol" className="hover:text-primary-foreground transition-colors">Free Protocol</a></li>
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">FAQ</a></li>
+              <li><a href="/blog" className="hover:text-primary-foreground transition-colors">Blog</a></li>
+              <li><a href="/faq" className="hover:text-primary-foreground transition-colors">FAQ</a></li>
             </ul>
           </div>
 
@@ -88,9 +89,9 @@ const Footer = () => {
             <h4 className="font-semibold mb-4">Company</h4>
             <ul className="space-y-3 text-sm text-primary-foreground/60">
               <li><a href="/about" className="hover:text-primary-foreground transition-colors">About Us</a></li>
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">Careers</a></li>
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">Press</a></li>
-              <li><a href="mailto:contact@artlux8.com" className="hover:text-primary-foreground transition-colors">Contact</a></li>
+              <li><a href="/genetic-testing" className="hover:text-primary-foreground transition-colors">Genetic Testing</a></li>
+              <li><a href="/expert-biohacker" className="hover:text-primary-foreground transition-colors">Expert Biohacker</a></li>
+              <li><a href="/contact" className="hover:text-primary-foreground transition-colors">Contact</a></li>
             </ul>
           </div>
 
@@ -98,10 +99,10 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Support</h4>
             <ul className="space-y-3 text-sm text-primary-foreground/60">
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">Shipping</a></li>
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">Returns</a></li>
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">Track Order</a></li>
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">Help Center</a></li>
+              <li><a href="/shipping" className="hover:text-primary-foreground transition-colors">Shipping</a></li>
+              <li><a href="/returns" className="hover:text-primary-foreground transition-colors">Returns</a></li>
+              <li><a href="/privacy" className="hover:text-primary-foreground transition-colors">Privacy Policy</a></li>
+              <li><a href="/terms" className="hover:text-primary-foreground transition-colors">Terms of Service</a></li>
             </ul>
           </div>
         </div>

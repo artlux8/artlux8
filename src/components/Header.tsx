@@ -9,12 +9,13 @@ import GeoRedirectBanner from "./GeoRedirectBanner";
 import { useLocalizationStore } from "@/stores/localizationStore";
 
 const navLinks = [
-  { href: "/", label: "Home" },
   { href: "/shop", label: "Shop" },
-  { href: "/wholesale", label: "Wholesale" },
-  { href: "/podcast", label: "Podcast" },
-  { href: "/free-protocol", label: "FREE ARTLUX PROTOCOL" },
-  { href: "/about", label: "About" },
+  { href: "/longevity-protocol", label: "Protocol" },
+  { href: "/genetic-testing", label: "Genetic Test" },
+  { href: "/bundles", label: "Bundles" },
+  { href: "/free-protocol", label: "Free Protocol" },
+  { href: "/blog", label: "Blog" },
+  { href: "/expert-biohacker", label: "Expert" },
 ];
 
 const Header = () => {

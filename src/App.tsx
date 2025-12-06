@@ -28,6 +28,20 @@ import Peptides from "./pages/Peptides";
 import Bundles from "./pages/Bundles";
 import ExpertBiohacker from "./pages/ExpertBiohacker";
 import PersonalizedSubscription from "./pages/PersonalizedSubscription";
+import ColdPlunge from "./pages/ColdPlunge";
+import InfraredMasks from "./pages/InfraredMasks";
+import Grounding from "./pages/Grounding";
+import WaterSystems from "./pages/WaterSystems";
+import AirSystems from "./pages/AirSystems";
+import BioactiveNutrients from "./pages/BioactiveNutrients";
+import HydrogenBottles from "./pages/HydrogenBottles";
+import Contact from "./pages/Contact";
+import FAQ from "./pages/FAQ";
+import Shipping from "./pages/Shipping";
+import Returns from "./pages/Returns";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
+import LongevityProtocol from "./pages/LongevityProtocol";
 
 const queryClient = new QueryClient();
 
@@ -45,10 +59,12 @@ const App = () => (
               <Route path="/auth" element={<Auth />} />
               <Route path="/about" element={<About />} />
               <Route path="/protocols" element={<Protocols />} />
+              <Route path="/longevity-protocol" element={<LongevityProtocol />} />
               <Route path="/shop" element={<Shop />} />
               <Route path="/product/:handle" element={<ShopifyProductDetail />} />
               <Route path="/bundle/:id" element={<BundleDetail />} />
               <Route path="/podcast" element={<Podcast />} />
+              <Route path="/podcasts" element={<Podcast />} />
               <Route path="/free-protocol" element={<FreeProtocol />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<Blog />} />
@@ -63,6 +79,19 @@ const App = () => (
               <Route path="/bundles" element={<Bundles />} />
               <Route path="/expert-biohacker" element={<ExpertBiohacker />} />
               <Route path="/personalized-subscription" element={<PersonalizedSubscription />} />
+              <Route path="/cold-plunge" element={<ColdPlunge />} />
+              <Route path="/infrared-masks" element={<InfraredMasks />} />
+              <Route path="/grounding" element={<Grounding />} />
+              <Route path="/water-systems" element={<WaterSystems />} />
+              <Route path="/oxygen-air-systems" element={<AirSystems />} />
+              <Route path="/bioactive-nutrients" element={<BioactiveNutrients />} />
+              <Route path="/hydrogen-water-bottles" element={<HydrogenBottles />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/shipping" element={<Shipping />} />
+              <Route path="/returns" element={<Returns />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
