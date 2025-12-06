@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { z } from "zod";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -10,6 +11,21 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+
+// Validation schema for form inputs
+const protocolFormSchema = z.object({
+  fullName: z.string().trim().min(2, "Name must be at least 2 characters").max(100, "Name is too long"),
+  email: z.string().trim().email("Please enter a valid email"),
+  phone: z.string().trim().min(5, "Please enter a valid phone number").max(20, "Phone number is too long").regex(/^[+]?[\d\s\-()]+$/, "Please enter a valid phone number"),
+  shippingAddress: z.string().trim().min(5, "Please enter a valid address").max(200, "Address is too long"),
+  shippingCity: z.string().trim().min(2, "Please enter a valid city").max(100, "City name is too long"),
+  shippingCountry: z.string().trim().min(2, "Please enter a valid country").max(100, "Country name is too long"),
+  shippingPostalCode: z.string().trim().min(2, "Please enter a valid postal code").max(20, "Postal code is too long"),
+  age: z.string().regex(/^\d+$/, "Age must be a number"),
+  motivation: z.string().trim().max(1000, "Motivation text is too long").optional(),
+  termsAccepted: z.boolean(),
+  medicalDisclaimer: z.boolean(),
+});
 import {
   Sun,
   Snowflake,
@@ -84,13 +100,21 @@ const FreeProtocol = () => {
       return;
     }
 
+    // Validate form data with Zod schema
+    const validationResult = protocolFormSchema.safeParse(formData);
+    if (!validationResult.success) {
+      const firstError = validationResult.error.errors[0];
+      toast.error(firstError.message);
+      return;
+    }
+
     if (!formData.termsAccepted || !formData.medicalDisclaimer) {
       toast.error("Please accept all terms and conditions");
       return;
     }
 
     const age = parseInt(formData.age);
-    if (isNaN(age) || age < 18) {
+    if (age < 18) {
       toast.error("You must be at least 18 years old to join");
       return;
     }

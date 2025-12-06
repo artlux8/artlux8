@@ -130,7 +130,7 @@ const handler = async (req: Request): Promise<Response> => {
 
   try {
     const data: OrderStatusEmailRequest = await req.json();
-    console.log("Email request data:", JSON.stringify(data, null, 2));
+    console.log("Processing order status email:", data.order_id, "status:", data.status);
 
     if (!data.order_id || !data.status || !data.customer_email || !data.customer_name) {
       console.error("Missing required fields");
