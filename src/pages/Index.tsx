@@ -2,15 +2,17 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import ChristmasBanner from "@/components/ChristmasBanner";
 import PressLogos from "@/components/PressLogos";
+import ArtluxEcosystem from "@/components/ArtluxEcosystem";
+import LongevityProtocolPreview from "@/components/LongevityProtocolPreview";
+import TruthAboutLongevity from "@/components/TruthAboutLongevity";
+import FreeProtocolCTA from "@/components/FreeProtocolCTA";
+import ScienceAutophagy from "@/components/ScienceAutophagy";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import ProtocolBundles from "@/components/ProtocolBundles";
-import Products from "@/components/Products";
 import PodcastPreview from "@/components/PodcastPreview";
-import Science from "@/components/Science";
 import Testimonials from "@/components/Testimonials";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
-import HomeLongContent from "@/components/HomeLongContent";
 
 const Index = () => {
   return (
@@ -19,12 +21,14 @@ const Index = () => {
       <Header />
       <Hero />
       <PressLogos />
-      <HomeLongContent />
+      <ArtluxEcosystem />
+      <LongevityProtocolPreview />
+      <TruthAboutLongevity />
+      <FreeProtocolCTA />
+      <ScienceAutophagy />
       <FeaturedProducts />
       <ProtocolBundles />
-      <Products />
       <PodcastPreview />
-      <Science />
       <Testimonials />
       <CTA />
       <Footer />
