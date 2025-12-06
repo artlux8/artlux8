@@ -8,6 +8,8 @@ import { useCartStore } from '@/stores/cartStore';
 import { fetchProductByHandle, ShopifyProduct } from '@/lib/shopify';
 import { toast } from 'sonner';
 import { useLocalizationStore } from '@/stores/localizationStore';
+import { getEnhancedContent, EnhancedProductContent } from '@/data/enhancedProductContent';
+import EnhancedProductContentSection from '@/components/product/EnhancedProductContent';
 
 const ShopifyProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
@@ -19,6 +21,7 @@ const ShopifyProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
+  const [enhancedContent, setEnhancedContent] = useState<EnhancedProductContent | null>(null);
 
   useEffect(() => {
     const loadProduct = async () => {
@@ -26,6 +29,7 @@ const ShopifyProductDetail = () => {
       setLoading(true);
       const productData = await fetchProductByHandle(handle);
       setProduct(productData);
+      setEnhancedContent(getEnhancedContent(handle));
       setLoading(false);
     };
     loadProduct();
@@ -91,6 +95,19 @@ const ShopifyProductDetail = () => {
 
   const totalPrice = convertPrice(parseFloat(price.amount)) * quantity;
 
+  // Update meta tags for enhanced content
+  useEffect(() => {
+    if (enhancedContent) {
+      document.title = enhancedContent.metaTitle;
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) {
+        metaDesc.setAttribute('content', enhancedContent.metaDescription);
+      }
+    } else if (product) {
+      document.title = `${product.title} | ARTLUX∞`;
+    }
+  }, [enhancedContent, product]);
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -106,7 +123,7 @@ const ShopifyProductDetail = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Product Image */}
-          <div className="relative aspect-square bg-secondary/30 rounded-2xl overflow-hidden">
+          <div className="relative aspect-square bg-secondary/30 rounded-2xl overflow-hidden lg:sticky lg:top-32">
             {mainImage ? (
               <img
                 src={mainImage.url}
@@ -123,7 +140,7 @@ const ShopifyProductDetail = () => {
           {/* Product Info */}
           <div>
             <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
-              {product.title}
+              {enhancedContent?.heroHeadline || product.title}
             </h1>
 
             <p className="text-muted-foreground mb-6 text-lg">
@@ -210,6 +227,11 @@ const ShopifyProductDetail = () => {
             )}
           </div>
         </div>
+
+        {/* Enhanced Content Section */}
+        {enhancedContent && (
+          <EnhancedProductContentSection content={enhancedContent} />
+        )}
       </div>
 
       <Footer />
