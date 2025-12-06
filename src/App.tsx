@@ -23,6 +23,11 @@ import WholesaleCatalog from "./pages/WholesaleCatalog";
 import SupplierDashboard from "./pages/SupplierDashboard";
 import NewsletterPopup from "./components/NewsletterPopup";
 import Blog from "./pages/Blog";
+import GeneticTesting from "./pages/GeneticTesting";
+import Peptides from "./pages/Peptides";
+import Bundles from "./pages/Bundles";
+import ExpertBiohacker from "./pages/ExpertBiohacker";
+import PersonalizedSubscription from "./pages/PersonalizedSubscription";
 
 const queryClient = new QueryClient();
 
@@ -53,6 +58,11 @@ const App = () => (
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/wholesale" element={<WholesaleCatalog />} />
               <Route path="/admin/suppliers" element={<SupplierDashboard />} />
+              <Route path="/genetic-testing" element={<GeneticTesting />} />
+              <Route path="/peptides" element={<Peptides />} />
+              <Route path="/bundles" element={<Bundles />} />
+              <Route path="/expert-biohacker" element={<ExpertBiohacker />} />
+              <Route path="/personalized-subscription" element={<PersonalizedSubscription />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
