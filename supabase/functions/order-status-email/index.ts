@@ -158,7 +158,8 @@ const handler = async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "ARTLUX∞ <onboarding@resend.dev>",
+        from: "ARTLUX∞ <contact@artlux8.com>",
+        reply_to: "contact@artlux8.com",
         to: [data.customer_email],
         subject: subject,
         html: emailHtml,
