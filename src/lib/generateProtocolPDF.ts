@@ -384,6 +384,325 @@ const protocolContents: Record<string, ProtocolContent> = {
         ]
       }
     ]
+  },
+  "Breathwork Guide": {
+    title: "Complete Breathwork Guide",
+    sections: [
+      {
+        heading: "Why Breathwork?",
+        content: [
+          "Breathwork is the fastest way to shift your nervous system state.",
+          "It increases oxygen delivery, reduces stress, and activates autophagy.",
+          "Used by Navy SEALs, athletes, and biohackers worldwide."
+        ]
+      },
+      {
+        heading: "Wim Hof Method (3 Rounds)",
+        content: [
+          "1. Take 30-40 deep breaths (in through nose, out through mouth)",
+          "2. Exhale fully and hold for 1-2 minutes",
+          "3. Inhale deeply and hold for 15 seconds",
+          "4. Repeat 3 rounds total",
+          "",
+          "Benefits: Increased oxygen, reduced inflammation, enhanced focus"
+        ]
+      },
+      {
+        heading: "Gary Brecka 30-30-30",
+        content: [
+          "• 30 deep breaths",
+          "• 30 second breath hold",
+          "• 30 seconds recovery",
+          "• Repeat 3-5 rounds",
+          "",
+          "Best done first thing in the morning on empty stomach"
+        ]
+      },
+      {
+        heading: "Box Breathing (4-4-4-4)",
+        content: [
+          "• Inhale for 4 seconds",
+          "• Hold for 4 seconds",
+          "• Exhale for 4 seconds",
+          "• Hold for 4 seconds",
+          "",
+          "Use for stress reduction and focus throughout the day"
+        ]
+      },
+      {
+        heading: "Physiological Sigh (Quick Reset)",
+        content: [
+          "• Double inhale through nose (fill lungs completely)",
+          "• Long slow exhale through mouth",
+          "• Repeat 1-3 times",
+          "",
+          "Fastest way to calm nervous system in seconds"
+        ]
+      },
+      {
+        heading: "Daily Protocol",
+        content: [
+          "Morning: Wim Hof or Brecka method (5-10 min)",
+          "Midday: Box breathing if stressed (2-3 min)",
+          "Pre-workout: 30 power breaths",
+          "Evening: Slow breathing 4-7-8 for sleep",
+          "Anytime: Physiological sigh for instant calm"
+        ]
+      }
+    ]
+  },
+  "Grounding Protocol": {
+    title: "Grounding (Earthing) Protocol",
+    sections: [
+      {
+        heading: "What is Grounding?",
+        content: [
+          "Grounding connects your body to Earth's natural electric charge.",
+          "Free electrons from the Earth neutralize free radicals.",
+          "This reduces inflammation, improves sleep, and resets cortisol."
+        ]
+      },
+      {
+        heading: "The Science",
+        content: [
+          "• Earth has a negative electrical charge",
+          "• Modern life insulates us from this charge",
+          "• Chronic inflammation is linked to electron deficiency",
+          "• Grounding restores electrical balance",
+          "• Studies show reduced blood viscosity and pain"
+        ]
+      },
+      {
+        heading: "Outdoor Grounding (Best)",
+        content: [
+          "• Walk barefoot on grass, sand, or soil",
+          "• Minimum 20 minutes daily",
+          "• Morning sunlight + grounding = optimal",
+          "• Wet surfaces conduct better",
+          "• Avoid concrete and asphalt (insulating)"
+        ]
+      },
+      {
+        heading: "Indoor Grounding",
+        content: [
+          "• Use grounding mat under desk or bed",
+          "• Grounding sheets for sleep",
+          "• Connect to grounded outlet",
+          "• Especially useful in winter/urban areas"
+        ]
+      },
+      {
+        heading: "Daily Protocol",
+        content: [
+          "Morning: 10-20 min barefoot with sunrise",
+          "Afternoon: 10 min grass break if possible",
+          "Evening: 20 min before sunset (stress reset)",
+          "Night: Sleep on grounding sheet",
+          "",
+          "Combine with: hydrogen water, breathwork, red light"
+        ]
+      },
+      {
+        heading: "Benefits Timeline",
+        content: [
+          "Immediate: Reduced stress, calm feeling",
+          "1 Week: Better sleep, less pain",
+          "1 Month: Improved energy, reduced inflammation",
+          "3 Months: Measurable health improvements"
+        ]
+      }
+    ]
+  },
+  "Morning Sunlight Routine": {
+    title: "Morning Sunlight Routine",
+    sections: [
+      {
+        heading: "Why Morning Light Matters",
+        content: [
+          "Morning sunlight sets your circadian rhythm for the entire day.",
+          "It triggers cortisol awakening response (natural energy).",
+          "Improves sleep quality 12-16 hours later.",
+          "Acts as a natural antidepressant without side effects."
+        ]
+      },
+      {
+        heading: "The Science",
+        content: [
+          "• Blue light receptors in eyes signal brain it's daytime",
+          "• Cortisol rises naturally (healthy stress hormone)",
+          "• Dopamine and serotonin production increases",
+          "• Melatonin production is suppressed until evening",
+          "• This sets your internal clock for 24-hour cycle"
+        ]
+      },
+      {
+        heading: "Optimal Protocol",
+        content: [
+          "• Get outside within 30 minutes of waking",
+          "• Duration: 10-15 min (clear day) to 30 min (cloudy)",
+          "• No sunglasses (eyes need the light)",
+          "• Face toward sun (don't stare directly)",
+          "• Works even on overcast days"
+        ]
+      },
+      {
+        heading: "What NOT to Do",
+        content: [
+          "✗ Look at phone/screens first thing",
+          "✗ Stay indoors behind windows (glass blocks UV)",
+          "✗ Wear sunglasses during morning protocol",
+          "✗ Use bright indoor lights as substitute",
+          "✗ Skip on cloudy days"
+        ]
+      },
+      {
+        heading: "Stack with Other Protocols",
+        content: [
+          "• Grounding: barefoot on grass while getting light",
+          "• Breathwork: Wim Hof while facing sun",
+          "• Hydrogen water: drink during outdoor time",
+          "• Cold exposure: follow with cold shower"
+        ]
+      },
+      {
+        heading: "Seasonal Adjustments",
+        content: [
+          "Summer: Earlier wake time, shorter duration needed",
+          "Winter: Use light therapy lamp if sunrise too late",
+          "Travel: Reset jet lag with local sunrise",
+          "Shift work: Light therapy at 'morning' of your schedule"
+        ]
+      }
+    ]
+  },
+  "Detox Protocol": {
+    title: "Complete Cellular Detox Protocol",
+    sections: [
+      {
+        heading: "Real Detox vs. Fake Detox",
+        content: [
+          "Most 'detox' products are marketing nonsense.",
+          "Real detox happens at the cellular and mitochondrial level.",
+          "Your liver, kidneys, and lymph do the heavy lifting.",
+          "Support these systems with the right inputs."
+        ]
+      },
+      {
+        heading: "Phase 1: Reduce Toxin Exposure",
+        content: [
+          "• Filter tap water (remove chlorine, fluoride, heavy metals)",
+          "• Eat organic when possible (avoid pesticides)",
+          "• Eliminate seed oils (use olive, avocado, coconut)",
+          "• Avoid plastic containers (use glass/stainless)",
+          "• Air purifier for indoor spaces"
+        ]
+      },
+      {
+        heading: "Phase 2: Support Liver Detox",
+        content: [
+          "• NAC (N-Acetyl Cysteine): 600-1200mg daily",
+          "• Glutathione: liposomal 500mg or IV",
+          "• Milk thistle: 200-400mg",
+          "• Cruciferous vegetables daily",
+          "• Lemon water in morning"
+        ]
+      },
+      {
+        heading: "Phase 3: Lymphatic Drainage",
+        content: [
+          "• Dry brushing before shower",
+          "• Rebounding (mini trampoline) 10 min",
+          "• Deep breathing exercises",
+          "• Sauna or hot/cold contrast",
+          "• Manual lymphatic massage"
+        ]
+      },
+      {
+        heading: "Phase 4: Heavy Metal Chelation",
+        content: [
+          "• Chlorella: binds heavy metals",
+          "• Cilantro: mobilizes mercury",
+          "• Zeolite: binds toxins for excretion",
+          "• EDTA (consult practitioner)",
+          "• Note: Go slow to avoid redistribution"
+        ]
+      },
+      {
+        heading: "Daily Detox Stack",
+        content: [
+          "Morning: Lemon water + NAC",
+          "With meals: Chlorella + digestive enzymes",
+          "Evening: Glutathione + magnesium",
+          "Weekly: 24-36 hour fast for autophagy",
+          "Monthly: Extended sauna session"
+        ]
+      }
+    ]
+  },
+  "Mitochondria Optimization": {
+    title: "Mitochondria Optimization Protocol",
+    sections: [
+      {
+        heading: "Why Mitochondria Matter",
+        content: [
+          "Mitochondria are the powerhouses of your cells.",
+          "They produce 90% of your body's energy (ATP).",
+          "Mitochondrial decline is the #1 cause of aging.",
+          "Optimizing them = more energy, slower aging, sharper mind."
+        ]
+      },
+      {
+        heading: "Core Supplements",
+        content: [
+          "• CoQ10 Ubiquinol: 100-200mg (not ubiquinone)",
+          "• PQQ: 10-20mg (creates new mitochondria)",
+          "• Urolithin A: 500-1000mg (triggers mitophagy)",
+          "• ALCAR: 500-1000mg (transports fat to mitochondria)",
+          "• Alpha Lipoic Acid: 300-600mg"
+        ]
+      },
+      {
+        heading: "Lifestyle Factors",
+        content: [
+          "• Cold exposure: Stimulates mitochondrial biogenesis",
+          "• Exercise: HIIT and resistance training",
+          "• Fasting: Triggers autophagy and renewal",
+          "• Sleep: Repair and regeneration happens here",
+          "• Sunlight: Red/infrared stimulates cytochrome c"
+        ]
+      },
+      {
+        heading: "Things That DAMAGE Mitochondria",
+        content: [
+          "✗ Chronic stress (cortisol overload)",
+          "✗ Poor sleep (blocks repair)",
+          "✗ Seed oils (oxidative damage)",
+          "✗ Excess sugar (glycation)",
+          "✗ Environmental toxins",
+          "✗ Sedentary lifestyle"
+        ]
+      },
+      {
+        heading: "Red Light Therapy for Mitochondria",
+        content: [
+          "• 630-670nm (red) and 810-850nm (near-infrared)",
+          "• Directly stimulates cytochrome c oxidase",
+          "• Increases ATP production by 40-50%",
+          "• Use 10-20 minutes daily",
+          "• Focus on thyroid, face, large muscle groups"
+        ]
+      },
+      {
+        heading: "Weekly Protocol",
+        content: [
+          "Daily: CoQ10 + PQQ + red light therapy",
+          "3x/week: Cold exposure (2-5 min)",
+          "3x/week: HIIT or resistance training",
+          "Weekly: 24-hour fast",
+          "Monthly: 48-72 hour fast for deep renewal"
+        ]
+      }
+    ]
   }
 };
 

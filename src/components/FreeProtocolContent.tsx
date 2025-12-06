@@ -80,7 +80,12 @@ const downloads = [
   "Cold Plunge Beginner Guide",
   "Red Light Quick Start",
   "Hydrogen Water Daily Protocol",
-  "Longevity Sleep Formula"
+  "Longevity Sleep Formula",
+  "Breathwork Guide",
+  "Grounding Protocol",
+  "Morning Sunlight Routine",
+  "Detox Protocol",
+  "Mitochondria Optimization"
 ];
 
 const FreeProtocolContent = () => {
