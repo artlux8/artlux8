@@ -70,13 +70,37 @@ const SupplierDashboard = () => {
   const [fulfillments, setFulfillments] = useState<OrderFulfillment[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedSupplier, setSelectedSupplier] = useState<string>("all");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     if (!user) {
       navigate("/auth");
       return;
     }
-    fetchData();
+
+    const checkAdminAndFetch = async () => {
+      try {
+        // Check if user is admin using the has_role function
+        const { data: hasRole, error: roleError } = await supabase.rpc("has_role", {
+          _user_id: user.id,
+          _role: "admin",
+        });
+
+        if (roleError || !hasRole) {
+          toast.error("Access denied. Admin privileges required.");
+          navigate("/dashboard");
+          return;
+        }
+
+        setIsAdmin(true);
+        await fetchData();
+      } catch (error) {
+        console.error("Error checking admin status:", error);
+        navigate("/dashboard");
+      }
+    };
+
+    checkAdminAndFetch();
   }, [user, navigate]);
 
   const fetchData = async () => {
@@ -167,6 +191,16 @@ const SupplierDashboard = () => {
     : fulfillments.filter(f => f.supplier === selectedSupplier);
 
   const stats = getSupplierStats(selectedSupplier);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="animate-pulse text-muted-foreground">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!isAdmin) return null;
 
   return (
     <div className="min-h-screen bg-background">
