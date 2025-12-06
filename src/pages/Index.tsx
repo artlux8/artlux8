@@ -10,6 +10,7 @@ import Science from "@/components/Science";
 import Testimonials from "@/components/Testimonials";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
+import HomeLongContent from "@/components/HomeLongContent";
 
 const Index = () => {
   return (
@@ -18,6 +19,7 @@ const Index = () => {
       <Header />
       <Hero />
       <PressLogos />
+      <HomeLongContent />
       <FeaturedProducts />
       <ProtocolBundles />
       <Products />

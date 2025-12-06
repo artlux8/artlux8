@@ -13,6 +13,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import hydrogenBottleLuxury from "@/assets/hydrogen-bottle-luxury.png";
 import hydrogenBottleStandard from "@/assets/hydrogen-bottle-standard.png";
+import FreeProtocolContent from "@/components/FreeProtocolContent";
 // Validation schema for form inputs
 const protocolFormSchema = z.object({
   fullName: z.string().trim().min(2, "Name must be at least 2 characters").max(100, "Name is too long"),
@@ -220,6 +221,9 @@ const FreeProtocol = () => {
           </div>
         </div>
       </section>
+
+      {/* Long-form Protocol Content */}
+      <FreeProtocolContent />
 
       {/* Good Habits Section */}
       <section className="py-20">

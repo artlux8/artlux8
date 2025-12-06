@@ -22,6 +22,7 @@ import NotFound from "./pages/NotFound";
 import WholesaleCatalog from "./pages/WholesaleCatalog";
 import SupplierDashboard from "./pages/SupplierDashboard";
 import NewsletterPopup from "./components/NewsletterPopup";
+import Blog from "./pages/Blog";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,8 @@ const App = () => (
               <Route path="/bundle/:id" element={<BundleDetail />} />
               <Route path="/podcast" element={<Podcast />} />
               <Route path="/free-protocol" element={<FreeProtocol />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<Blog />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/dashboard/challenge" element={<ChallengeProgress />} />
               <Route path="/dashboard/upload" element={<UploadProof />} />
