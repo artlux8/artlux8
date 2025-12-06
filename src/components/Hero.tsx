@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { ArrowRight, Sparkles, Shield, Dna, Heart } from "lucide-react";
 
 const Hero = () => {
@@ -24,31 +25,35 @@ const Hero = () => {
           <div className="flex items-center gap-2 mb-6 opacity-0 animate-fade-in" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
             <Sparkles className="w-4 h-4 text-accent" />
             <p className="text-accent font-medium text-sm md:text-base tracking-widest uppercase">
-              Science-Backed Protocols • Premium Supplements
+              Longevity Supplements • Hydrogen Technology • Cold Therapy
             </p>
           </div>
 
           {/* Main Headline */}
           <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground leading-[1.1] mb-6 opacity-0 animate-slide-up" style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}>
-            Live Longer.
+            Unlock Your Longest,
             <br />
-            <span className="text-accent">Live Better.</span>
+            <span className="text-accent">Healthiest Life</span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-primary-foreground/80 text-lg md:text-xl max-w-xl mb-10 opacity-0 animate-fade-in" style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}>
-            Unlock your body's full potential with cutting-edge longevity protocols and 
-            pharmaceutical-grade supplements designed to optimize healthspan and reverse biological aging.
+            Longevity supplements, hydrogen technology, cold therapy & advanced protocols 
+            inspired by real science — not pharmaceutical profits.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 opacity-0 animate-fade-in" style={{ animationDelay: "0.6s", animationFillMode: "forwards" }}>
-            <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 text-base px-8 py-6 rounded-full font-semibold group">
-              Shop Protocols
-              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 text-base px-8 py-6 rounded-full font-semibold group">
+              <Link to="/longevity-protocol">
+                Start Your Protocol
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </Button>
-            <Button size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 text-base px-8 py-6 rounded-full font-semibold">
-              Take the Quiz
+            <Button asChild size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 text-base px-8 py-6 rounded-full font-semibold">
+              <Link to="/genetic-testing">
+                Take Genetic Test
+              </Link>
             </Button>
           </div>
 
