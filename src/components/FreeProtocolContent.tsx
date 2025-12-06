@@ -12,9 +12,11 @@ import {
   Download,
   ArrowRight,
   Shield,
-  Heart
+  Heart,
+  FileText
 } from "lucide-react";
-
+import { generateProtocolPDF } from "@/lib/generateProtocolPDF";
+import { toast } from "sonner";
 const pillars = [
   {
     number: "1",
@@ -201,12 +203,17 @@ const FreeProtocolContent = () => {
               {downloads.map((download, index) => (
                 <button
                   key={index}
+                  onClick={() => {
+                    generateProtocolPDF(download);
+                    toast.success(`Downloading ${download}...`);
+                  }}
                   className="flex items-center gap-3 p-4 bg-card rounded-xl border border-border hover:border-gold/50 transition-colors text-left group"
                 >
                   <div className="w-10 h-10 rounded-lg bg-gold/10 flex items-center justify-center flex-shrink-0">
-                    <Download className="w-5 h-5 text-gold group-hover:scale-110 transition-transform" />
+                    <FileText className="w-5 h-5 text-gold group-hover:scale-110 transition-transform" />
                   </div>
                   <span className="text-foreground font-medium">{download}</span>
+                  <Download className="w-4 h-4 text-muted-foreground ml-auto group-hover:text-gold transition-colors" />
                 </button>
               ))}
             </div>
