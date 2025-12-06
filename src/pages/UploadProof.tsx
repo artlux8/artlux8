@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
+import { z } from "zod";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,34 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { ArrowLeft, Upload, Image, Video, Link as LinkIcon, CheckCircle2 } from "lucide-react";
+
+// Allowed domains for proof URL validation
+const ALLOWED_URL_DOMAINS = [
+  "youtube.com",
+  "youtu.be",
+  "drive.google.com",
+  "docs.google.com",
+  "dropbox.com",
+  "imgur.com",
+  "icloud.com",
+  "onedrive.live.com",
+  "1drv.ms",
+  "cloudinary.com",
+  "amazonaws.com",
+];
+
+// Validation schema for proof submission
+const proofSchema = z.object({
+  proofUrl: z.string().url("Please enter a valid URL").refine((url) => {
+    try {
+      const hostname = new URL(url).hostname.replace("www.", "");
+      return ALLOWED_URL_DOMAINS.some(domain => hostname.includes(domain));
+    } catch {
+      return false;
+    }
+  }, "Please use a supported platform: YouTube, Google Drive, Dropbox, Imgur, iCloud, OneDrive, or cloud storage"),
+  notes: z.string().max(1000, "Notes are too long (max 1000 characters)").optional(),
+});
 
 const UploadProof = () => {
   const { user } = useAuth();
@@ -63,8 +92,11 @@ const UploadProof = () => {
 
     if (!enrollment || !user) return;
 
-    if (!proofUrl.trim()) {
-      toast.error("Please provide a proof URL or link");
+    // Validate inputs with Zod schema
+    const validationResult = proofSchema.safeParse({ proofUrl, notes });
+    if (!validationResult.success) {
+      const firstError = validationResult.error.errors[0];
+      toast.error(firstError.message);
       return;
     }
 
