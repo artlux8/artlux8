@@ -11,7 +11,8 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-
+import hydrogenBottleLuxury from "@/assets/hydrogen-bottle-luxury.png";
+import hydrogenBottleStandard from "@/assets/hydrogen-bottle-standard.png";
 // Validation schema for form inputs
 const protocolFormSchema = z.object({
   fullName: z.string().trim().min(2, "Name must be at least 2 characters").max(100, "Name is too long"),
@@ -340,14 +341,22 @@ const FreeProtocol = () => {
                   * Shipping costs may apply depending on your region.
                 </p>
               </div>
-              <div className="bg-secondary/50 rounded-3xl p-8 aspect-square flex items-center justify-center">
-                <div className="text-center">
-                  <Gift className="w-24 h-24 text-gold mx-auto mb-4" />
-                  <p className="text-muted-foreground">
-                    Hydrogen Water Bottle
-                    <br />
-                    <span className="text-sm">(Image placeholder)</span>
-                  </p>
+              <div className="grid gap-4">
+                <div className="bg-secondary/50 rounded-3xl p-6 flex flex-col items-center justify-center">
+                  <img 
+                    src={hydrogenBottleLuxury} 
+                    alt="ARTLUX Luxury Hydrogen Water Bottle" 
+                    className="w-full max-w-[200px] h-auto object-contain mb-3"
+                  />
+                  <p className="text-gold font-semibold text-sm">Luxury Edition</p>
+                </div>
+                <div className="bg-secondary/50 rounded-3xl p-6 flex flex-col items-center justify-center">
+                  <img 
+                    src={hydrogenBottleStandard} 
+                    alt="ARTLUX Standard Hydrogen Water Bottle" 
+                    className="w-full max-w-[200px] h-auto object-contain mb-3"
+                  />
+                  <p className="text-muted-foreground font-semibold text-sm">Standard Edition</p>
                 </div>
               </div>
             </div>
