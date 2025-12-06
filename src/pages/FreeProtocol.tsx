@@ -342,7 +342,7 @@ const FreeProtocol = () => {
                 </p>
               </div>
               <div className="grid gap-4">
-                <div className="bg-secondary/50 rounded-3xl p-6 flex flex-col items-center justify-center">
+                <div className="bg-secondary/50 rounded-3xl p-6 flex flex-col items-center justify-center animate-fade-in hover-scale">
                   <img 
                     src={hydrogenBottleLuxury} 
                     alt="ARTLUX Luxury Hydrogen Water Bottle" 
@@ -350,7 +350,7 @@ const FreeProtocol = () => {
                   />
                   <p className="text-gold font-semibold text-sm">Luxury Edition</p>
                 </div>
-                <div className="bg-secondary/50 rounded-3xl p-6 flex flex-col items-center justify-center">
+                <div className="bg-secondary/50 rounded-3xl p-6 flex flex-col items-center justify-center animate-fade-in hover-scale" style={{ animationDelay: '0.2s' }}>
                   <img 
                     src={hydrogenBottleStandard} 
                     alt="ARTLUX Standard Hydrogen Water Bottle" 
