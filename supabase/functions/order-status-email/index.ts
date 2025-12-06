@@ -159,7 +159,7 @@ const handler = async (req: Request): Promise<Response> => {
       },
       body: JSON.stringify({
         from: "ARTLUX∞ <contact@artlux8.com>",
-        reply_to: "contact@artlux8.com",
+        reply_to: "artlux.ltd@gmail.com",
         to: [data.customer_email],
         subject: subject,
         html: emailHtml,
