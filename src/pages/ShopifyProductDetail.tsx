@@ -10,6 +10,8 @@ import { toast } from 'sonner';
 import { useLocalizationStore } from '@/stores/localizationStore';
 import { getEnhancedContent, EnhancedProductContent } from '@/data/enhancedProductContent';
 import EnhancedProductContentSection from '@/components/product/EnhancedProductContent';
+import ProductReviews from '@/components/product/ProductReviews';
+import { getProductReviews, ProductReview } from '@/data/productReviews';
 
 const ShopifyProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
@@ -22,6 +24,7 @@ const ShopifyProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const [enhancedContent, setEnhancedContent] = useState<EnhancedProductContent | null>(null);
+  const [reviews, setReviews] = useState<ProductReview[]>([]);
 
   useEffect(() => {
     const loadProduct = async () => {
@@ -30,6 +33,7 @@ const ShopifyProductDetail = () => {
       const productData = await fetchProductByHandle(handle);
       setProduct(productData);
       setEnhancedContent(getEnhancedContent(handle));
+      setReviews(getProductReviews(handle));
       setLoading(false);
     };
     loadProduct();
@@ -232,6 +236,9 @@ const ShopifyProductDetail = () => {
         {enhancedContent && (
           <EnhancedProductContentSection content={enhancedContent} />
         )}
+
+        {/* Customer Reviews */}
+        <ProductReviews reviews={reviews} />
       </div>
 
       <Footer />
