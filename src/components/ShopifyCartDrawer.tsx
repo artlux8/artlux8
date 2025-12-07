@@ -32,16 +32,24 @@ export const ShopifyCartDrawer = () => {
   const totalPrice = getTotalPrice();
 
   const handleCheckout = async () => {
+    // Open window immediately on user click to avoid popup blocker
+    const checkoutWindow = window.open('about:blank', '_blank');
+    
     try {
       const checkoutUrl = await createCheckout();
-      if (checkoutUrl) {
-        window.open(checkoutUrl, '_blank');
+      if (checkoutUrl && checkoutWindow) {
+        checkoutWindow.location.href = checkoutUrl;
         setIsOpen(false);
+      } else if (checkoutUrl) {
+        // Fallback if popup was blocked
+        window.location.href = checkoutUrl;
       } else {
+        checkoutWindow?.close();
         toast.error('Failed to create checkout');
       }
     } catch (error) {
       console.error('Checkout failed:', error);
+      checkoutWindow?.close();
       toast.error('Checkout failed. Please try again.');
     }
   };
