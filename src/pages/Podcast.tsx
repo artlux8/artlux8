@@ -2,12 +2,13 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Headphones, Play } from "lucide-react";
+import PodcastPlayer from "@/components/PodcastPlayer";
 import podcastGaryBrecka from "@/assets/podcast-gary-brecka.jpg";
 import podcastHuberman from "@/assets/podcast-huberman.jpg";
 import podcastAttia from "@/assets/podcast-attia.jpg";
 import podcastWimhof from "@/assets/podcast-wimhof.jpg";
 
-// Podcast data - easily updateable
+// Podcast data - easily updateable with embed IDs
 const podcasts = [
   {
     id: 1,
@@ -17,8 +18,10 @@ const podcasts = [
     description: "Gary Brecka reveals the biohacking protocols that helped UFC president Dana White lose 30 pounds and reverse his health markers. Discover the power of gene testing and personalized health optimization.",
     image: podcastGaryBrecka,
     spotifyUrl: "https://open.spotify.com/show/1a2G6j5gFCl7CVnmwpbCe2",
-    youtubeUrl: "https://www.youtube.com/@GaryBrecka",
+    youtubeUrl: "https://www.youtube.com/watch?v=TM902RqLPk8",
     category: "Biohacking",
+    spotifyEmbedId: "1a2G6j5gFCl7CVnmwpbCe2",
+    youtubeEmbedId: "TM902RqLPk8",
   },
   {
     id: 2,
@@ -30,6 +33,7 @@ const podcasts = [
     spotifyUrl: "https://open.spotify.com/episode/3bVsV4bBvFJPBxT3UWdpNq",
     youtubeUrl: "https://www.youtube.com/watch?v=TM902RqLPk8",
     category: "Health Science",
+    youtubeEmbedId: "TM902RqLPk8",
   },
   {
     id: 3,
@@ -41,6 +45,7 @@ const podcasts = [
     spotifyUrl: "https://open.spotify.com/show/79CkJF3UJTHFV8Dse3Ez0P",
     youtubeUrl: "https://www.youtube.com/@hubermanlab",
     category: "Neuroscience",
+    spotifyEmbedId: "79CkJF3UJTHFV8Dse3Ez0P",
   },
   {
     id: 4,
@@ -52,6 +57,7 @@ const podcasts = [
     spotifyUrl: "https://open.spotify.com/show/1ktxVBArrt5OOcicSyCCTM",
     youtubeUrl: "https://www.youtube.com/@PeterAttiaMD",
     category: "Longevity",
+    spotifyEmbedId: "1ktxVBArrt5OOcicSyCCTM",
   },
   {
     id: 5,
@@ -63,6 +69,7 @@ const podcasts = [
     spotifyUrl: "https://open.spotify.com/show/1vSjZ4nsUFZN4eX9Bb4yHF",
     youtubeUrl: "https://www.youtube.com/@RichRoll",
     category: "Wellness",
+    spotifyEmbedId: "1vSjZ4nsUFZN4eX9Bb4yHF",
   },
   {
     id: 6,
@@ -74,6 +81,7 @@ const podcasts = [
     spotifyUrl: "https://open.spotify.com/show/5x8r9G8fDBICqBlQVUHI1l",
     youtubeUrl: "https://www.youtube.com/@FoundMyFitness",
     category: "Science",
+    spotifyEmbedId: "5x8r9G8fDBICqBlQVUHI1l",
   },
   {
     id: 7,
@@ -85,6 +93,7 @@ const podcasts = [
     spotifyUrl: "https://open.spotify.com/show/5bJQRBq1HbMl5r6fCVAOqS",
     youtubeUrl: "https://www.youtube.com/@ShawnStevensonModel",
     category: "Sleep",
+    spotifyEmbedId: "5bJQRBq1HbMl5r6fCVAOqS",
   },
   {
     id: 8,
@@ -96,6 +105,7 @@ const podcasts = [
     spotifyUrl: "https://open.spotify.com/show/3bMhKz8bPZ3VvQF8rF2Xq5",
     youtubeUrl: "https://www.youtube.com/@BryanJohnson",
     category: "Longevity",
+    spotifyEmbedId: "3bMhKz8bPZ3VvQF8rF2Xq5",
   },
 ];
 
@@ -171,83 +181,19 @@ const Podcast = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {podcasts.map((podcast) => (
-              <div
+              <PodcastPlayer
                 key={podcast.id}
-                className="group bg-card rounded-2xl border border-border overflow-hidden hover:border-gold/30 hover:shadow-xl hover:shadow-gold/5 transition-all duration-300"
-              >
-                {/* Podcast Image */}
-                <div className="relative aspect-square overflow-hidden">
-                  <img
-                    src={podcast.image}
-                    alt={podcast.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
-                  
-                  {/* Play Button Overlay */}
-                  <a
-                    href={podcast.youtubeUrl || podcast.spotifyUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <div className="w-16 h-16 rounded-full bg-gold/90 flex items-center justify-center hover:scale-110 transition-transform">
-                      <Play className="w-8 h-8 text-primary ml-1" />
-                    </div>
-                  </a>
-
-                  {/* Category Badge */}
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-gold/90 text-primary text-xs font-semibold rounded-full">
-                      {podcast.category}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-5">
-                  <div className="mb-3">
-                    <h3 className="font-semibold text-base text-foreground mb-1 line-clamp-1">
-                      {podcast.name}
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      {podcast.host}
-                    </p>
-                  </div>
-
-                  <h4 className="font-medium text-foreground mb-2 line-clamp-2 text-sm">
-                    {podcast.episodeTitle}
-                  </h4>
-                  
-                  <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                    {podcast.description}
-                  </p>
-
-                  <div className="flex gap-2">
-                    <Button
-                      asChild
-                      size="sm"
-                      className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
-                    >
-                      <a href={podcast.spotifyUrl} target="_blank" rel="noopener noreferrer">
-                        Spotify
-                      </a>
-                    </Button>
-                    {podcast.youtubeUrl && (
-                      <Button
-                        asChild
-                        size="sm"
-                        variant="outline"
-                        className="flex-1"
-                      >
-                        <a href={podcast.youtubeUrl} target="_blank" rel="noopener noreferrer">
-                          YouTube
-                        </a>
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              </div>
+                name={podcast.name}
+                host={podcast.host}
+                episodeTitle={podcast.episodeTitle}
+                description={podcast.description}
+                image={podcast.image}
+                spotifyUrl={podcast.spotifyUrl}
+                youtubeUrl={podcast.youtubeUrl}
+                category={podcast.category}
+                spotifyEmbedId={podcast.spotifyEmbedId}
+                youtubeEmbedId={podcast.youtubeEmbedId}
+              />
             ))}
           </div>
         </div>
