@@ -47,7 +47,7 @@ const podcasts = [
 
 const PodcastPreview = () => {
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-primary-900 to-primary-950">
+    <section className="py-16 md:py-24 bg-gradient-to-b from-primary to-background">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
@@ -57,10 +57,10 @@ const PodcastPreview = () => {
               Curated Content
             </span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-display font-bold text-primary-foreground mb-4">
             ARTLUX<span className="text-gold">∞</span> Listening Room
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto">
             Learn from the world's leading longevity experts. Curated podcasts on biohacking, 
             performance optimization, and the science behind the ARTLUX Protocol.
           </p>
@@ -74,7 +74,7 @@ const PodcastPreview = () => {
               href={podcast.youtubeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative overflow-hidden rounded-xl bg-primary-800/50 hover:bg-primary-800 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-gold/10"
+              className="group relative overflow-hidden rounded-xl bg-secondary/50 hover:bg-secondary transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-gold/10"
             >
               {/* Image */}
               <div className="aspect-square overflow-hidden">
@@ -96,11 +96,11 @@ const PodcastPreview = () => {
                 <span className="inline-block px-2 py-1 text-xs font-semibold bg-gold/20 text-gold rounded-full mb-2">
                   {podcast.category}
                 </span>
-                <h3 className="font-display font-bold text-white text-sm md:text-base mb-1 line-clamp-1">
+                <h3 className="font-display font-bold text-foreground text-sm md:text-base mb-1 line-clamp-1">
                   {podcast.title}
                 </h3>
-                <p className="text-gray-400 text-xs mb-2">{podcast.host}</p>
-                <p className="text-gray-500 text-xs line-clamp-2 hidden md:block">
+                <p className="text-muted-foreground text-xs mb-2">{podcast.host}</p>
+                <p className="text-muted-foreground/70 text-xs line-clamp-2 hidden md:block">
                   {podcast.description}
                 </p>
               </div>
@@ -113,7 +113,7 @@ const PodcastPreview = () => {
           <Link to="/podcast">
             <Button 
               variant="outline" 
-              className="border-gold text-gold hover:bg-gold hover:text-primary-900 transition-all"
+              className="border-gold text-gold hover:bg-gold hover:text-primary transition-all"
             >
               <Headphones className="w-4 h-4 mr-2" />
               Explore All Episodes
