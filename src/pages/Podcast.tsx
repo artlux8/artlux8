@@ -1,14 +1,14 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Headphones, Play } from "lucide-react";
+import { ExternalLink, Headphones, Play, Video } from "lucide-react";
 import PodcastPlayer from "@/components/PodcastPlayer";
 import podcastGaryBrecka from "@/assets/podcast-gary-brecka.jpg";
 import podcastHuberman from "@/assets/podcast-huberman.jpg";
 import podcastAttia from "@/assets/podcast-attia.jpg";
 import podcastWimhof from "@/assets/podcast-wimhof.jpg";
 
-// Podcast data - easily updateable with embed IDs
+// Podcast data - YouTube only
 const podcasts = [
   {
     id: 1,
@@ -17,10 +17,8 @@ const podcasts = [
     episodeTitle: "Dana White's Transformation: 10 Years Added to Life",
     description: "Gary Brecka reveals the biohacking protocols that helped UFC president Dana White lose 30 pounds and reverse his health markers. Discover the power of gene testing and personalized health optimization.",
     image: podcastGaryBrecka,
-    spotifyUrl: "https://open.spotify.com/show/1a2G6j5gFCl7CVnmwpbCe2",
     youtubeUrl: "https://www.youtube.com/watch?v=oWu9TFJjHaM",
     category: "Biohacking",
-    spotifyEmbedId: "1a2G6j5gFCl7CVnmwpbCe2",
     youtubeEmbedId: "oWu9TFJjHaM",
   },
   {
@@ -30,7 +28,6 @@ const podcasts = [
     episodeTitle: "#2065 - Gary Brecka: Breathwork & Human Optimization",
     description: "Gary Brecka joins Joe Rogan to discuss the 30-30-30 protocol, breathwork science, and why morning routines are crucial for longevity. A deep dive into oxygen optimization.",
     image: podcastGaryBrecka,
-    spotifyUrl: "https://open.spotify.com/episode/3bVsV4bBvFJPBxT3UWdpNq",
     youtubeUrl: "https://www.youtube.com/watch?v=I56gvjXEVUg",
     category: "Health Science",
     youtubeEmbedId: "I56gvjXEVUg",
@@ -42,10 +39,8 @@ const podcasts = [
     episodeTitle: "The Science of Cold Exposure for Health & Performance",
     description: "Stanford neuroscientist explains the science behind cold exposure, including how it affects dopamine, metabolism, and mental resilience. Protocols for cold showers and ice baths.",
     image: podcastHuberman,
-    spotifyUrl: "https://open.spotify.com/show/79CkJF3UJTHFV8Dse3Ez0P",
     youtubeUrl: "https://www.youtube.com/watch?v=pq6WHJzOkno",
     category: "Neuroscience",
-    spotifyEmbedId: "79CkJF3UJTHFV8Dse3Ez0P",
     youtubeEmbedId: "pq6WHJzOkno",
   },
   {
@@ -55,10 +50,8 @@ const podcasts = [
     episodeTitle: "Longevity, Healthspan & The Science of Living Longer",
     description: "Deep dive into the science of longevity, covering everything from exercise protocols to nutrition strategies for optimal healthspan. The medicine 3.0 approach to aging.",
     image: podcastAttia,
-    spotifyUrl: "https://open.spotify.com/show/1ktxVBArrt5OOcicSyCCTM",
     youtubeUrl: "https://www.youtube.com/watch?v=tGLYLyHk5ck",
     category: "Longevity",
-    spotifyEmbedId: "1ktxVBArrt5OOcicSyCCTM",
     youtubeEmbedId: "tGLYLyHk5ck",
   },
   {
@@ -68,10 +61,8 @@ const podcasts = [
     episodeTitle: "Wim Hof: Mastering the Ice & Breathwork",
     description: "The Iceman himself discusses his method for cold exposure mastery, breathwork techniques, and the science behind pushing human limits for better health and mental clarity.",
     image: podcastWimhof,
-    spotifyUrl: "https://open.spotify.com/show/1vSjZ4nsUFZN4eX9Bb4yHF",
     youtubeUrl: "https://www.youtube.com/watch?v=JPflvEqLA3s",
     category: "Wellness",
-    spotifyEmbedId: "1vSjZ4nsUFZN4eX9Bb4yHF",
     youtubeEmbedId: "JPflvEqLA3s",
   },
   {
@@ -81,10 +72,8 @@ const podcasts = [
     episodeTitle: "Cold Shock Proteins & Heat Shock Response",
     description: "Research-focused discussions on the molecular mechanisms behind cold and heat exposure. Learn about hormesis and how stress adaptation improves longevity markers.",
     image: podcastHuberman,
-    spotifyUrl: "https://open.spotify.com/show/5x8r9G8fDBICqBlQVUHI1l",
     youtubeUrl: "https://www.youtube.com/watch?v=EbH4m6WzrxY",
     category: "Science",
-    spotifyEmbedId: "5x8r9G8fDBICqBlQVUHI1l",
     youtubeEmbedId: "EbH4m6WzrxY",
   },
   {
@@ -94,10 +83,8 @@ const podcasts = [
     episodeTitle: "Sleep Optimization & Circadian Rhythm Mastery",
     description: "Evidence-based strategies for improving sleep quality, understanding your circadian rhythm, and optimizing your sleep environment for peak performance and recovery.",
     image: podcastAttia,
-    spotifyUrl: "https://open.spotify.com/show/5bJQRBq1HbMl5r6fCVAOqS",
     youtubeUrl: "https://www.youtube.com/watch?v=nm1TxQj9IsQ",
     category: "Sleep",
-    spotifyEmbedId: "5bJQRBq1HbMl5r6fCVAOqS",
     youtubeEmbedId: "nm1TxQj9IsQ",
   },
   {
@@ -107,10 +94,8 @@ const podcasts = [
     episodeTitle: "Don't Die: The Protocol for Biological Age Reversal",
     description: "Tech entrepreneur Bryan Johnson shares his extreme longevity protocols including his morning routine, supplement stack, and the data-driven approach to reversing biological aging.",
     image: podcastGaryBrecka,
-    spotifyUrl: "https://open.spotify.com/show/3bMhKz8bPZ3VvQF8rF2Xq5",
     youtubeUrl: "https://www.youtube.com/watch?v=1B-Q9k6KAL4",
     category: "Longevity",
-    spotifyEmbedId: "3bMhKz8bPZ3VvQF8rF2Xq5",
     youtubeEmbedId: "1B-Q9k6KAL4",
   },
 ];
@@ -164,15 +149,9 @@ const Podcast = () => {
                 How Gary Brecka helped Dana White add 10 years to his life through gene testing, breathwork, and biohacking protocols. The episode that started a health revolution.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
-                <Button asChild className="bg-gold hover:bg-gold/90 text-primary">
-                  <a href="https://open.spotify.com/show/1a2G6j5gFCl7CVnmwpbCe2" target="_blank" rel="noopener noreferrer">
-                    <Play className="w-4 h-4 mr-2" />
-                    Listen on Spotify
-                  </a>
-                </Button>
-                <Button asChild variant="outline" className="border-gold/50 text-foreground hover:bg-gold/10">
-                  <a href="https://www.youtube.com/@GaryBrecka" target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="w-4 h-4 mr-2" />
+                <Button asChild className="bg-red-600 hover:bg-red-600/90 text-white">
+                  <a href="https://www.youtube.com/watch?v=oWu9TFJjHaM" target="_blank" rel="noopener noreferrer">
+                    <Video className="w-4 h-4 mr-2" />
                     Watch on YouTube
                   </a>
                 </Button>
@@ -194,10 +173,8 @@ const Podcast = () => {
                 episodeTitle={podcast.episodeTitle}
                 description={podcast.description}
                 image={podcast.image}
-                spotifyUrl={podcast.spotifyUrl}
                 youtubeUrl={podcast.youtubeUrl}
                 category={podcast.category}
-                spotifyEmbedId={podcast.spotifyEmbedId}
                 youtubeEmbedId={podcast.youtubeEmbedId}
               />
             ))}

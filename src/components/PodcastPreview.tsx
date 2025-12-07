@@ -14,7 +14,7 @@ const podcasts = [
     host: "Gary Brecka",
     category: "Biohacking",
     description: "Gene testing, breathwork, and the protocols that transformed Dana White.",
-    spotifyUrl: "https://open.spotify.com/show/1a2G6j5gFCl7CVnmwpbCe2",
+    youtubeUrl: "https://www.youtube.com/watch?v=oWu9TFJjHaM",
   },
   {
     id: 2,
@@ -23,7 +23,7 @@ const podcasts = [
     host: "Dr. Andrew Huberman",
     category: "Neuroscience",
     description: "Stanford neuroscientist on cold exposure, dopamine, and performance.",
-    spotifyUrl: "https://open.spotify.com/show/79CkJF3UJTHFV8Dse3Ez0P",
+    youtubeUrl: "https://www.youtube.com/watch?v=pq6WHJzOkno",
   },
   {
     id: 3,
@@ -32,7 +32,7 @@ const podcasts = [
     host: "Dr. Peter Attia",
     category: "Longevity",
     description: "Deep dive into longevity science and medicine 3.0 protocols.",
-    spotifyUrl: "https://open.spotify.com/show/1ktxVBArrt5OOcicSyCCTM",
+    youtubeUrl: "https://www.youtube.com/watch?v=tGLYLyHk5ck",
   },
   {
     id: 4,
@@ -41,7 +41,7 @@ const podcasts = [
     host: "Wim Hof",
     category: "Cold Exposure",
     description: "The Iceman on breathwork, cold mastery, and pushing human limits.",
-    spotifyUrl: "https://open.spotify.com/show/1vSjZ4nsUFZN4eX9Bb4yHF",
+    youtubeUrl: "https://www.youtube.com/watch?v=JPflvEqLA3s",
   },
 ];
 
@@ -71,7 +71,7 @@ const PodcastPreview = () => {
           {podcasts.map((podcast) => (
             <a
               key={podcast.id}
-              href={podcast.spotifyUrl}
+              href={podcast.youtubeUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="group relative overflow-hidden rounded-xl bg-primary-800/50 hover:bg-primary-800 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-gold/10"
@@ -85,8 +85,8 @@ const PodcastPreview = () => {
                 />
                 {/* Play overlay */}
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <div className="w-14 h-14 rounded-full bg-gold flex items-center justify-center transform scale-75 group-hover:scale-100 transition-transform">
-                    <Play className="w-6 h-6 text-primary-900 ml-1" fill="currentColor" />
+                  <div className="w-14 h-14 rounded-full bg-red-600 flex items-center justify-center transform scale-75 group-hover:scale-100 transition-transform">
+                    <Play className="w-6 h-6 text-white ml-1" fill="currentColor" />
                   </div>
                 </div>
               </div>
