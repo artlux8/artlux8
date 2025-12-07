@@ -5,11 +5,12 @@ import Footer from '@/components/Footer';
 import ProtocolBundles from '@/components/ProtocolBundles';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ShoppingCart, Star, Leaf, Brain, Moon, Zap, Heart, Shield, Loader2 } from 'lucide-react';
+import { ShoppingCart, Star, Leaf, Brain, Moon, Zap, Heart, Shield } from 'lucide-react';
 import { useCartStore } from '@/stores/cartStore';
 import { fetchProducts, ShopifyProduct } from '@/lib/shopify';
 import { toast } from 'sonner';
 import { useLocalizationStore } from '@/stores/localizationStore';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const categories = [
   { id: 'all', name: 'All Products', icon: Shield },
@@ -110,10 +111,27 @@ const Shop = () => {
       <section className="py-16">
         <div className="container mx-auto px-4">
           {loading ? (
-            <div className="flex items-center justify-center py-20">
-              <Loader2 className="w-8 h-8 animate-spin text-accent" />
-              <span className="ml-3 text-muted-foreground">Loading products...</span>
-            </div>
+            <>
+              <div className="flex items-center justify-between mb-8">
+                <Skeleton className="h-5 w-40" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {Array.from({ length: 8 }).map((_, i) => (
+                  <div key={i} className="bg-card rounded-2xl border border-border overflow-hidden">
+                    <Skeleton className="aspect-square w-full" />
+                    <div className="p-5 space-y-3">
+                      <Skeleton className="h-5 w-3/4" />
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-2/3" />
+                      <div className="flex items-center justify-between pt-2">
+                        <Skeleton className="h-7 w-20" />
+                        <Skeleton className="h-9 w-16 rounded-md" />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
           ) : products.length === 0 ? (
             <div className="text-center py-20">
               <ShoppingCart className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
