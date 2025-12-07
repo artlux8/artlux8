@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Play, Music, Video, X } from "lucide-react";
+import { Play, Video, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,10 +14,8 @@ interface PodcastPlayerProps {
   episodeTitle: string;
   description: string;
   image: string;
-  spotifyUrl: string;
-  youtubeUrl?: string;
+  youtubeUrl: string;
   category: string;
-  spotifyEmbedId?: string;
   youtubeEmbedId?: string;
 }
 
@@ -27,36 +25,11 @@ const PodcastPlayer = ({
   episodeTitle,
   description,
   image,
-  spotifyUrl,
   youtubeUrl,
   category,
-  spotifyEmbedId,
   youtubeEmbedId,
 }: PodcastPlayerProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activePlayer, setActivePlayer] = useState<"spotify" | "youtube">("spotify");
-
-  const handleOpenPlayer = (player: "spotify" | "youtube") => {
-    setActivePlayer(player);
-    setIsOpen(true);
-  };
-
-  // Extract Spotify show/episode ID from URL if not provided
-  const getSpotifyEmbedUrl = () => {
-    if (spotifyEmbedId) {
-      return `https://open.spotify.com/embed/show/${spotifyEmbedId}?utm_source=generator&theme=0`;
-    }
-    // Try to extract from URL
-    const showMatch = spotifyUrl.match(/show\/([a-zA-Z0-9]+)/);
-    const episodeMatch = spotifyUrl.match(/episode\/([a-zA-Z0-9]+)/);
-    if (episodeMatch) {
-      return `https://open.spotify.com/embed/episode/${episodeMatch[1]}?utm_source=generator&theme=0`;
-    }
-    if (showMatch) {
-      return `https://open.spotify.com/embed/show/${showMatch[1]}?utm_source=generator&theme=0`;
-    }
-    return null;
-  };
 
   // Extract YouTube video ID from URL if not provided
   const getYoutubeEmbedUrl = () => {
@@ -71,7 +44,6 @@ const PodcastPlayer = ({
     return null;
   };
 
-  const spotifyEmbed = getSpotifyEmbedUrl();
   const youtubeEmbed = getYoutubeEmbedUrl();
 
   return (
@@ -88,11 +60,11 @@ const PodcastPlayer = ({
           
           {/* Play Button Overlay */}
           <button
-            onClick={() => handleOpenPlayer(youtubeEmbed ? "youtube" : "spotify")}
+            onClick={() => setIsOpen(true)}
             className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
           >
-            <div className="w-16 h-16 rounded-full bg-gold/90 flex items-center justify-center hover:scale-110 transition-transform">
-              <Play className="w-8 h-8 text-primary ml-1" />
+            <div className="w-16 h-16 rounded-full bg-red-600/90 flex items-center justify-center hover:scale-110 transition-transform">
+              <Play className="w-8 h-8 text-white ml-1" />
             </div>
           </button>
 
@@ -123,27 +95,14 @@ const PodcastPlayer = ({
             {description}
           </p>
 
-          <div className="flex gap-2">
-            <Button
-              size="sm"
-              className="flex-1 bg-[#1DB954] hover:bg-[#1DB954]/90 text-white"
-              onClick={() => handleOpenPlayer("spotify")}
-            >
-              <Music className="w-3 h-3 mr-1" />
-              Spotify
-            </Button>
-            {youtubeUrl && (
-              <Button
-                size="sm"
-                variant="outline"
-                className="flex-1 border-red-500/50 text-foreground hover:bg-red-500/10"
-                onClick={() => handleOpenPlayer("youtube")}
-              >
-                <Video className="w-3 h-3 mr-1" />
-                YouTube
-              </Button>
-            )}
-          </div>
+          <Button
+            size="sm"
+            className="w-full bg-red-600 hover:bg-red-600/90 text-white"
+            onClick={() => setIsOpen(true)}
+          >
+            <Video className="w-3 h-3 mr-1" />
+            Watch on YouTube
+          </Button>
         </div>
       </div>
 
@@ -151,48 +110,13 @@ const PodcastPlayer = ({
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="max-w-4xl w-[95vw] p-0 bg-card border-gold/20">
           <DialogHeader className="p-4 pb-0">
-            <div className="flex items-center justify-between">
-              <DialogTitle className="text-lg font-semibold text-foreground">
-                {name} - {episodeTitle}
-              </DialogTitle>
-            </div>
-            {/* Player Toggle */}
-            <div className="flex gap-2 mt-3">
-              <Button
-                size="sm"
-                variant={activePlayer === "spotify" ? "default" : "outline"}
-                className={activePlayer === "spotify" ? "bg-[#1DB954] hover:bg-[#1DB954]/90 text-white" : ""}
-                onClick={() => setActivePlayer("spotify")}
-              >
-                <Music className="w-4 h-4 mr-2" />
-                Spotify
-              </Button>
-              {youtubeEmbed && (
-                <Button
-                  size="sm"
-                  variant={activePlayer === "youtube" ? "default" : "outline"}
-                  className={activePlayer === "youtube" ? "bg-red-600 hover:bg-red-600/90 text-white" : ""}
-                  onClick={() => setActivePlayer("youtube")}
-                >
-                  <Video className="w-4 h-4 mr-2" />
-                  YouTube
-                </Button>
-              )}
-            </div>
+            <DialogTitle className="text-lg font-semibold text-foreground">
+              {name} - {episodeTitle}
+            </DialogTitle>
           </DialogHeader>
 
           <div className="p-4">
-            {activePlayer === "spotify" && spotifyEmbed ? (
-              <iframe
-                src={spotifyEmbed}
-                width="100%"
-                height="352"
-                frameBorder="0"
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                loading="lazy"
-                className="rounded-xl"
-              />
-            ) : activePlayer === "youtube" && youtubeEmbed ? (
+            {youtubeEmbed ? (
               <div className="aspect-video">
                 <iframe
                   src={youtubeEmbed}
@@ -207,13 +131,14 @@ const PodcastPlayer = ({
             ) : (
               <div className="flex flex-col items-center justify-center py-12 text-muted-foreground">
                 <p className="mb-4">Embedded player not available</p>
-                <Button asChild className="bg-gold hover:bg-gold/90 text-primary">
+                <Button asChild className="bg-red-600 hover:bg-red-600/90 text-white">
                   <a 
-                    href={activePlayer === "youtube" ? youtubeUrl : spotifyUrl} 
+                    href={youtubeUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
                   >
-                    Open in {activePlayer === "youtube" ? "YouTube" : "Spotify"}
+                    <ExternalLink className="w-4 h-4 mr-2" />
+                    Open in YouTube
                   </a>
                 </Button>
               </div>
