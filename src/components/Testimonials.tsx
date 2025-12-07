@@ -1,72 +1,105 @@
-import { Star, Quote } from "lucide-react";
+import { useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const testimonials = [
   {
-    name: "Dr. Sarah Chen",
-    role: "Integrative Medicine Physician",
+    name: "DANA WHITE",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face",
+    content: "I was on blood pressure medicine, thyroid medicine, and cholesterol medicine. I am on nothing now except [ARTLUX∞] supplements...so I'm off all these meds I've been on for 12 years, and I lost 40lbs.",
+  },
+  {
+    name: "DR. SARAH CHEN",
+    image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=200&h=200&fit=crop&crop=face",
     content: "The formulations are pharmaceutical-grade. I've seen remarkable improvements in my patients' biomarkers—inflammation markers down, energy up. This is what evidence-based supplementation looks like.",
-    rating: 5,
   },
   {
-    name: "Marcus Thompson",
-    role: "Biohacker & Entrepreneur",
+    name: "MARCUS THOMPSON",
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face",
     content: "I've tried everything. These protocols actually move the needle. My biological age tests show I'm aging slower than my chronological age. The Longevity Stack is non-negotiable.",
-    rating: 5,
   },
   {
-    name: "Dr. Emily Rodriguez",
-    role: "Longevity Researcher",
+    name: "DR. EMILY RODRIGUEZ",
+    image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=200&h=200&fit=crop&crop=face",
     content: "Finally, a company that understands bioavailability and dosing. The methylated B-vitamins and NMN quality are comparable to what we use in clinical trials. Highly recommend.",
-    rating: 5,
   },
 ];
 
 const Testimonials = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const goToPrevious = () => {
+    setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
+  };
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
+  };
+
+  const currentTestimonial = testimonials[currentIndex];
+
   return (
-    <section className="py-20 md:py-32 bg-primary">
+    <section className="py-16 md:py-24 bg-muted">
       <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <p className="text-gold-light font-medium text-sm tracking-widest uppercase mb-4">
-            Testimonials
-          </p>
-          <h2 className="font-logo text-3xl md:text-5xl font-bold text-primary-foreground mb-4">
-            Trusted by Biohackers & Physicians
-          </h2>
-          <p className="text-primary-foreground/70 text-lg max-w-2xl mx-auto">
-            Join thousands of high performers optimizing their healthspan with science-backed protocols.
-          </p>
-        </div>
-
-        {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial) => (
-            <div
-              key={testimonial.name}
-              className="bg-primary-foreground/5 backdrop-blur-sm border border-primary-foreground/10 rounded-2xl p-8 hover:border-gold/30 transition-colors"
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center justify-between gap-8">
+            {/* Left Arrow */}
+            <button
+              onClick={goToPrevious}
+              className="flex-shrink-0 w-12 h-12 rounded-full border-2 border-foreground/20 flex items-center justify-center hover:border-foreground/40 hover:bg-foreground/5 transition-all"
+              aria-label="Previous testimonial"
             >
-              {/* Quote Icon */}
-              <Quote className="w-8 h-8 text-gold/40 mb-4" />
+              <ChevronLeft className="w-6 h-6 text-foreground" />
+            </button>
 
-              {/* Stars */}
-              <div className="flex gap-1 mb-6">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-gold text-gold" />
-                ))}
+            {/* Testimonial Content */}
+            <div className="flex flex-col md:flex-row items-center gap-8 flex-1">
+              {/* Circular Photo */}
+              <div className="flex-shrink-0">
+                <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-background shadow-lg">
+                  <img
+                    src={currentTestimonial.image}
+                    alt={currentTestimonial.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
 
-              {/* Content */}
-              <p className="text-primary-foreground/90 text-base mb-8 leading-relaxed">
-                "{testimonial.content}"
-              </p>
-
-              {/* Author */}
-              <div>
-                <p className="font-semibold text-primary-foreground">{testimonial.name}</p>
-                <p className="text-gold-light/70 text-sm">{testimonial.role}</p>
+              {/* Quote and Name */}
+              <div className="flex-1 text-center md:text-left">
+                <p className="text-foreground text-lg md:text-xl leading-relaxed mb-6">
+                  "{currentTestimonial.content}"
+                </p>
+                <p className="font-bold text-foreground text-lg tracking-wide">
+                  {currentTestimonial.name}
+                </p>
               </div>
             </div>
-          ))}
+
+            {/* Right Arrow */}
+            <button
+              onClick={goToNext}
+              className="flex-shrink-0 w-12 h-12 rounded-full border-2 border-foreground/20 flex items-center justify-center hover:border-foreground/40 hover:bg-foreground/5 transition-all"
+              aria-label="Next testimonial"
+            >
+              <ChevronRight className="w-6 h-6 text-foreground" />
+            </button>
+          </div>
+
+          {/* Dots Indicator */}
+          <div className="flex justify-center gap-2 mt-8">
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  index === currentIndex
+                    ? "bg-gold w-6"
+                    : "bg-foreground/30 hover:bg-foreground/50"
+                }`}
+                aria-label={`Go to testimonial ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
