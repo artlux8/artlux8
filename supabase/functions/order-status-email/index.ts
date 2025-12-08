@@ -2,6 +2,9 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -18,6 +21,38 @@ interface OrderStatusEmailRequest {
   carrier?: string;
   order_total?: number;
   currency?: string;
+}
+
+// Verify that the authenticated user has admin role
+async function verifyAdminRole(req: Request): Promise<{ isAdmin: boolean; error?: string }> {
+  const authHeader = req.headers.get("Authorization");
+  if (!authHeader) {
+    return { isAdmin: false, error: "Missing authorization header" };
+  }
+
+  const token = authHeader.replace("Bearer ", "");
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  
+  const { data: { user }, error: userError } = await supabase.auth.getUser(token);
+  if (userError || !user) {
+    console.error("Auth error:", userError);
+    return { isAdmin: false, error: "Invalid or expired token" };
+  }
+
+  // Check if user has admin role using the has_role function
+  const serviceClient = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+  const { data: isAdmin, error: roleError } = await serviceClient.rpc("has_role", {
+    _user_id: user.id,
+    _role: "admin"
+  });
+
+  if (roleError) {
+    console.error("Role check error:", roleError);
+    return { isAdmin: false, error: "Failed to verify admin role" };
+  }
+
+  console.log("Admin role check for user:", user.id, "result:", isAdmin);
+  return { isAdmin: !!isAdmin };
 }
 
 const getShippedEmailHtml = (data: OrderStatusEmailRequest) => `
@@ -128,6 +163,16 @@ const handler = async (req: Request): Promise<Response> => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Verify admin role before processing
+  const { isAdmin, error: authError } = await verifyAdminRole(req);
+  if (!isAdmin) {
+    console.error("Authorization failed:", authError);
+    return new Response(
+      JSON.stringify({ error: authError || "Unauthorized - Admin access required" }),
+      { status: 403, headers: { "Content-Type": "application/json", ...corsHeaders } }
+    );
+  }
+
   try {
     const data: OrderStatusEmailRequest = await req.json();
     console.log("Processing order status email:", data.order_id, "status:", data.status);
@@ -174,9 +219,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // Update order record
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
     await supabase
       .from("order_fulfillments")
