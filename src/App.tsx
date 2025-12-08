@@ -21,7 +21,7 @@ import UploadProof from "./pages/UploadProof";
 import NotFound from "./pages/NotFound";
 import WholesaleCatalog from "./pages/WholesaleCatalog";
 import SupplierDashboard from "./pages/SupplierDashboard";
-import NewsletterPopup from "./components/NewsletterPopup";
+import ExitIntentPopup from "./components/ExitIntentPopup";
 import Blog from "./pages/Blog";
 import GeneticTesting from "./pages/GeneticTesting";
 import Peptides from "./pages/Peptides";
@@ -53,7 +53,7 @@ const App = () => (
         <CartProvider>
           <Toaster />
           <Sonner />
-          <NewsletterPopup />
+          <ExitIntentPopup />
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
