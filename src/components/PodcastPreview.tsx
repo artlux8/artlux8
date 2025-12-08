@@ -1,47 +1,47 @@
 import { Headphones, Play, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
-import podcastGaryBrecka from "@/assets/podcast-gary-brecka.jpg";
-import podcastHuberman from "@/assets/podcast-huberman.jpg";
-import podcastAttia from "@/assets/podcast-attia.jpg";
-import podcastWimhof from "@/assets/podcast-wimhof.jpg";
+import garyBreckaThumbnail from "@/assets/gary-brecka-real.jpg";
+import garyBreckaJoeRogan from "@/assets/gary-brecka-joe-rogan.jpg";
+import ultimateHumanDiet from "@/assets/ultimate-human-diet.jpg";
+import ultimateHumanSupplements from "@/assets/ultimate-human-supplements.jpg";
 
 const podcasts = [
   {
     id: 1,
-    image: podcastGaryBrecka,
-    title: "The Ultimate Human",
-    host: "Gary Brecka",
+    image: garyBreckaJoeRogan,
+    title: "Joe Rogan Experience #2304",
+    host: "Joe Rogan & Gary Brecka",
     category: "Biohacking",
-    description: "Gene testing, breathwork, and the protocols that transformed Dana White.",
-    youtubeUrl: "https://www.youtube.com/watch?v=oWu9TFJjHaM",
+    description: "Gary Brecka on longevity, breathwork, and the science of human optimization.",
+    youtubeUrl: "https://www.youtube.com/watch?v=nhC8lLPpGl4",
   },
   {
     id: 2,
-    image: podcastHuberman,
-    title: "Huberman Lab",
-    host: "Dr. Andrew Huberman",
-    category: "Neuroscience",
-    description: "Stanford neuroscientist on cold exposure, dopamine, and performance.",
-    youtubeUrl: "https://www.youtube.com/watch?v=pq6WHJzOkno",
+    image: ultimateHumanDiet,
+    title: "Diet Myths & Creatine",
+    host: "Gary Brecka",
+    category: "Nutrition",
+    description: "The real secret to longevity: avoiding processed foods and mastering the basics.",
+    youtubeUrl: "https://www.youtube.com/watch?v=4dET0o0AK2I",
   },
   {
     id: 3,
-    image: podcastAttia,
-    title: "The Peter Attia Drive",
-    host: "Dr. Peter Attia",
-    category: "Longevity",
-    description: "Deep dive into longevity science and medicine 3.0 protocols.",
-    youtubeUrl: "https://www.youtube.com/watch?v=tGLYLyHk5ck",
+    image: ultimateHumanSupplements,
+    title: "Stop Guessing Supplements",
+    host: "Gary Brecka",
+    category: "Supplements",
+    description: "Your immune system isn't attacking you for no reason. Find out what's really happening.",
+    youtubeUrl: "https://www.youtube.com/watch?v=ZlvhOOD1kjw",
   },
   {
     id: 4,
-    image: podcastWimhof,
-    title: "The Wim Hof Method",
-    host: "Wim Hof",
-    category: "Cold Exposure",
-    description: "The Iceman on breathwork, cold mastery, and pushing human limits.",
-    youtubeUrl: "https://www.youtube.com/watch?v=JPflvEqLA3s",
+    image: garyBreckaThumbnail,
+    title: "AI Health Breakthroughs",
+    host: "Gary Brecka & Peter",
+    category: "Technology",
+    description: "The most important bio hacks and health tech gadgets for living longer.",
+    youtubeUrl: "https://www.youtube.com/watch?v=HR4oWQuCXSA",
   },
 ];
 
@@ -54,15 +54,15 @@ const PodcastPreview = () => {
           <div className="flex items-center justify-center gap-2 mb-4">
             <Headphones className="w-6 h-6 text-gold" />
             <span className="text-gold font-semibold tracking-widest uppercase text-sm">
-              Curated Content
+              The Ultimate Human Podcast
             </span>
           </div>
           <h2 className="text-3xl md:text-4xl font-display font-bold text-primary-foreground mb-4">
             ARTLUX<span className="text-gold">∞</span> Listening Room
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Learn from the world's leading longevity experts. Curated podcasts on biohacking, 
-            performance optimization, and the science behind the ARTLUX Protocol.
+            Learn from Gary Brecka's Ultimate Human Podcast. Curated episodes on biohacking, 
+            performance optimization, and the science behind longevity.
           </p>
         </div>
 
@@ -77,7 +77,7 @@ const PodcastPreview = () => {
               className="group relative overflow-hidden rounded-xl bg-secondary/50 hover:bg-secondary transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-gold/10"
             >
               {/* Image */}
-              <div className="aspect-square overflow-hidden">
+              <div className="aspect-video overflow-hidden">
                 <img
                   src={podcast.image}
                   alt={podcast.title}
