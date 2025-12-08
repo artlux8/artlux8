@@ -68,12 +68,10 @@ interface LocalizationStore {
   updateCurrencyRates: (rates: Record<string, number>) => void;
 }
 
-// Round to attractive price points
-const roundToAttractive = (price: number): number => {
-  if (price < 10) return Math.round(price);
-  if (price < 50) return Math.round(price / 5) * 5;
-  if (price < 100) return Math.round(price / 10) * 10;
-  return Math.round(price / 25) * 25;
+// Round to .88 ending (ARTLUX brand signature)
+const roundTo88 = (price: number): number => {
+  const wholeNumber = Math.floor(price);
+  return wholeNumber + 0.88;
 };
 
 // Store mutable rates that can be updated
@@ -149,11 +147,11 @@ export const useLocalizationStore = create<LocalizationStore>()(
         // Use live rate from currentRates if available
         const rate = currentRates[currency.code] || currency.rate;
         const converted = numAmount * rate;
-        const finalAmount = round ? roundToAttractive(converted) : converted;
+        const finalAmount = round ? roundTo88(converted) : converted;
         
         return `${currency.symbol}${finalAmount.toLocaleString('en-US', {
-          minimumFractionDigits: 0,
-          maximumFractionDigits: round ? 0 : 2,
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
         })}`;
       },
 
@@ -162,7 +160,7 @@ export const useLocalizationStore = create<LocalizationStore>()(
         const numAmount = typeof usdAmount === 'string' ? parseFloat(usdAmount) : usdAmount;
         // Use live rate from currentRates if available
         const rate = currentRates[currency.code] || currency.rate;
-        return roundToAttractive(numAmount * rate);
+        return roundTo88(numAmount * rate);
       },
 
       detectAndSetLocale: async () => {
