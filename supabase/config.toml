@@ -4,4 +4,4 @@ project_id = "vqixktvgtmqtviaauwlr"
 verify_jwt = false
 
 [functions.order-status-email]
-verify_jwt = false
+verify_jwt = true
