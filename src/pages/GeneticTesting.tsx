@@ -1,9 +1,12 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Check, Dna, Brain, Heart, Zap, Shield, Clock, FileText } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-
+import { useCartStore } from '@/stores/cartStore';
+import { fetchProductByHandle, createStorefrontCheckout } from '@/lib/shopify';
+import { toast } from 'sonner';
 const measures = [
   "Biological age (vs chronological age)",
   "Rate of cellular aging",
@@ -38,11 +41,49 @@ const protocolItems = [
 ];
 
 const GeneticTesting = () => {
+  const navigate = useNavigate();
+  const addItem = useCartStore(state => state.addItem);
+
   useEffect(() => {
     document.title = "ARTLUX Methylation Genetic Testing – Precision Longevity Blueprint";
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) metaDesc.setAttribute('content', 'Discover your biological age, detox capacity, inflammation markers and optimal supplement protocol using methylation-based DNA testing. ARTLUX provides personalized longevity plans based on your genes.');
   }, []);
+
+  const handleOrderTest = async () => {
+    try {
+      const product = await fetchProductByHandle('methylation-genetic-test');
+      if (!product) {
+        toast.error('Product not found');
+        return;
+      }
+      
+      const variant = product.variants.edges[0]?.node;
+      if (!variant) {
+        toast.error('No variant available');
+        return;
+      }
+
+      const cartItem = {
+        product: { node: product },
+        variantId: variant.id,
+        variantTitle: variant.title,
+        price: variant.price,
+        quantity: 1,
+        selectedOptions: variant.selectedOptions || []
+      };
+
+      addItem(cartItem);
+      
+      const checkoutUrl = await createStorefrontCheckout([cartItem]);
+      if (checkoutUrl) {
+        window.open(checkoutUrl, '_blank');
+      }
+    } catch (error) {
+      console.error('Checkout error:', error);
+      toast.error('Failed to create checkout');
+    }
+  };
 
   return (
     <>
@@ -139,13 +180,13 @@ const GeneticTesting = () => {
               Start Your Longevity Journey
             </h2>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground" onClick={handleOrderTest}>
                 Order Methylation Test
               </Button>
-              <Button size="lg" variant="outline" className="border-accent/30 hover:bg-accent/10">
+              <Button size="lg" variant="outline" className="border-accent/30 hover:bg-accent/10" onClick={() => toast.info('Sample report coming soon')}>
                 View Sample Report
               </Button>
-              <Button size="lg" variant="outline" className="border-accent/30 hover:bg-accent/10">
+              <Button size="lg" variant="outline" className="border-accent/30 hover:bg-accent/10" onClick={() => navigate('/personalized-subscription')}>
                 Unlock Personalized Subscription
               </Button>
             </div>
