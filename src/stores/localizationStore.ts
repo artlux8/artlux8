@@ -27,6 +27,8 @@ export const CURRENCIES: Currency[] = [
   { code: 'AED', symbol: 'د.إ', name: 'UAE Dirham', rate: 3.67, flag: '🇦🇪' },
   { code: 'SAR', symbol: '﷼', name: 'Saudi Riyal', rate: 3.75, flag: '🇸🇦' },
   { code: 'QAR', symbol: 'ر.ق', name: 'Qatari Riyal', rate: 3.64, flag: '🇶🇦' },
+  { code: 'UAH', symbol: '₴', name: 'Ukrainian Hryvnia', rate: 41.50, flag: '🇺🇦' },
+  { code: 'RUB', symbol: '₽', name: 'Russian Ruble', rate: 92.50, flag: '🇷🇺' },
 ];
 
 export const LANGUAGES: Language[] = [
@@ -39,6 +41,8 @@ export const LANGUAGES: Language[] = [
   { code: 'ar', name: 'Arabic', nativeName: 'العربية' },
   { code: 'zh', name: 'Chinese', nativeName: '中文' },
   { code: 'ja', name: 'Japanese', nativeName: '日本語' },
+  { code: 'uk', name: 'Ukrainian', nativeName: 'Українська' },
+  { code: 'ru', name: 'Russian', nativeName: 'Русский' },
 ];
 
 interface GeoData {
