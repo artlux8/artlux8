@@ -6,7 +6,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import ShopifyCartDrawer from "./ShopifyCartDrawer";
 import LocalizationSelector from "./LocalizationSelector";
 import GeoRedirectBanner from "./GeoRedirectBanner";
-import GoogleTranslate from "./GoogleTranslate";
 import { useLocalizationStore } from "@/stores/localizationStore";
 
 const navLinks = [
@@ -78,7 +77,6 @@ const Header = () => {
 
             {/* Right Actions */}
             <div className="flex items-center gap-2 md:gap-3">
-              <GoogleTranslate />
               <LocalizationSelector />
               {user ? (
                 <button
