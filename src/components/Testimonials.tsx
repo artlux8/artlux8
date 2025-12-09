@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import danaWhiteImage from "@/assets/dana-white-portrait.jpg";
+import danaWhiteImage from "@/assets/dana-white-ufc.jpg";
 
 const testimonials = [
   {
