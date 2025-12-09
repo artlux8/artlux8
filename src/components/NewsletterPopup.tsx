@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { X, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,6 +6,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { z } from "zod";
+import TurnstileWidget from "@/components/TurnstileWidget";
 
 const emailSchema = z.string().email("Please enter a valid email address");
 
@@ -15,6 +16,7 @@ const NewsletterPopup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [discountCode, setDiscountCode] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   useEffect(() => {
     // Check if user has already seen the popup
@@ -32,6 +34,14 @@ const NewsletterPopup = () => {
     return `ARTLUX15-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
   };
 
+  const handleTurnstileVerify = useCallback((token: string) => {
+    setTurnstileToken(token);
+  }, []);
+
+  const handleTurnstileExpire = useCallback(() => {
+    setTurnstileToken(null);
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -42,19 +52,32 @@ const NewsletterPopup = () => {
       return;
     }
 
+    if (!turnstileToken) {
+      toast.error("Please complete the CAPTCHA verification");
+      return;
+    }
+
     setIsLoading(true);
     const code = generateDiscountCode();
 
     try {
-      const { error } = await supabase
-        .from("newsletter_subscribers")
-        .insert({ email, discount_code: code });
+      const { data, error } = await supabase.functions.invoke('newsletter-subscribe', {
+        body: { 
+          email, 
+          turnstileToken,
+          discountCode: code 
+        }
+      });
 
       if (error) {
-        if (error.code === "23505") {
+        throw error;
+      }
+
+      if (data?.error) {
+        if (data.error.includes('already subscribed')) {
           toast.error("This email is already subscribed!");
         } else {
-          throw error;
+          toast.error(data.error);
         }
         return;
       }
@@ -122,9 +145,17 @@ const NewsletterPopup = () => {
                     className="border-border focus:border-gold"
                     required
                   />
+                  
+                  <TurnstileWidget
+                    onVerify={handleTurnstileVerify}
+                    onExpire={handleTurnstileExpire}
+                    theme="dark"
+                    size="normal"
+                  />
+                  
                   <Button
                     type="submit"
-                    disabled={isLoading}
+                    disabled={isLoading || !turnstileToken}
                     className="w-full bg-gold hover:bg-gold/90 text-primary font-semibold"
                   >
                     {isLoading ? "Subscribing..." : "Get My 15% Off"}

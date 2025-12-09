@@ -6,6 +6,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { z } from "zod";
+import TurnstileWidget from "@/components/TurnstileWidget";
 
 const emailSchema = z.string().email("Please enter a valid email address");
 
@@ -63,6 +64,7 @@ const ExitIntentPopup = () => {
   const [discountCode, setDiscountCode] = useState("");
   const [offerLevel, setOfferLevel] = useState<OfferLevel>(1);
   const [hasTriggered, setHasTriggered] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   const currentOffer = OFFERS[offerLevel];
 
@@ -95,6 +97,14 @@ const ExitIntentPopup = () => {
     return `${prefix}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
   };
 
+  const handleTurnstileVerify = useCallback((token: string) => {
+    setTurnstileToken(token);
+  }, []);
+
+  const handleTurnstileExpire = useCallback(() => {
+    setTurnstileToken(null);
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -105,22 +115,32 @@ const ExitIntentPopup = () => {
       return;
     }
 
+    if (!turnstileToken) {
+      toast.error("Please complete the CAPTCHA verification");
+      return;
+    }
+
     setIsLoading(true);
     const code = generateDiscountCode(offerLevel);
 
     try {
-      const { error } = await supabase
-        .from("newsletter_subscribers")
-        .insert({ 
+      const { data, error } = await supabase.functions.invoke('newsletter-subscribe', {
+        body: { 
           email, 
-          discount_code: code,
-        });
+          turnstileToken,
+          discountCode: code 
+        }
+      });
 
       if (error) {
-        if (error.code === "23505") {
+        throw error;
+      }
+
+      if (data?.error) {
+        if (data.error.includes('already subscribed')) {
           toast.error("This email is already subscribed!");
         } else {
-          throw error;
+          toast.error(data.error);
         }
         return;
       }
@@ -142,6 +162,7 @@ const ExitIntentPopup = () => {
     localStorage.setItem("artlux-exit-intent-level", offerLevel.toString());
     setIsOpen(false);
     setHasTriggered(false); // Allow next level to trigger on next exit
+    setTurnstileToken(null); // Reset captcha
   };
 
   const handleClose = () => {
@@ -229,9 +250,17 @@ const ExitIntentPopup = () => {
                     className="border-border focus:border-gold"
                     required
                   />
+                  
+                  <TurnstileWidget
+                    onVerify={handleTurnstileVerify}
+                    onExpire={handleTurnstileExpire}
+                    theme="dark"
+                    size="normal"
+                  />
+                  
                   <Button
                     type="submit"
-                    disabled={isLoading}
+                    disabled={isLoading || !turnstileToken}
                     className={`w-full font-semibold ${
                       offerLevel === 3 
                         ? 'bg-gradient-to-r from-gold via-gold-light to-gold hover:opacity-90 text-primary animate-shimmer'
