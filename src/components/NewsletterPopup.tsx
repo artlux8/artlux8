@@ -94,8 +94,8 @@ const NewsletterPopup = () => {
             {!isSubmitted ? (
               <>
                 <div className="flex justify-center mb-4">
-                  <div className="p-3 rounded-full bg-[#4ECDC4]/10">
-                    <Sparkles className="w-8 h-8 text-[#4ECDC4]" />
+                  <div className="p-3 rounded-full bg-teal/10">
+                    <Sparkles className="w-8 h-8 text-teal" />
                   </div>
                 </div>
                 
@@ -138,8 +138,8 @@ const NewsletterPopup = () => {
             ) : (
               <>
                 <div className="flex justify-center mb-4">
-                  <div className="p-3 rounded-full bg-[#4ECDC4]/20">
-                    <Sparkles className="w-8 h-8 text-[#4ECDC4]" />
+                  <div className="p-3 rounded-full bg-teal/20">
+                    <Sparkles className="w-8 h-8 text-teal" />
                   </div>
                 </div>
                 
