@@ -251,7 +251,7 @@ const LongevityChat = () => {
         className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-teal hover:bg-teal-dark text-white px-4 py-3 rounded-full shadow-lg transition-all hover:scale-105"
       >
         <MessageCircle className="w-5 h-5" />
-        <span className="font-medium">AI Консультант</span>
+        <span className="font-medium">Live Chat</span>
       </button>
     );
   }
