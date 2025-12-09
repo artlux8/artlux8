@@ -1,8 +1,8 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send, Bot, User, Sparkles, X, MessageCircle, Trash2, LogIn } from "lucide-react";
+import { Send, Bot, User, Sparkles, X, MessageCircle, Trash2, LogIn, Minimize2, Volume2, VolumeX } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
@@ -14,13 +14,39 @@ interface Message {
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/longevity-chat`;
 
+// Generate notification sound using Web Audio API
+const playNotificationSound = () => {
+  try {
+    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+    oscillator.frequency.setValueAtTime(600, audioContext.currentTime + 0.1);
+    
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.3);
+  } catch (error) {
+    console.log("Audio not supported");
+  }
+};
+
 const LongevityChat = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
   const [isLoadingHistory, setIsLoadingHistory] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(true);
+  const [unreadCount, setUnreadCount] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
@@ -39,10 +65,11 @@ const LongevityChat = () => {
 
   // Load chat history when user is authenticated and chat opens
   useEffect(() => {
-    if (isOpen && userId) {
+    if (isOpen && userId && !isMinimized) {
       loadChatHistory();
+      setUnreadCount(0);
     }
-  }, [isOpen, userId]);
+  }, [isOpen, userId, isMinimized]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -184,6 +211,14 @@ const LongevityChat = () => {
       if (userId && assistantContent) {
         await saveMessage("assistant", assistantContent);
       }
+
+      // Play notification sound and update unread count
+      if (soundEnabled) {
+        playNotificationSound();
+      }
+      if (isMinimized) {
+        setUnreadCount(prev => prev + 1);
+      }
     } catch (error) {
       console.error("Chat error:", error);
       toast.error(error instanceof Error ? error.message : "Failed to get response");
@@ -199,6 +234,16 @@ const LongevityChat = () => {
     streamChat(input.trim());
   };
 
+  const handleMinimize = () => {
+    setIsMinimized(true);
+  };
+
+  const handleExpand = () => {
+    setIsMinimized(false);
+    setUnreadCount(0);
+  };
+
+  // Closed state - show floating button
   if (!isOpen) {
     return (
       <button
@@ -211,6 +256,24 @@ const LongevityChat = () => {
     );
   }
 
+  // Minimized state - show compact icon
+  if (isMinimized) {
+    return (
+      <button
+        onClick={handleExpand}
+        className="fixed bottom-6 right-6 z-50 relative bg-teal hover:bg-teal-dark text-white p-4 rounded-full shadow-lg transition-all hover:scale-105"
+      >
+        <Sparkles className="w-6 h-6" />
+        {unreadCount > 0 && (
+          <span className="absolute -top-1 -right-1 bg-gold text-primary text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
+            {unreadCount}
+          </span>
+        )}
+      </button>
+    );
+  }
+
+  // Full chat view
   return (
     <div className="fixed bottom-6 right-6 z-50 w-[380px] h-[520px] bg-background border border-border rounded-2xl shadow-2xl flex flex-col overflow-hidden">
       {/* Header */}
@@ -227,6 +290,17 @@ const LongevityChat = () => {
           </div>
         </div>
         <div className="flex items-center gap-1">
+          <button
+            onClick={() => setSoundEnabled(!soundEnabled)}
+            className="p-1.5 hover:bg-white/20 rounded-full transition-colors"
+            title={soundEnabled ? "Mute sounds" : "Enable sounds"}
+          >
+            {soundEnabled ? (
+              <Volume2 className="w-4 h-4 text-white" />
+            ) : (
+              <VolumeX className="w-4 h-4 text-white/60" />
+            )}
+          </button>
           {userId && messages.length > 0 && (
             <button
               onClick={clearHistory}
@@ -237,8 +311,16 @@ const LongevityChat = () => {
             </button>
           )}
           <button
+            onClick={handleMinimize}
+            className="p-1.5 hover:bg-white/20 rounded-full transition-colors"
+            title="Minimize"
+          >
+            <Minimize2 className="w-4 h-4 text-white" />
+          </button>
+          <button
             onClick={() => setIsOpen(false)}
             className="p-1.5 hover:bg-white/20 rounded-full transition-colors"
+            title="Close"
           >
             <X className="w-5 h-5 text-white" />
           </button>
