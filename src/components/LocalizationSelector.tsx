@@ -8,10 +8,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { useLocalizationStore, CURRENCIES, LANGUAGES } from "@/stores/localizationStore";
+import { useLocalizationStore, CURRENCIES } from "@/stores/localizationStore";
 
 const LocalizationSelector = () => {
-  const { currency, language, setCurrency, setLanguage } = useLocalizationStore();
+  const { currency, setCurrency } = useLocalizationStore();
 
   return (
     <DropdownMenu>
@@ -34,20 +34,6 @@ const LocalizationSelector = () => {
             <span className="w-10 font-medium">{c.symbol}</span>
             <span className="w-10">{c.code}</span>
             <span className="ml-auto text-xs text-muted-foreground">{c.name}</span>
-          </DropdownMenuItem>
-        ))}
-        
-        <DropdownMenuSeparator />
-        
-        <DropdownMenuLabel className="text-xs text-muted-foreground uppercase tracking-wider">Language</DropdownMenuLabel>
-        {LANGUAGES.map((l) => (
-          <DropdownMenuItem
-            key={l.code}
-            onClick={() => setLanguage(l)}
-            className={`cursor-pointer ${language.code === l.code ? 'bg-primary/10 text-primary' : ''}`}
-          >
-            <span>{l.nativeName}</span>
-            <span className="ml-auto text-xs text-muted-foreground">{l.name}</span>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
