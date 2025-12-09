@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import danaWhiteImage from "@/assets/dana-white-portrait.jpg";
 
 const testimonials = [
   {
     name: "DANA WHITE",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face",
+    image: danaWhiteImage,
     content: "I was on blood pressure medicine, thyroid medicine, and cholesterol medicine. I am on nothing now except [ARTLUX∞] supplements...so I'm off all these meds I've been on for 12 years, and I lost 40lbs.",
   },
   {
