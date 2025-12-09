@@ -2,8 +2,10 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send, Bot, User, Sparkles, X, MessageCircle } from "lucide-react";
+import { Send, Bot, User, Sparkles, X, MessageCircle, Trash2, LogIn } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom";
 
 interface Message {
   role: "user" | "assistant";
@@ -17,7 +19,30 @@ const LongevityChat = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [isLoadingHistory, setIsLoadingHistory] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+
+  // Check auth status
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
+      setUserId(session?.user?.id ?? null);
+    });
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUserId(session?.user?.id ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  // Load chat history when user is authenticated and chat opens
+  useEffect(() => {
+    if (isOpen && userId) {
+      loadChatHistory();
+    }
+  }, [isOpen, userId]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -25,11 +50,73 @@ const LongevityChat = () => {
     }
   }, [messages]);
 
+  const loadChatHistory = async () => {
+    if (!userId) return;
+    
+    setIsLoadingHistory(true);
+    try {
+      const { data, error } = await supabase
+        .from("chat_messages")
+        .select("role, content")
+        .eq("user_id", userId)
+        .order("created_at", { ascending: true })
+        .limit(50);
+
+      if (error) throw error;
+      
+      if (data && data.length > 0) {
+        setMessages(data as Message[]);
+      }
+    } catch (error) {
+      console.error("Error loading chat history:", error);
+    } finally {
+      setIsLoadingHistory(false);
+    }
+  };
+
+  const saveMessage = async (role: "user" | "assistant", content: string) => {
+    if (!userId) return;
+    
+    try {
+      await supabase.from("chat_messages").insert({
+        user_id: userId,
+        role,
+        content,
+      });
+    } catch (error) {
+      console.error("Error saving message:", error);
+    }
+  };
+
+  const clearHistory = async () => {
+    if (!userId) return;
+    
+    try {
+      const { error } = await supabase
+        .from("chat_messages")
+        .delete()
+        .eq("user_id", userId);
+
+      if (error) throw error;
+      
+      setMessages([]);
+      toast.success("Chat history cleared");
+    } catch (error) {
+      console.error("Error clearing history:", error);
+      toast.error("Failed to clear history");
+    }
+  };
+
   const streamChat = async (userMessage: string) => {
     const newMessages: Message[] = [...messages, { role: "user", content: userMessage }];
     setMessages(newMessages);
     setInput("");
     setIsLoading(true);
+
+    // Save user message if authenticated
+    if (userId) {
+      await saveMessage("user", userMessage);
+    }
 
     let assistantContent = "";
 
@@ -87,16 +174,19 @@ const LongevityChat = () => {
               });
             }
           } catch {
-            // Incomplete JSON, put back and wait
             buffer = line + "\n" + buffer;
             break;
           }
         }
       }
+
+      // Save assistant response if authenticated
+      if (userId && assistantContent) {
+        await saveMessage("assistant", assistantContent);
+      }
     } catch (error) {
       console.error("Chat error:", error);
       toast.error(error instanceof Error ? error.message : "Failed to get response");
-      // Remove the empty assistant message on error
       setMessages(newMessages);
     } finally {
       setIsLoading(false);
@@ -131,20 +221,38 @@ const LongevityChat = () => {
           </div>
           <div>
             <h3 className="font-semibold text-white">ARTLUX∞ AI</h3>
-            <p className="text-xs text-white/80">Longevity Advisor</p>
+            <p className="text-xs text-white/80">
+              {userId ? "История сохраняется" : "Войдите для сохранения"}
+            </p>
           </div>
         </div>
-        <button
-          onClick={() => setIsOpen(false)}
-          className="p-1 hover:bg-white/20 rounded-full transition-colors"
-        >
-          <X className="w-5 h-5 text-white" />
-        </button>
+        <div className="flex items-center gap-1">
+          {userId && messages.length > 0 && (
+            <button
+              onClick={clearHistory}
+              className="p-1.5 hover:bg-white/20 rounded-full transition-colors"
+              title="Clear history"
+            >
+              <Trash2 className="w-4 h-4 text-white" />
+            </button>
+          )}
+          <button
+            onClick={() => setIsOpen(false)}
+            className="p-1.5 hover:bg-white/20 rounded-full transition-colors"
+          >
+            <X className="w-5 h-5 text-white" />
+          </button>
+        </div>
       </div>
 
       {/* Messages */}
       <ScrollArea className="flex-1 p-4" ref={scrollRef}>
-        {messages.length === 0 ? (
+        {isLoadingHistory ? (
+          <div className="text-center py-8">
+            <div className="animate-spin w-8 h-8 border-2 border-teal border-t-transparent rounded-full mx-auto" />
+            <p className="text-sm text-muted-foreground mt-2">Loading history...</p>
+          </div>
+        ) : messages.length === 0 ? (
           <div className="text-center py-8">
             <div className="p-3 bg-teal/10 rounded-full w-fit mx-auto mb-4">
               <Bot className="w-8 h-8 text-teal" />
@@ -153,6 +261,15 @@ const LongevityChat = () => {
             <p className="text-sm text-muted-foreground mb-4">
               Ask me about longevity, supplements, protocols, or health optimization.
             </p>
+            {!userId && (
+              <button
+                onClick={() => navigate("/auth")}
+                className="flex items-center gap-2 mx-auto text-sm text-teal hover:underline mb-4"
+              >
+                <LogIn className="w-4 h-4" />
+                Sign in to save chat history
+              </button>
+            )}
             <div className="flex flex-wrap gap-2 justify-center">
               {["NAD+ benefits?", "Sleep protocol", "Best for energy"].map((q) => (
                 <button
