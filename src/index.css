@@ -140,6 +140,38 @@
   }
 }
 
+@keyframes led-flow {
+  0% {
+    background-position: 300% center;
+  }
+  100% {
+    background-position: -300% center;
+  }
+}
+
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  14% {
+    transform: scale(1.02);
+    filter: brightness(1.2);
+  }
+  28% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  42% {
+    transform: scale(1.02);
+    filter: brightness(1.15);
+  }
+  70% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;
