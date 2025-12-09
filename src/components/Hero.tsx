@@ -30,10 +30,14 @@ const Hero = () => {
           </div>
 
           {/* Main Headline */}
-          <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground leading-[1.1] mb-6 opacity-0 animate-slide-up" style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}>
-            Unlock Your Longest,
+          <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6 opacity-0 animate-slide-up" style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}>
+            <span className="bg-gradient-to-r from-white via-accent to-white bg-[length:200%_auto] animate-[shimmer_3s_linear_infinite] bg-clip-text text-transparent">
+              Unlock Your Longest,
+            </span>
             <br />
-            <span className="text-accent">Healthiest Life</span>
+            <span className="bg-gradient-to-r from-accent via-yellow-300 to-accent bg-[length:200%_auto] animate-[shimmer_3s_linear_infinite] bg-clip-text text-transparent">
+              Healthiest Life
+            </span>
           </h1>
 
           {/* Subheadline */}
