@@ -195,16 +195,18 @@ export const useLocalizationStore = create<LocalizationStore>()(
 
           set({ geoData, hasCheckedGeo: true });
 
-          // Check if UK user should be redirected to .co.uk
+          // Auto-redirect UK users to .co.uk domain
           const currentHost = window.location.hostname;
           const isUK = data.country_code === 'GB';
           const isOnCoUk = currentHost.includes('.co.uk');
-          const isOnCom = currentHost.includes('.com') && !currentHost.includes('.co.uk');
+          const isOnCom = currentHost.includes('artlux8.com');
+          const isLocalhost = currentHost.includes('localhost') || currentHost.includes('lovable.app');
 
-          if (isUK && isOnCom) {
-            set({ showRedirectBanner: true });
-          } else if (!isUK && isOnCoUk) {
-            set({ showRedirectBanner: true });
+          // Only redirect on production domains, not localhost/preview
+          if (isUK && isOnCom && !isLocalhost) {
+            const currentPath = window.location.pathname + window.location.search;
+            window.location.href = `https://artlux8.co.uk${currentPath}`;
+            return;
           }
 
           // Auto-suggest currency based on location
