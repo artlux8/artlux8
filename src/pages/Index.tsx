@@ -13,7 +13,6 @@ import PodcastPreview from "@/components/PodcastPreview";
 import Testimonials from "@/components/Testimonials";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
-import LongevityChat from "@/components/LongevityChat";
 
 const Index = () => {
   return (
@@ -33,7 +32,6 @@ const Index = () => {
       <Testimonials />
       <CTA />
       <Footer />
-      <LongevityChat />
     </div>
   );
 };
