@@ -120,8 +120,6 @@ export default {
         "shimmer": "shimmer 3s linear infinite",
         "heartbeat": "heartbeat 1.5s ease-in-out infinite",
       },
-        "shimmer": "shimmer 3s linear infinite",
-      },
     },
   },
   plugins: [require("tailwindcss-animate")],
