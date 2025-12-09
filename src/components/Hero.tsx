@@ -50,7 +50,7 @@ const Hero = () => {
                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 text-base px-8 py-6 rounded-full font-semibold">
+            <Button asChild size="lg" variant="outline" className="border-accent bg-primary/50 text-accent hover:bg-accent hover:text-primary text-base px-8 py-6 rounded-full font-semibold">
               <Link to="/genetic-testing">
                 Take Genetic Test
               </Link>
