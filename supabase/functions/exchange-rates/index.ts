@@ -6,7 +6,7 @@ const corsHeaders = {
 };
 
 // Target currencies we support
-const SUPPORTED_CURRENCIES = ['USD', 'GBP', 'EUR', 'CAD', 'AUD', 'HKD', 'SGD', 'AED', 'SAR', 'QAR', 'UAH', 'RUB'];
+const SUPPORTED_CURRENCIES = ['USD', 'GBP', 'EUR', 'CAD', 'AUD', 'HKD', 'SGD', 'AED', 'SAR', 'QAR', 'UAH', 'RUB', 'PLN', 'BRL', 'COP', 'CLP', 'ARS'];
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -75,6 +75,11 @@ serve(async (req) => {
           QAR: 3.64,
           UAH: 41.50,
           RUB: 92.50,
+          PLN: 4.05,
+          BRL: 6.05,
+          COP: 4380,
+          CLP: 980,
+          ARS: 1050,
         },
       }),
       {

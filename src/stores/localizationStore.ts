@@ -29,6 +29,11 @@ export const CURRENCIES: Currency[] = [
   { code: 'QAR', symbol: 'ر.ق', name: 'Qatari Riyal', rate: 3.64, flag: '🇶🇦' },
   { code: 'UAH', symbol: '₴', name: 'Ukrainian Hryvnia', rate: 41.50, flag: '🇺🇦' },
   { code: 'RUB', symbol: '₽', name: 'Russian Ruble', rate: 92.50, flag: '🇷🇺' },
+  { code: 'PLN', symbol: 'zł', name: 'Polish Zloty', rate: 4.05, flag: '🇵🇱' },
+  { code: 'BRL', symbol: 'R$', name: 'Brazilian Real', rate: 6.05, flag: '🇧🇷' },
+  { code: 'COP', symbol: 'COL$', name: 'Colombian Peso', rate: 4380, flag: '🇨🇴' },
+  { code: 'CLP', symbol: 'CL$', name: 'Chilean Peso', rate: 980, flag: '🇨🇱' },
+  { code: 'ARS', symbol: 'AR$', name: 'Argentine Peso', rate: 1050, flag: '🇦🇷' },
 ];
 
 export const LANGUAGES: Language[] = [
@@ -43,6 +48,10 @@ export const LANGUAGES: Language[] = [
   { code: 'ja', name: 'Japanese', nativeName: '日本語' },
   { code: 'uk', name: 'Ukrainian', nativeName: 'Українська' },
   { code: 'ru', name: 'Russian', nativeName: 'Русский' },
+  { code: 'lv', name: 'Latvian', nativeName: 'Latviešu' },
+  { code: 'lt', name: 'Lithuanian', nativeName: 'Lietuvių' },
+  { code: 'et', name: 'Estonian', nativeName: 'Eesti' },
+  { code: 'pl', name: 'Polish', nativeName: 'Polski' },
 ];
 
 interface GeoData {
