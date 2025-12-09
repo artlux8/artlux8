@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send, Bot, User, Sparkles, X, MessageCircle, Trash2, LogIn, Minimize2, Volume2, VolumeX } from "lucide-react";
+import { Send, Bot, User, Sparkles, X, MessageCircle, Trash2, LogIn, Minimize2, Volume2, VolumeX, Mic, MicOff, Play, Square } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
@@ -37,6 +37,36 @@ const playNotificationSound = () => {
   }
 };
 
+// Text-to-Speech function using Web Speech API
+const speakText = (text: string, onEnd?: () => void) => {
+  if (!('speechSynthesis' in window)) {
+    console.log("Text-to-Speech not supported");
+    return;
+  }
+  
+  // Cancel any ongoing speech
+  window.speechSynthesis.cancel();
+  
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'en-US';
+  utterance.rate = 1.0;
+  utterance.pitch = 1.0;
+  utterance.volume = 1.0;
+  
+  if (onEnd) {
+    utterance.onend = onEnd;
+  }
+  
+  window.speechSynthesis.speak(utterance);
+};
+
+// Stop Text-to-Speech
+const stopSpeaking = () => {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+  }
+};
+
 const LongevityChat = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
@@ -47,7 +77,11 @@ const LongevityChat = () => {
   const [isLoadingHistory, setIsLoadingHistory] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [isListening, setIsListening] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [ttsEnabled, setTtsEnabled] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const recognitionRef = useRef<any>(null);
   const navigate = useNavigate();
 
   // Check auth status
@@ -219,6 +253,12 @@ const LongevityChat = () => {
       if (isMinimized) {
         setUnreadCount(prev => prev + 1);
       }
+
+      // Auto-speak the response if TTS is enabled
+      if (ttsEnabled && assistantContent) {
+        setIsSpeaking(true);
+        speakText(assistantContent, () => setIsSpeaking(false));
+      }
     } catch (error) {
       console.error("Chat error:", error);
       toast.error(error instanceof Error ? error.message : "Failed to get response");
@@ -226,6 +266,58 @@ const LongevityChat = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Initialize Speech Recognition
+  const startListening = () => {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      toast.error("Voice input not supported in this browser");
+      return;
+    }
+
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognitionRef.current = recognition;
+    
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = () => {
+      setIsListening(true);
+    };
+
+    recognition.onresult = (event: any) => {
+      const transcript = event.results[0][0].transcript;
+      setInput(transcript);
+      setIsListening(false);
+    };
+
+    recognition.onerror = (event: any) => {
+      console.error("Speech recognition error:", event.error);
+      if (event.error !== 'no-speech') {
+        toast.error("Voice input error: " + event.error);
+      }
+      setIsListening(false);
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+
+    recognition.start();
+  };
+
+  const stopListening = () => {
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+    }
+  };
+
+  const handleStopSpeaking = () => {
+    stopSpeaking();
+    setIsSpeaking(false);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -291,16 +383,25 @@ const LongevityChat = () => {
         </div>
         <div className="flex items-center gap-1">
           <button
-            onClick={() => setSoundEnabled(!soundEnabled)}
+            onClick={() => setTtsEnabled(!ttsEnabled)}
             className="p-1.5 hover:bg-white/20 rounded-full transition-colors"
-            title={soundEnabled ? "Mute sounds" : "Enable sounds"}
+            title={ttsEnabled ? "Disable auto-speak" : "Enable auto-speak"}
           >
-            {soundEnabled ? (
+            {ttsEnabled ? (
               <Volume2 className="w-4 h-4 text-white" />
             ) : (
               <VolumeX className="w-4 h-4 text-white/60" />
             )}
           </button>
+          {isSpeaking && (
+            <button
+              onClick={handleStopSpeaking}
+              className="p-1.5 hover:bg-white/20 rounded-full transition-colors animate-pulse"
+              title="Stop speaking"
+            >
+              <Square className="w-4 h-4 text-white" />
+            </button>
+          )}
           {userId && messages.length > 0 && (
             <button
               onClick={clearHistory}
@@ -413,11 +514,22 @@ const LongevityChat = () => {
       {/* Input */}
       <form onSubmit={handleSubmit} className="p-4 border-t border-border">
         <div className="flex gap-2">
+          <Button
+            type="button"
+            onClick={isListening ? stopListening : startListening}
+            disabled={isLoading}
+            size="icon"
+            variant={isListening ? "destructive" : "outline"}
+            className={isListening ? "animate-pulse" : ""}
+            title={isListening ? "Stop listening" : "Voice input"}
+          >
+            {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+          </Button>
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask about longevity..."
-            disabled={isLoading}
+            placeholder={isListening ? "Listening..." : "Ask about longevity..."}
+            disabled={isLoading || isListening}
             className="flex-1"
           />
           <Button
