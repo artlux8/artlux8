@@ -41,6 +41,11 @@
     --gold-light: 45 100% 70%;
     --gold-dark: 38 80% 40%;
 
+    /* Brand teal color - ARTLUX logo */
+    --teal: 176 56% 55%;
+    --teal-light: 176 60% 70%;
+    --teal-dark: 176 50% 40%;
+
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
