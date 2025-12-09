@@ -103,6 +103,13 @@ export default {
           "0%": { backgroundPosition: "200% center" },
           "100%": { backgroundPosition: "-200% center" },
         },
+        "heartbeat": {
+          "0%, 100%": { transform: "scale(1)" },
+          "14%": { transform: "scale(1.05)" },
+          "28%": { transform: "scale(1)" },
+          "42%": { transform: "scale(1.05)" },
+          "70%": { transform: "scale(1)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -110,6 +117,9 @@ export default {
         "fade-in": "fade-in 0.6s ease-out forwards",
         "slide-up": "slide-up 0.8s ease-out forwards",
         "marquee": "marquee 30s linear infinite",
+        "shimmer": "shimmer 3s linear infinite",
+        "heartbeat": "heartbeat 1.5s ease-in-out infinite",
+      },
         "shimmer": "shimmer 3s linear infinite",
       },
     },
