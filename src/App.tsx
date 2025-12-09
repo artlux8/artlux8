@@ -43,6 +43,7 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import LongevityProtocol from "./pages/LongevityProtocol";
 import ThankYou from "./pages/ThankYou";
+import LongevityChat from "./components/LongevityChat";
 
 const queryClient = new QueryClient();
 
@@ -97,6 +98,7 @@ const App = () => (
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <LongevityChat />
           </BrowserRouter>
         </CartProvider>
       </AuthProvider>
