@@ -1,4 +1,5 @@
 import { Instagram, Twitter, Youtube, Linkedin } from "lucide-react";
+import { useTranslation } from "@/hooks/useTranslation";
 
 // Custom TikTok icon
 const TikTokIcon = () => (
@@ -15,6 +16,8 @@ const PinterestIcon = () => (
 );
 
 const Footer = () => {
+  const { t } = useTranslation();
+
   return (
     <footer className="bg-primary text-primary-foreground">
       <div className="container mx-auto px-4 py-16">
@@ -24,7 +27,7 @@ const Footer = () => {
             <span className="text-2xl font-logo font-semibold tracking-[0.25em] mb-2 block">ARTLUX<span className="logo-infinity-light text-3xl font-bold ml-0.5">∞</span></span>
             <span className="text-[9px] text-primary-foreground/60 mb-4 block tracking-[0.2em] uppercase font-medium">The Luxury Longevity</span>
             <p className="text-primary-foreground/60 text-sm mb-4 max-w-xs">
-              Science-backed biohacking protocols and premium supplements for optimal healthspan and peak performance.
+              {t('hero.subtitle')}
             </p>
             <div className="text-primary-foreground/60 text-sm mb-4 space-y-1">
               <p className="font-semibold text-primary-foreground">ARTLUX LTD</p>
@@ -62,47 +65,47 @@ const Footer = () => {
 
           {/* Shop */}
           <div>
-            <h4 className="font-semibold mb-4">Shop</h4>
+            <h4 className="font-semibold mb-4">{t('footer.shop')}</h4>
             <ul className="space-y-3 text-sm text-primary-foreground/60">
-              <li><a href="/shop" className="hover:text-primary-foreground transition-colors">Supplements</a></li>
+              <li><a href="/shop" className="hover:text-primary-foreground transition-colors">{t('footer.allProducts')}</a></li>
               <li><a href="/hydrogen-water-bottles" className="hover:text-primary-foreground transition-colors">Hydrogen Bottles</a></li>
               <li><a href="/cold-plunge" className="hover:text-primary-foreground transition-colors">Cold Plunge</a></li>
               <li><a href="/grounding" className="hover:text-primary-foreground transition-colors">Grounding</a></li>
-              <li><a href="/bundles" className="hover:text-primary-foreground transition-colors">Bundles</a></li>
+              <li><a href="/bundles" className="hover:text-primary-foreground transition-colors">{t('footer.bundles')}</a></li>
             </ul>
           </div>
 
           {/* Learn */}
           <div>
-            <h4 className="font-semibold mb-4">Learn</h4>
+            <h4 className="font-semibold mb-4">{t('footer.learn')}</h4>
             <ul className="space-y-3 text-sm text-primary-foreground/60">
-              <li><a href="/longevity-protocol" className="hover:text-primary-foreground transition-colors">Longevity Protocol</a></li>
-              <li><a href="/podcast" className="hover:text-primary-foreground transition-colors">Podcast</a></li>
-              <li><a href="/free-protocol" className="hover:text-primary-foreground transition-colors">Free Protocol</a></li>
-              <li><a href="/blog" className="hover:text-primary-foreground transition-colors">Blog</a></li>
-              <li><a href="/faq" className="hover:text-primary-foreground transition-colors">FAQ</a></li>
+              <li><a href="/longevity-protocol" className="hover:text-primary-foreground transition-colors">{t('footer.protocols')}</a></li>
+              <li><a href="/podcast" className="hover:text-primary-foreground transition-colors">{t('footer.podcast')}</a></li>
+              <li><a href="/free-protocol" className="hover:text-primary-foreground transition-colors">{t('footer.freeProtocol')}</a></li>
+              <li><a href="/blog" className="hover:text-primary-foreground transition-colors">{t('footer.blog')}</a></li>
+              <li><a href="/faq" className="hover:text-primary-foreground transition-colors">{t('footer.faq')}</a></li>
             </ul>
           </div>
 
           {/* Company */}
           <div>
-            <h4 className="font-semibold mb-4">Company</h4>
+            <h4 className="font-semibold mb-4">{t('footer.company')}</h4>
             <ul className="space-y-3 text-sm text-primary-foreground/60">
-              <li><a href="/about" className="hover:text-primary-foreground transition-colors">About Us</a></li>
+              <li><a href="/about" className="hover:text-primary-foreground transition-colors">{t('footer.about')}</a></li>
               <li><a href="/genetic-testing" className="hover:text-primary-foreground transition-colors">Genetic Testing</a></li>
               <li><a href="/expert-biohacker" className="hover:text-primary-foreground transition-colors">Expert Biohacker</a></li>
-              <li><a href="/contact" className="hover:text-primary-foreground transition-colors">Contact</a></li>
+              <li><a href="/contact" className="hover:text-primary-foreground transition-colors">{t('footer.contact')}</a></li>
             </ul>
           </div>
 
           {/* Support */}
           <div>
-            <h4 className="font-semibold mb-4">Support</h4>
+            <h4 className="font-semibold mb-4">{t('footer.support')}</h4>
             <ul className="space-y-3 text-sm text-primary-foreground/60">
-              <li><a href="/shipping" className="hover:text-primary-foreground transition-colors">Shipping</a></li>
-              <li><a href="/returns" className="hover:text-primary-foreground transition-colors">Returns</a></li>
-              <li><a href="/privacy" className="hover:text-primary-foreground transition-colors">Privacy Policy</a></li>
-              <li><a href="/terms" className="hover:text-primary-foreground transition-colors">Terms of Service</a></li>
+              <li><a href="/shipping" className="hover:text-primary-foreground transition-colors">{t('footer.shipping')}</a></li>
+              <li><a href="/returns" className="hover:text-primary-foreground transition-colors">{t('footer.returns')}</a></li>
+              <li><a href="/privacy" className="hover:text-primary-foreground transition-colors">{t('footer.privacy')}</a></li>
+              <li><a href="/terms" className="hover:text-primary-foreground transition-colors">{t('footer.terms')}</a></li>
             </ul>
           </div>
         </div>
@@ -110,12 +113,12 @@ const Footer = () => {
         {/* Bottom */}
         <div className="border-t border-primary-foreground/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-primary-foreground/40 text-sm">
-            © 2024 ARTLUX LTD. All rights reserved.
+            © 2024 ARTLUX LTD. {t('footer.rights')}
           </p>
           <div className="flex gap-6 text-sm text-primary-foreground/40">
-            <a href="#" className="hover:text-primary-foreground transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-primary-foreground transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-primary-foreground transition-colors">Accessibility</a>
+            <a href="/privacy" className="hover:text-primary-foreground transition-colors">{t('footer.privacy')}</a>
+            <a href="/terms" className="hover:text-primary-foreground transition-colors">{t('footer.terms')}</a>
+            <a href="#" className="hover:text-primary-foreground transition-colors">{t('footer.accessibility')}</a>
           </div>
         </div>
       </div>

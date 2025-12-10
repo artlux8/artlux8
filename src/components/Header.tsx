@@ -7,16 +7,7 @@ import ShopifyCartDrawer from "./ShopifyCartDrawer";
 import LocalizationSelector from "./LocalizationSelector";
 import GeoRedirectBanner from "./GeoRedirectBanner";
 import { useLocalizationStore } from "@/stores/localizationStore";
-
-const navLinks = [
-  { href: "/shop", label: "Shop" },
-  { href: "/longevity-protocol", label: "Protocol" },
-  { href: "/genetic-testing", label: "Genetic Test" },
-  { href: "/bundles", label: "Bundles" },
-  { href: "/free-protocol", label: "Free Protocol" },
-  { href: "/blog", label: "Blog" },
-  { href: "/expert-biohacker", label: "Expert" },
-];
+import { useTranslation } from "@/hooks/useTranslation";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,6 +15,17 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { detectAndSetLocale, fetchLiveRates, currency } = useLocalizationStore();
+  const { t } = useTranslation();
+
+  const navLinks = [
+    { href: "/shop", label: t('nav.shop') },
+    { href: "/longevity-protocol", label: t('nav.protocols') },
+    { href: "/genetic-testing", label: "Genetic Test" },
+    { href: "/bundles", label: t('nav.bundles') },
+    { href: "/free-protocol", label: t('nav.freeProtocol') },
+    { href: "/blog", label: t('nav.blog') },
+    { href: "/expert-biohacker", label: "Expert" },
+  ];
 
   useEffect(() => {
     detectAndSetLocale();
@@ -41,7 +43,7 @@ const Header = () => {
       
       {/* Announcement Bar */}
       <div className="bg-primary text-primary-foreground text-center py-2.5 text-sm font-medium">
-        Subscribe & Save 15% on All Protocols • Free Shipping on Orders {freeShippingThreshold}+
+        {t('cta.benefits.subscribe')} • {t('cta.benefits.shipping').replace('$75+', freeShippingThreshold + '+')}
       </div>
 
       {/* Main Header */}
@@ -82,7 +84,7 @@ const Header = () => {
                 <button
                   onClick={() => navigate('/dashboard')}
                   className="hidden md:flex items-center justify-center w-10 h-10 rounded-full hover:bg-secondary transition-colors"
-                  title="Dashboard"
+                  title={t('nav.dashboard')}
                 >
                   <User className="w-5 h-5 text-foreground" />
                 </button>
@@ -90,14 +92,14 @@ const Header = () => {
                 <button
                   onClick={() => navigate('/auth')}
                   className="hidden md:flex items-center justify-center w-10 h-10 rounded-full hover:bg-secondary transition-colors"
-                  title="Sign In"
+                  title={t('nav.signIn')}
                 >
                   <User className="w-5 h-5 text-foreground" />
                 </button>
               )}
               <ShopifyCartDrawer />
               <Button onClick={() => navigate('/shop')} className="hidden md:flex bg-primary text-primary-foreground hover:bg-primary/90">
-                Shop Now
+                {t('hero.cta.shopProducts')}
               </Button>
               <button
                 className="md:hidden p-2"
@@ -128,15 +130,15 @@ const Header = () => {
               {user ? (
                 <>
                   <a href="/dashboard" className="text-lg font-medium py-2 border-b border-border" onClick={() => setIsMenuOpen(false)}>
-                    Dashboard
+                    {t('nav.dashboard')}
                   </a>
                   <Button onClick={() => { signOut(); setIsMenuOpen(false); }} variant="outline" className="mt-4 w-full">
-                    Sign Out
+                    {t('nav.signOut')}
                   </Button>
                 </>
               ) : (
                 <Button onClick={() => { navigate('/auth'); setIsMenuOpen(false); }} className="mt-4 w-full bg-primary text-primary-foreground">
-                  Sign In
+                  {t('nav.signIn')}
                 </Button>
               )}
             </nav>
