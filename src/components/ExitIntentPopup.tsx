@@ -28,8 +28,8 @@ const OFFERS: Record<OfferLevel, OfferConfig> = {
   1: {
     discount: "8.88%",
     discountValue: 8.88,
-    title: "Wait! Don't Leave Yet",
-    subtitle: "Exclusive Exit Offer",
+    title: "Special Offer Just For You",
+    subtitle: "3 Minute Reward",
     description: "Get 8.88% off your first order when you join our longevity community.",
     buttonText: "Claim 8.88% Off",
     icon: <Sparkles className="w-8 h-8 text-gold" />,
@@ -37,8 +37,8 @@ const OFFERS: Record<OfferLevel, OfferConfig> = {
   2: {
     discount: "18.88%",
     discountValue: 18.88,
-    title: "One More Thing...",
-    subtitle: "Special Hydrogen Bottle Offer",
+    title: "You've Unlocked More!",
+    subtitle: "6 Minute Bonus",
     description: "Get 18.88% off our premium Hydrogen Water Bottle — the ultimate longevity tool.",
     buttonText: "Get Hydrogen Bottle Deal",
     icon: <Gift className="w-8 h-8 text-gold" />,
@@ -47,8 +47,8 @@ const OFFERS: Record<OfferLevel, OfferConfig> = {
   3: {
     discount: "88.88%",
     discountValue: 88.88,
-    title: "Final Offer — Our Best Deal",
-    subtitle: "Legendary Discount Unlocked",
+    title: "Maximum Discount Unlocked!",
+    subtitle: "9 Minute Legendary Offer",
     description: "Get an incredible 88.88% off your entire order when you spend over $200!",
     buttonText: "Claim 88.88% Off Now",
     icon: <Zap className="w-8 h-8 text-gold" />,
@@ -68,29 +68,41 @@ const ExitIntentPopup = () => {
 
   const currentOffer = OFFERS[offerLevel];
 
-  const handleExitIntent = useCallback((e: MouseEvent) => {
-    // Only trigger when mouse leaves from top of page
-    if (e.clientY <= 0 && !hasTriggered) {
-      const exitIntentSeen = localStorage.getItem("artlux-exit-intent-level");
-      const seenLevel = exitIntentSeen ? parseInt(exitIntentSeen) : 0;
-      
-      if (seenLevel < 3) {
-        const nextLevel = Math.min(seenLevel + 1, 3) as OfferLevel;
-        setOfferLevel(nextLevel);
-        setIsOpen(true);
-        setHasTriggered(true);
-      }
-    }
-  }, [hasTriggered]);
+  // Time-based offer triggers: 3min = level 1, 6min = level 2, 9min = level 3
+  const OFFER_TIMES = {
+    1: 3 * 60 * 1000,  // 3 minutes
+    2: 6 * 60 * 1000,  // 6 minutes
+    3: 9 * 60 * 1000,  // 9 minutes
+  };
 
   useEffect(() => {
-    // Add exit intent listener
-    document.addEventListener("mouseout", handleExitIntent);
+    const seenLevel = parseInt(localStorage.getItem("artlux-exit-intent-level") || "0");
     
+    // If user has already seen all offers, don't show any
+    if (seenLevel >= 3) return;
+
+    const timers: NodeJS.Timeout[] = [];
+
+    // Set up timers for each offer level that hasn't been shown
+    ([1, 2, 3] as OfferLevel[]).forEach((level) => {
+      if (level > seenLevel) {
+        const timer = setTimeout(() => {
+          const currentSeenLevel = parseInt(localStorage.getItem("artlux-exit-intent-level") || "0");
+          // Only show if this level hasn't been seen yet and popup isn't open
+          if (level > currentSeenLevel && !isOpen) {
+            setOfferLevel(level);
+            setIsOpen(true);
+            setHasTriggered(true);
+          }
+        }, OFFER_TIMES[level]);
+        timers.push(timer);
+      }
+    });
+
     return () => {
-      document.removeEventListener("mouseout", handleExitIntent);
+      timers.forEach(clearTimeout);
     };
-  }, [handleExitIntent]);
+  }, []);
 
   const generateDiscountCode = (level: OfferLevel) => {
     const prefix = level === 1 ? "ARTLUX888" : level === 2 ? "HYDRO1888" : "MEGA8888";
