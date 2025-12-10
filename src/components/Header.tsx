@@ -7,7 +7,6 @@ import ShopifyCartDrawer from "./ShopifyCartDrawer";
 import LocalizationSelector from "./LocalizationSelector";
 import GeoRedirectBanner from "./GeoRedirectBanner";
 import { useLocalizationStore } from "@/stores/localizationStore";
-import { useTranslation } from "@/hooks/useTranslation";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,15 +14,14 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { detectAndSetLocale, fetchLiveRates, currency } = useLocalizationStore();
-  const { t } = useTranslation();
 
   const navLinks = [
-    { href: "/shop", label: t('nav.shop') },
-    { href: "/longevity-protocol", label: t('nav.protocols') },
+    { href: "/shop", label: "Shop" },
+    { href: "/longevity-protocol", label: "Protocols" },
     { href: "/genetic-testing", label: "Genetic Test" },
-    { href: "/bundles", label: t('nav.bundles') },
-    { href: "/free-protocol", label: t('nav.freeProtocol') },
-    { href: "/blog", label: t('nav.blog') },
+    { href: "/bundles", label: "Bundles" },
+    { href: "/free-protocol", label: "Free Protocol" },
+    { href: "/blog", label: "Blog" },
     { href: "/expert-biohacker", label: "Expert" },
   ];
 
@@ -43,7 +41,7 @@ const Header = () => {
       
       {/* Announcement Bar */}
       <div className="bg-primary text-primary-foreground text-center py-2.5 text-sm font-medium">
-        {t('cta.benefits.subscribe')} • {t('cta.benefits.shipping').replace('$75+', freeShippingThreshold + '+')}
+        Subscribe & Save 10% • Free Shipping on Orders {freeShippingThreshold}+
       </div>
 
       {/* Main Header */}
@@ -84,7 +82,7 @@ const Header = () => {
                 <button
                   onClick={() => navigate('/dashboard')}
                   className="hidden md:flex items-center justify-center w-10 h-10 rounded-full hover:bg-secondary transition-colors"
-                  title={t('nav.dashboard')}
+                  title="Dashboard"
                 >
                   <User className="w-5 h-5 text-foreground" />
                 </button>
@@ -92,14 +90,14 @@ const Header = () => {
                 <button
                   onClick={() => navigate('/auth')}
                   className="hidden md:flex items-center justify-center w-10 h-10 rounded-full hover:bg-secondary transition-colors"
-                  title={t('nav.signIn')}
+                  title="Sign In"
                 >
                   <User className="w-5 h-5 text-foreground" />
                 </button>
               )}
               <ShopifyCartDrawer />
               <Button onClick={() => navigate('/shop')} className="hidden md:flex bg-primary text-primary-foreground hover:bg-primary/90">
-                {t('hero.cta.shopProducts')}
+                Shop Products
               </Button>
               <button
                 className="md:hidden p-2"
@@ -130,15 +128,15 @@ const Header = () => {
               {user ? (
                 <>
                   <a href="/dashboard" className="text-lg font-medium py-2 border-b border-border" onClick={() => setIsMenuOpen(false)}>
-                    {t('nav.dashboard')}
+                    Dashboard
                   </a>
                   <Button onClick={() => { signOut(); setIsMenuOpen(false); }} variant="outline" className="mt-4 w-full">
-                    {t('nav.signOut')}
+                    Sign Out
                   </Button>
                 </>
               ) : (
                 <Button onClick={() => { navigate('/auth'); setIsMenuOpen(false); }} className="mt-4 w-full bg-primary text-primary-foreground">
-                  {t('nav.signIn')}
+                  Sign In
                 </Button>
               )}
             </nav>

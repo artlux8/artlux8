@@ -1,11 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Sparkles, Shield, Dna, Heart } from "lucide-react";
-import { useTranslation } from "@/hooks/useTranslation";
 
 const Hero = () => {
-  const { t } = useTranslation();
-
   return (
     <section className="relative min-h-[90vh] flex items-center bg-gradient-to-br from-primary via-primary to-primary/90 overflow-hidden">
       {/* Background Pattern */}
@@ -28,7 +25,7 @@ const Hero = () => {
           <div className="flex items-center gap-2 mb-6 opacity-0 animate-fade-in" style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}>
             <Sparkles className="w-4 h-4 text-accent" />
             <p className="text-accent font-medium text-sm md:text-base tracking-widest uppercase">
-              {t('hero.eyebrow')}
+              Science-Backed Longevity
             </p>
           </div>
 
@@ -45,7 +42,7 @@ const Hero = () => {
                 textShadow: '0 0 30px rgba(79, 209, 197, 0.5), 0 0 60px rgba(212, 175, 55, 0.3)',
               }}
             >
-              {t('hero.title')}
+              Transform Your Health.
             </span>
             <br />
             <span 
@@ -59,26 +56,26 @@ const Hero = () => {
                 textShadow: '0 0 40px rgba(212, 175, 55, 0.6), 0 0 80px rgba(255, 215, 0, 0.4)',
               }}
             >
-              {t('hero.titleHighlight')}
+              Extend Your Life.
             </span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-primary-foreground/80 text-lg md:text-xl max-w-xl mb-10 opacity-0 animate-fade-in" style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}>
-            {t('hero.subtitle')}
+            Premium supplements and protocols designed for optimal longevity, backed by cutting-edge science.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 opacity-0 animate-fade-in" style={{ animationDelay: "0.6s", animationFillMode: "forwards" }}>
             <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 text-base px-8 py-6 rounded-full font-semibold group">
               <Link to="/longevity-protocol">
-                {t('hero.cta.startProtocol')}
+                Start Your Protocol
                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-accent bg-primary/50 text-accent hover:bg-accent hover:text-primary text-base px-8 py-6 rounded-full font-semibold">
               <Link to="/shop">
-                {t('hero.cta.shopProducts')}
+                Shop Products
               </Link>
             </Button>
           </div>
@@ -109,7 +106,7 @@ const Hero = () => {
               </div>
               <div>
                 <p className="text-2xl md:text-3xl font-bold text-primary-foreground">25K+</p>
-                <p className="text-primary-foreground/60 text-sm">{t('hero.stats.customers')}</p>
+                <p className="text-primary-foreground/60 text-sm">Happy Customers</p>
               </div>
             </div>
           </div>
