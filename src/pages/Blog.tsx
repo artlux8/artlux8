@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import SEO from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { blogArticles, blogCategories } from "@/data/blogArticles";
@@ -31,6 +32,13 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Longevity Science Blog | ARTLUX∞"
+        description="Science-backed insights on longevity, autophagy, NAD+, and natural health optimization. No pharma propaganda — just truth about living longer and healthier."
+        keywords="longevity blog, autophagy science, NAD+ research, anti-aging articles, biohacking tips, health optimization"
+        url="https://artlux8.com/blog"
+        type="website"
+      />
       <Header />
 
       {/* Hero Section */}

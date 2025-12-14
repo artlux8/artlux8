@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import ChristmasBanner from "@/components/ChristmasBanner";
@@ -17,6 +18,12 @@ import Footer from "@/components/Footer";
 const Index = () => {
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="ARTLUX∞ - The Luxury Longevity | Premium Supplements & Protocols"
+        description="Science-backed longevity supplements and protocols. Premium NAD+, NMN, autophagy activators, and personalized health optimization. Your body is the ultimate luxury asset."
+        keywords="longevity supplements, NAD+ booster, NMN, autophagy, anti-aging, biohacking, hydrogen water, longevity protocol, Gary Brecka, Bryan Johnson"
+        url="https://artlux8.com"
+      />
       <ChristmasBanner />
       <Header />
       <Hero />
