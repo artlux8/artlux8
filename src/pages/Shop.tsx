@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import SEO from '@/components/SEO';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProtocolBundles from '@/components/ProtocolBundles';
@@ -62,6 +63,12 @@ const Shop = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Shop Premium Longevity Supplements"
+        description="Browse our curated collection of science-backed longevity supplements. NAD+ boosters, NMN, autophagy activators, and more. Third-party tested, clean ingredients."
+        keywords="buy longevity supplements, NAD+ supplements, NMN capsules, anti-aging supplements, biohacking supplements"
+        url="https://artlux8.com/shop"
+      />
       <Header />
       
       {/* Hero Section */}
