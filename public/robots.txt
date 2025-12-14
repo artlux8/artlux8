@@ -1,14 +1,39 @@
+# ARTLUX∞ - The Luxury Longevity
+# https://artlux8.com
+
+# Sitemap location
+Sitemap: https://artlux8.com/sitemap.xml
+
+# Google
 User-agent: Googlebot
 Allow: /
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /auth
 
+# Bing
 User-agent: Bingbot
 Allow: /
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /auth
 
+# Social Media Crawlers
 User-agent: Twitterbot
 Allow: /
 
 User-agent: facebookexternalhit
 Allow: /
 
+User-agent: LinkedInBot
+Allow: /
+
+# All other crawlers
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /dashboard
+Disallow: /dashboard/*
+Disallow: /auth
+Disallow: /wholesale
