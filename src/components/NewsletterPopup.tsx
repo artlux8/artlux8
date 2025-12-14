@@ -2,7 +2,8 @@ import { useState, useEffect, useCallback } from "react";
 import { X, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -101,7 +102,10 @@ const NewsletterPopup = () => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="sm:max-w-md p-0 overflow-hidden border-gold/30 bg-background [&>button]:hidden">
+      <DialogContent className="sm:max-w-md p-0 overflow-hidden border-gold/30 bg-background [&>button]:hidden" aria-describedby={undefined}>
+        <VisuallyHidden>
+          <DialogTitle>Newsletter Signup</DialogTitle>
+        </VisuallyHidden>
         <button
           onClick={handleClose}
           className="absolute right-4 top-4 z-10 rounded-full p-1 hover:bg-secondary transition-colors"
