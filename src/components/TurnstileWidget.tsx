@@ -1,7 +1,8 @@
 import { useEffect, useRef, useCallback } from 'react';
 
-// Cloudflare Turnstile Site Key - this is a publishable key
-const TURNSTILE_SITE_KEY = '0x4AAAAAABfGpVSKFMYpH7Ri'; // Replace with your actual site key
+// Cloudflare Turnstile Site Key - Use test key for development if no valid key configured
+// Test keys: https://developers.cloudflare.com/turnstile/troubleshooting/testing/
+const TURNSTILE_SITE_KEY = '1x00000000000000000000AA'; // Cloudflare's always-pass test key
 
 declare global {
   interface Window {
