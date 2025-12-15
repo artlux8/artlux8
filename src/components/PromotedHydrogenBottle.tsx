@@ -164,10 +164,10 @@ const PromotedHydrogenBottle = () => {
                 Add to Cart
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Link to="/free-protocol">
+              <Link to="/product/artlux-hydrogen-water-bottle">
                 <Button 
                   size="lg" 
-                  variant="outline" 
+                  variant="outline"
                   className="border-accent/50 text-accent hover:bg-accent/10 px-8 py-6 text-lg"
                 >
                   Win It Free
