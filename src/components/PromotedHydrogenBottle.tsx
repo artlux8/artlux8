@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Droplets, Zap, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
-import hydrogenBottle from "@/assets/hydrogen-bottle-luxury.png";
+import hydrogenBottle from "@/assets/artlux-hydrogen-bottle-branded.png";
 
 const PromotedHydrogenBottle = () => {
   const benefits = [
