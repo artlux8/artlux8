@@ -1,10 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, Sun, Clock, Moon, Zap, Shield, Brain, Heart, Flame, Dna, Sparkles, Droplets, Leaf } from "lucide-react";
+import { ArrowRight, Sun, Clock, Moon, Zap, Shield, Brain, Heart, Flame, Dna, Sparkles, ShoppingCart, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
+import { fetchProducts, ShopifyProduct, CartItem } from "@/lib/shopify";
+import { useCartStore } from "@/stores/cartStore";
 
 interface Supplement {
   name: string;
@@ -12,7 +15,85 @@ interface Supplement {
   benefit: string;
 }
 
+// Mapping of formula supplements to Shopify product keywords
+const STACK_PRODUCT_MAPPINGS = {
+  morning: [
+    "NAD+ BOOSTER", "Vitamin D3", "Ashwagandha", "CoQ10", "Alpha Lipoic"
+  ],
+  day: [
+    "Omega-3", "Berberine", "Magnesium", "B Complex"
+  ],
+  night: [
+    "Sleep", "Magnesium", "Ashwagandha", "Mushroom"
+  ]
+};
+
 const LongevityProtocol = () => {
+  const [loadingStack, setLoadingStack] = useState<string | null>(null);
+  const addItem = useCartStore(state => state.addItem);
+
+  const handleBuyStack = async (stackType: 'morning' | 'day' | 'night') => {
+    setLoadingStack(stackType);
+    try {
+      const products = await fetchProducts(100, 'vendor:ARTLUX');
+      
+      if (!products || products.length === 0) {
+        toast.error("No products available", {
+          description: "Please check back later or visit our shop.",
+        });
+        return;
+      }
+
+      const keywords = STACK_PRODUCT_MAPPINGS[stackType];
+      const matchedProducts = products.filter((p: ShopifyProduct) => 
+        keywords.some(keyword => 
+          p.node.title.toLowerCase().includes(keyword.toLowerCase())
+        )
+      );
+
+      if (matchedProducts.length === 0) {
+        toast.info(`${stackType.charAt(0).toUpperCase() + stackType.slice(1)} Stack`, {
+          description: "Visit our shop to explore supplements for this protocol.",
+          action: {
+            label: "Shop Now",
+            onClick: () => window.location.href = "/shop"
+          }
+        });
+        return;
+      }
+
+      let addedCount = 0;
+      matchedProducts.forEach((product: ShopifyProduct) => {
+        const variant = product.node.variants.edges[0]?.node;
+        if (variant && variant.availableForSale) {
+          const cartItem: CartItem = {
+            product,
+            variantId: variant.id,
+            variantTitle: variant.title,
+            price: variant.price,
+            quantity: 1,
+            selectedOptions: variant.selectedOptions || []
+          };
+          addItem(cartItem);
+          addedCount++;
+        }
+      });
+
+      if (addedCount > 0) {
+        toast.success(`${stackType.charAt(0).toUpperCase() + stackType.slice(1)} Stack Added!`, {
+          description: `${addedCount} supplement${addedCount > 1 ? 's' : ''} added to your cart.`,
+        });
+      }
+    } catch (error) {
+      console.error('Error adding stack to cart:', error);
+      toast.error("Failed to add stack", {
+        description: "Please try again or visit the shop directly.",
+      });
+    } finally {
+      setLoadingStack(null);
+    }
+  };
+
   useEffect(() => {
     document.title = "ULTIMATE LONGEVITY FORMULA V2.0 – Morning, Day & Night Anti-Aging System | ARTLUX∞";
     const metaDescription = document.querySelector('meta[name="description"]');
@@ -147,12 +228,29 @@ const LongevityProtocol = () => {
               ))}
             </div>
 
-            {/* Timing */}
-            <div className="text-center">
+            {/* Timing & Buy Button */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 rounded-full border border-amber-500/20">
                 <Clock className="w-4 h-4 text-amber-500" />
                 <span className="text-foreground font-medium">After Breakfast</span>
               </div>
+              <Button 
+                onClick={() => handleBuyStack('morning')}
+                disabled={loadingStack === 'morning'}
+                className="bg-amber-500 hover:bg-amber-600 text-white rounded-full"
+              >
+                {loadingStack === 'morning' ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Adding...
+                  </>
+                ) : (
+                  <>
+                    <ShoppingCart className="w-4 h-4 mr-2" />
+                    Buy Morning Stack
+                  </>
+                )}
+              </Button>
             </div>
           </div>
         </div>
@@ -198,12 +296,29 @@ const LongevityProtocol = () => {
               ))}
             </div>
 
-            {/* Timing */}
-            <div className="text-center">
+            {/* Timing & Buy Button */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 rounded-full border border-blue-500/20">
                 <Clock className="w-4 h-4 text-blue-500" />
                 <span className="text-foreground font-medium">After Lunch or Daytime Meal</span>
               </div>
+              <Button 
+                onClick={() => handleBuyStack('day')}
+                disabled={loadingStack === 'day'}
+                className="bg-blue-500 hover:bg-blue-600 text-white rounded-full"
+              >
+                {loadingStack === 'day' ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Adding...
+                  </>
+                ) : (
+                  <>
+                    <ShoppingCart className="w-4 h-4 mr-2" />
+                    Buy Day Stack
+                  </>
+                )}
+              </Button>
             </div>
           </div>
         </div>
@@ -249,12 +364,29 @@ const LongevityProtocol = () => {
               ))}
             </div>
 
-            {/* Timing */}
-            <div className="text-center">
+            {/* Timing & Buy Button */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-500/10 rounded-full border border-purple-500/20">
                 <Clock className="w-4 h-4 text-purple-500" />
                 <span className="text-foreground font-medium">1–2 Hours Before Sleep</span>
               </div>
+              <Button 
+                onClick={() => handleBuyStack('night')}
+                disabled={loadingStack === 'night'}
+                className="bg-purple-500 hover:bg-purple-600 text-white rounded-full"
+              >
+                {loadingStack === 'night' ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Adding...
+                  </>
+                ) : (
+                  <>
+                    <ShoppingCart className="w-4 h-4 mr-2" />
+                    Buy Night Stack
+                  </>
+                )}
+              </Button>
             </div>
           </div>
         </div>
