@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import ChristmasBanner from "@/components/ChristmasBanner";
 import PressLogos from "@/components/PressLogos";
 import ArtluxEcosystem from "@/components/ArtluxEcosystem";
+import PromotedHydrogenBottle from "@/components/PromotedHydrogenBottle";
 import LongevityProtocolPreview from "@/components/LongevityProtocolPreview";
 import TruthAboutLongevity from "@/components/TruthAboutLongevity";
 import FreeProtocolCTA from "@/components/FreeProtocolCTA";
@@ -29,6 +30,7 @@ const Index = () => {
       <Hero />
       <PressLogos />
       <ArtluxEcosystem />
+      <PromotedHydrogenBottle />
       <LongevityProtocolPreview />
       <TruthAboutLongevity />
       <FreeProtocolCTA />
