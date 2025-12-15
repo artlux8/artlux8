@@ -1,14 +1,78 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles, Droplets, Zap, Shield } from "lucide-react";
+import { ArrowRight, Sparkles, Droplets, Zap, Shield, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 import hydrogenBottle from "@/assets/artlux-hydrogen-bottle-branded.png";
+import { useCartStore } from "@/stores/cartStore";
+import { toast } from "sonner";
 
 const PromotedHydrogenBottle = () => {
+  const addItem = useCartStore((state) => state.addItem);
+
   const benefits = [
     { icon: Droplets, text: "Molecular Hydrogen H₂" },
     { icon: Zap, text: "Enhanced Cellular Energy" },
     { icon: Shield, text: "Powerful Antioxidant" },
   ];
+
+  const handleAddToCart = () => {
+    const hydrogenBottleProduct = {
+      node: {
+        id: "gid://shopify/Product/15821715931485",
+        title: "ARTLUX∞ Hydrogen Water Bottle",
+        description: "Premium hydrogen-rich water generator for optimal cellular hydration and longevity support.",
+        handle: "artlux-hydrogen-water-bottle",
+        priceRange: {
+          minVariantPrice: {
+            amount: "89.88",
+            currencyCode: "USD",
+          },
+        },
+        images: {
+          edges: [
+            {
+              node: {
+                url: "https://cdn.shopify.com/s/files/1/1016/3319/6381/files/artlux-hydrogen-bottle-branded.png?v=1765791886",
+                altText: "ARTLUX Hydrogen Water Bottle",
+              },
+            },
+          ],
+        },
+        variants: {
+          edges: [
+            {
+              node: {
+                id: "gid://shopify/ProductVariant/62890510451037",
+                title: "Standard",
+                price: {
+                  amount: "89.88",
+                  currencyCode: "USD",
+                },
+                availableForSale: true,
+                selectedOptions: [{ name: "Title", value: "Standard" }],
+              },
+            },
+          ],
+        },
+        options: [{ name: "Title", values: ["Standard"] }],
+      },
+    };
+
+    addItem({
+      product: hydrogenBottleProduct,
+      variantId: "gid://shopify/ProductVariant/62890510451037",
+      variantTitle: "Standard",
+      price: {
+        amount: "89.88",
+        currencyCode: "USD",
+      },
+      quantity: 1,
+      selectedOptions: [{ name: "Title", value: "Standard" }],
+    });
+
+    toast.success("Added to cart!", {
+      description: "ARTLUX∞ Hydrogen Water Bottle",
+    });
+  };
 
   return (
     <section className="py-20 md:py-32 bg-gradient-to-b from-background via-secondary/30 to-background relative overflow-hidden">
@@ -91,15 +155,15 @@ const PromotedHydrogenBottle = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Link to="/hydrogen-bottles">
-                <Button 
-                  size="lg" 
-                  className="bg-accent hover:bg-accent/90 text-primary font-bold px-8 py-6 text-lg group"
-                >
-                  Shop Now
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
+              <Button 
+                size="lg" 
+                className="bg-accent hover:bg-accent/90 text-primary font-bold px-8 py-6 text-lg group"
+                onClick={handleAddToCart}
+              >
+                <ShoppingCart className="mr-2 w-5 h-5" />
+                Add to Cart
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
               <Link to="/free-protocol">
                 <Button 
                   size="lg" 
