@@ -3,30 +3,64 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, Sun, Clock, Moon, Zap, Shield, Brain, Heart, Flame } from "lucide-react";
+import { ArrowRight, Sun, Clock, Moon, Zap, Shield, Brain, Heart, Flame, Dna, Sparkles, Droplets, Leaf } from "lucide-react";
+import { Link } from "react-router-dom";
+
+interface Supplement {
+  name: string;
+  dosage: string;
+  benefit: string;
+}
 
 const LongevityProtocol = () => {
   useEffect(() => {
-    document.title = "ARTLUX Longevity Protocol – Morning, Day & Night Anti-Aging System";
+    document.title = "ULTIMATE LONGEVITY FORMULA V2.0 – Morning, Day & Night Anti-Aging System | ARTLUX∞";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute("content", "The complete ARTLUX Longevity Protocol. Science-backed morning, day, and night supplement system for NAD+ activation, autophagy, and cellular renewal.");
+      metaDescription.setAttribute("content", "The complete ARTLUX∞ Ultimate Longevity Formula V2.0. Science-backed morning, day, and night supplement system for NAD+ activation, SIRT1-7, mitochondrial biogenesis, autophagy, and cellular renewal.");
     }
   }, []);
 
-  const morningStack = [
-    { name: "NAD+ Booster", benefit: "Cellular energy & DNA repair", icon: Zap },
-    { name: "Mito Power", benefit: "Mitochondrial biogenesis", icon: Flame },
+  const morningStack: Supplement[] = [
+    { name: "Urolithin A", dosage: "500 mg", benefit: "Main mitophagy stimulator. Clears damaged mitochondria." },
+    { name: "NMN (Sublingual-grade)", dosage: "500–750 mg", benefit: "Direct NAD+ elevation." },
+    { name: "PQQ (Pyrroloquinoline Quinone)", dosage: "20 mg", benefit: "New mitochondria growth." },
+    { name: "Ubiquinol CoQ10", dosage: "200 mg", benefit: "Optimal form for mitochondria." },
+    { name: "R-Lipoic Acid (R-ALA)", dosage: "150 mg", benefit: "Antioxidant recycling + insulin sensitivity." },
+    { name: "Acetyl-L-Carnitine (ALCAR)", dosage: "1000 mg", benefit: "Fatty acid transport to mitochondria, energy." },
+    { name: "Trans-Resveratrol (Micronized)", dosage: "300 mg", benefit: "SIRT1 activation, geroprotector." },
+    { name: "Fisetin", dosage: "200 mg", benefit: "Senolytic (kills old cells). Cyclic use." },
+    { name: "TMG (Betaine)", dosage: "500 mg", benefit: "Methylation + NMN support." },
+    { name: "Selenium (Selenomethionine)", dosage: "200 mcg", benefit: "Glutathione peroxidase, DNA protection." },
+    { name: "Vitamin D3 + K2 MK7", dosage: "4000 IU + 200 mcg", benefit: "Immunity, calcium, longevity, inflammation reduction." },
   ];
 
-  const dayStack = [
-    { name: "Lipo Detox", benefit: "Liver support & detoxification", icon: Shield },
-    { name: "Omega-3 Ultra", benefit: "Anti-inflammatory support", icon: Heart },
+  const dayStack: Supplement[] = [
+    { name: "Omega-3 (EPA 900mg / DHA 600mg)", dosage: "1500 mg total", benefit: "Best combo for brain and blood vessels." },
+    { name: "Curcumin (Liposomal)", dosage: "500 mg", benefit: "Strongest anti-inflammatory agent." },
+    { name: "Quercetin Phytosome", dosage: "500 mg", benefit: "Antioxidant, senolytic effect." },
+    { name: "Glutathione (S-acetyl)", dosage: "300 mg", benefit: "Main cellular detox and antioxidant." },
+    { name: "NAC", dosage: "900 mg", benefit: "Glutathione precursor." },
+    { name: "Berberine HCL", dosage: "500 mg", benefit: "AMPK activation, glucose stabilization, 'natural metformin'." },
+    { name: "Carnosine", dosage: "500 mg", benefit: "Anti-glycation (slows protein and skin aging)." },
+    { name: "Apigenin", dosage: "50 mg", benefit: "Protects telomeres, reduces stress-cortisol." },
+    { name: "Magnesium L-threonate (Magtein)", dosage: "1000 mg", benefit: "For brain, synapses, neurodegeneration protection." },
+    { name: "Taurine", dosage: "1000 mg", benefit: "Heart, mitochondria, longevity (2023 research data)." },
+    { name: "Vitamin C (Liposomal)", dosage: "1000 mg", benefit: "Antioxidant booster, collagen, blood vessels." },
   ];
 
-  const nightStack = [
-    { name: "Mind Focus", benefit: "Cognitive restoration", icon: Brain },
-    { name: "Magnesium", benefit: "Sleep & recovery", icon: Moon },
+  const nightStack: Supplement[] = [
+    { name: "Spermidine", dosage: "10 mg", benefit: "Strongest autophagy activator." },
+    { name: "Melatonin", dosage: "1-3 mg (low dose)", benefit: "DNA repair + antioxidant + sleep." },
+    { name: "Magnesium Bisglycinate", dosage: "200–300 mg", benefit: "Relax, recovery." },
+    { name: "L-Theanine", dosage: "200 mg", benefit: "Nervous system calm." },
+    { name: "Ashwagandha (Sensoril)", dosage: "250 mg", benefit: "Reduces cortisol, improves sleep." },
+    { name: "Glycine", dosage: "3 g (powder or capsules)", benefit: "Deep sleep + collagen support." },
+    { name: "Astaxanthin", dosage: "12 mg", benefit: "Most powerful antioxidant. Brain, eyes, skin." },
+    { name: "Trehalose", dosage: "1000 mg", benefit: "Autophagy + protein folding protection." },
+    { name: "Green Tea Extract (EGCG)", dosage: "200 mg", benefit: "Autophagy, anti-cancer profile." },
+    { name: "Grape Seed Extract (OPC 95%)", dosage: "300 mg", benefit: "Capillaries, skin, antioxidant." },
+    { name: "Reishi Mushroom Extract", dosage: "500 mg", benefit: "Immunity + anti-stress + longevity." },
   ];
 
   return (
@@ -39,105 +73,85 @@ const LongevityProtocol = () => {
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_50%,hsl(var(--accent)),transparent_50%)]" />
         </div>
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl">
-            <div className="flex items-center gap-2 mb-6">
-              <Zap className="w-5 h-5 text-accent" />
-              <span className="text-accent font-medium tracking-widest uppercase text-sm">Science-Backed System</span>
-            </div>
-            <h1 className="font-display text-4xl md:text-6xl font-bold text-primary-foreground mb-6">
-              ARTLUX Longevity Protocol™
-              <br />
-              <span className="text-accent">Morning. Day. Night.</span>
-            </h1>
-            <p className="text-primary-foreground/80 text-lg md:text-xl mb-8 max-w-xl">
-              A comprehensive anti-aging system designed to optimize NAD+ levels, 
-              activate autophagy, and support mitochondrial health throughout your day.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-full">
-                Start Full Protocol
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
-              <Button size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 rounded-full">
-                Download Protocol Guide
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Science Background */}
-      <section className="py-20 bg-secondary/30">
-        <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6">
-              The Science Behind the Protocol
-            </h2>
-            <p className="text-muted-foreground text-lg mb-8">
-              Aging is driven by a decline in cellular energy production, accumulation of damaged mitochondria, 
-              and reduced autophagy. The ARTLUX Protocol targets all three mechanisms simultaneously.
+            <div className="flex items-center justify-center gap-2 mb-6">
+              <Dna className="w-6 h-6 text-accent animate-pulse" />
+              <span className="text-accent font-medium tracking-widest uppercase text-sm">My Success Formula</span>
+            </div>
+            <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-6">
+              <span className="text-accent">🧬</span> ULTIMATE LONGEVITY
+              <br />
+              FORMULA V2.0
+            </h1>
+            <p className="text-primary-foreground/90 text-xl md:text-2xl mb-4">
+              Morning – Day – Night / Capsules / Extended Powerful Composition
             </p>
-            <div className="grid md:grid-cols-3 gap-6 text-left">
-              <div className="bg-card p-6 rounded-xl border border-border">
-                <Zap className="w-8 h-8 text-accent mb-4" />
-                <h4 className="font-semibold text-foreground mb-2">NAD+ Activation</h4>
-                <p className="text-muted-foreground text-sm">Restore cellular energy and DNA repair capacity.</p>
-              </div>
-              <div className="bg-card p-6 rounded-xl border border-border">
-                <Flame className="w-8 h-8 text-accent mb-4" />
-                <h4 className="font-semibold text-foreground mb-2">Mitochondrial Support</h4>
-                <p className="text-muted-foreground text-sm">Optimize energy production at the cellular level.</p>
-              </div>
-              <div className="bg-card p-6 rounded-xl border border-border">
-                <Shield className="w-8 h-8 text-accent mb-4" />
-                <h4 className="font-semibold text-foreground mb-2">Autophagy Activation</h4>
-                <p className="text-muted-foreground text-sm">Clear damaged cells and promote cellular renewal.</p>
-              </div>
+            <p className="text-primary-foreground/70 text-lg mb-8 max-w-2xl mx-auto">
+              Complete anti-aging system designed to maximize NAD+ levels, activate SIRT1-7, 
+              stimulate mitochondrial biogenesis, and trigger deep autophagy.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-full" asChild>
+                <Link to="/shop">
+                  Start Full Protocol
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Link>
+              </Button>
+              <Button size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 rounded-full" asChild>
+                <Link to="/free-protocol">
+                  Free 7-Day Challenge
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
       </section>
 
       {/* Morning Stack */}
-      <section className="py-20">
+      <section className="py-20 bg-gradient-to-b from-amber-950/20 to-background">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
-                  <Sun className="w-6 h-6 text-amber-500" />
-                </div>
-                <h2 className="font-display text-3xl font-bold text-foreground">Morning Stack</h2>
+          <div className="max-w-5xl mx-auto">
+            {/* Header */}
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-3 mb-4 px-6 py-3 bg-amber-500/20 rounded-full border border-amber-500/30">
+                <Sun className="w-8 h-8 text-amber-500" />
+                <span className="text-amber-500 font-bold text-2xl">🌅 1. MORNING COMPLEX</span>
               </div>
-              <p className="text-muted-foreground text-lg mb-8">
-                Kickstart your day with cellular energy activation. NAD+ and mitochondrial support 
-                for all-day vitality and mental clarity.
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Maximum Mitochondrial & Sirtuins Activation
+              </h2>
+              <p className="text-accent text-xl font-medium mb-6">
+                "Energy, Youth & Repair Start"
               </p>
-              <div className="space-y-4 mb-8">
-                {morningStack.map((item, index) => (
-                  <Card key={index} className="bg-card border-border">
-                    <CardContent className="p-4 flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
-                        <item.icon className="w-5 h-5 text-accent" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-foreground">{item.name}</h4>
-                        <p className="text-muted-foreground text-sm">{item.benefit}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+              <div className="bg-secondary/50 rounded-xl p-6 border border-border max-w-3xl mx-auto">
+                <h4 className="font-semibold text-foreground mb-3">Purpose:</h4>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  ↑ NAD+ – ↑ AMPK – ↑ SIRT1–7 – ↑ Mitochondrial biogenesis (new mitochondria) – 
+                  DNA protection – Inflammation reduction – All-day energy activation
+                </p>
               </div>
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
-                Shop Morning Stack
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
             </div>
-            <div className="bg-gradient-to-br from-amber-500/10 to-orange-500/10 rounded-3xl p-12 flex items-center justify-center">
-              <div className="text-center">
-                <Sun className="w-24 h-24 text-amber-500 mx-auto mb-4" />
-                <p className="text-foreground font-medium">6:00 AM - 9:00 AM</p>
-                <p className="text-muted-foreground text-sm">With breakfast</p>
+
+            {/* Supplements Grid */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+              {morningStack.map((item, index) => (
+                <Card key={index} className="bg-card border-amber-500/20 hover:border-amber-500/40 transition-colors">
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between mb-2">
+                      <h4 className="font-semibold text-foreground text-sm">{index + 1}. {item.name}</h4>
+                      <span className="text-amber-500 font-bold text-xs whitespace-nowrap ml-2">{item.dosage}</span>
+                    </div>
+                    <p className="text-muted-foreground text-xs">{item.benefit}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            {/* Timing */}
+            <div className="text-center">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 rounded-full border border-amber-500/20">
+                <Clock className="w-4 h-4 text-amber-500" />
+                <span className="text-foreground font-medium">After Breakfast</span>
               </div>
             </div>
           </div>
@@ -145,92 +159,141 @@ const LongevityProtocol = () => {
       </section>
 
       {/* Day Stack */}
-      <section className="py-20 bg-secondary/30">
+      <section className="py-20 bg-gradient-to-b from-blue-950/20 to-background">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-1 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-3xl p-12 flex items-center justify-center">
-              <div className="text-center">
-                <Clock className="w-24 h-24 text-blue-500 mx-auto mb-4" />
-                <p className="text-foreground font-medium">12:00 PM - 2:00 PM</p>
-                <p className="text-muted-foreground text-sm">With lunch</p>
+          <div className="max-w-5xl mx-auto">
+            {/* Header */}
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-3 mb-4 px-6 py-3 bg-blue-500/20 rounded-full border border-blue-500/30">
+                <Sparkles className="w-8 h-8 text-blue-500" />
+                <span className="text-blue-500 font-bold text-2xl">☀️ 2. DAY COMPLEX</span>
+              </div>
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Cell Protection, Anti-Inflammatory System, Brain, Capillaries
+              </h2>
+              <p className="text-accent text-xl font-medium mb-6">
+                "Cellular Shield & Anti-Inflammation Stack"
+              </p>
+              <div className="bg-secondary/50 rounded-xl p-6 border border-border max-w-3xl mx-auto">
+                <h4 className="font-semibold text-foreground mb-3">Purpose:</h4>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  ↓ Chronic inflammation – DNA protection – Vessel improvement – 
+                  Attention improvement – Glycation reduction – Antioxidant system enhancement
+                </p>
               </div>
             </div>
-            <div className="order-1 lg:order-2">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
-                  <Clock className="w-6 h-6 text-blue-500" />
-                </div>
-                <h2 className="font-display text-3xl font-bold text-foreground">Day Stack</h2>
+
+            {/* Supplements Grid */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+              {dayStack.map((item, index) => (
+                <Card key={index} className="bg-card border-blue-500/20 hover:border-blue-500/40 transition-colors">
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between mb-2">
+                      <h4 className="font-semibold text-foreground text-sm">{index + 1}. {item.name}</h4>
+                      <span className="text-blue-500 font-bold text-xs whitespace-nowrap ml-2">{item.dosage}</span>
+                    </div>
+                    <p className="text-muted-foreground text-xs">{item.benefit}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            {/* Timing */}
+            <div className="text-center">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 rounded-full border border-blue-500/20">
+                <Clock className="w-4 h-4 text-blue-500" />
+                <span className="text-foreground font-medium">After Lunch or Daytime Meal</span>
               </div>
-              <p className="text-muted-foreground text-lg mb-8">
-                Mid-day support for detoxification and inflammation control. 
-                Keep your system clean and inflammation-free.
-              </p>
-              <div className="space-y-4 mb-8">
-                {dayStack.map((item, index) => (
-                  <Card key={index} className="bg-card border-border">
-                    <CardContent className="p-4 flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
-                        <item.icon className="w-5 h-5 text-accent" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-foreground">{item.name}</h4>
-                        <p className="text-muted-foreground text-sm">{item.benefit}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
-                Shop Day Stack
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
             </div>
           </div>
         </div>
       </section>
 
       {/* Night Stack */}
-      <section className="py-20">
+      <section className="py-20 bg-gradient-to-b from-purple-950/20 to-background">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
-                  <Moon className="w-6 h-6 text-purple-500" />
-                </div>
-                <h2 className="font-display text-3xl font-bold text-foreground">Night Stack</h2>
+          <div className="max-w-5xl mx-auto">
+            {/* Header */}
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-3 mb-4 px-6 py-3 bg-purple-500/20 rounded-full border border-purple-500/30">
+                <Moon className="w-8 h-8 text-purple-500" />
+                <span className="text-purple-500 font-bold text-2xl">🌙 3. EVENING COMPLEX</span>
               </div>
-              <p className="text-muted-foreground text-lg mb-8">
-                Support deep sleep and overnight recovery. Cognitive restoration 
-                and muscle repair while you rest.
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Autophagy, Rejuvenation, Cell & DNA Restoration
+              </h2>
+              <p className="text-accent text-xl font-medium mb-6">
+                "Night Repair, Autophagy & Longevity Stack"
               </p>
-              <div className="space-y-4 mb-8">
-                {nightStack.map((item, index) => (
-                  <Card key={index} className="bg-card border-border">
-                    <CardContent className="p-4 flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
-                        <item.icon className="w-5 h-5 text-accent" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-foreground">{item.name}</h4>
-                        <p className="text-muted-foreground text-sm">{item.benefit}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+              <div className="bg-secondary/50 rounded-xl p-6 border border-border max-w-3xl mx-auto">
+                <h4 className="font-semibold text-foreground mb-3">Purpose:</h4>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Maximum autophagy – DNA restoration – Deep sleep – Inflammation reduction – 
+                  Cell cleansing – Night regeneration
+                </p>
               </div>
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
-                Shop Night Stack
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
             </div>
-            <div className="bg-gradient-to-br from-purple-500/10 to-indigo-500/10 rounded-3xl p-12 flex items-center justify-center">
-              <div className="text-center">
-                <Moon className="w-24 h-24 text-purple-500 mx-auto mb-4" />
-                <p className="text-foreground font-medium">8:00 PM - 10:00 PM</p>
-                <p className="text-muted-foreground text-sm">Before bed</p>
+
+            {/* Supplements Grid */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+              {nightStack.map((item, index) => (
+                <Card key={index} className="bg-card border-purple-500/20 hover:border-purple-500/40 transition-colors">
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between mb-2">
+                      <h4 className="font-semibold text-foreground text-sm">{index + 1}. {item.name}</h4>
+                      <span className="text-purple-500 font-bold text-xs whitespace-nowrap ml-2">{item.dosage}</span>
+                    </div>
+                    <p className="text-muted-foreground text-xs">{item.benefit}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            {/* Timing */}
+            <div className="text-center">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-500/10 rounded-full border border-purple-500/20">
+                <Clock className="w-4 h-4 text-purple-500" />
+                <span className="text-foreground font-medium">1–2 Hours Before Sleep</span>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Summary */}
+      <section className="py-20 bg-secondary/30">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-8">
+              Complete Daily Protocol Overview
+            </h2>
+            <div className="grid md:grid-cols-3 gap-6 mb-12">
+              <div className="bg-gradient-to-br from-amber-500/10 to-amber-500/5 rounded-2xl p-6 border border-amber-500/20">
+                <Sun className="w-12 h-12 text-amber-500 mx-auto mb-4" />
+                <h3 className="font-bold text-foreground text-lg mb-2">Morning</h3>
+                <p className="text-muted-foreground text-sm mb-2">11 supplements</p>
+                <p className="text-amber-500 font-medium text-sm">NAD+ & Mitochondria Activation</p>
+              </div>
+              <div className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 rounded-2xl p-6 border border-blue-500/20">
+                <Sparkles className="w-12 h-12 text-blue-500 mx-auto mb-4" />
+                <h3 className="font-bold text-foreground text-lg mb-2">Day</h3>
+                <p className="text-muted-foreground text-sm mb-2">11 supplements</p>
+                <p className="text-blue-500 font-medium text-sm">Anti-Inflammation & Protection</p>
+              </div>
+              <div className="bg-gradient-to-br from-purple-500/10 to-purple-500/5 rounded-2xl p-6 border border-purple-500/20">
+                <Moon className="w-12 h-12 text-purple-500 mx-auto mb-4" />
+                <h3 className="font-bold text-foreground text-lg mb-2">Night</h3>
+                <p className="text-muted-foreground text-sm mb-2">11 supplements</p>
+                <p className="text-purple-500 font-medium text-sm">Autophagy & Regeneration</p>
+              </div>
+            </div>
+            <div className="bg-accent/10 rounded-2xl p-8 border border-accent/20">
+              <Dna className="w-16 h-16 text-accent mx-auto mb-4" />
+              <h3 className="font-display text-2xl font-bold text-foreground mb-4">33 Total Compounds</h3>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                This comprehensive formula targets all major aging pathways: NAD+ decline, mitochondrial dysfunction, 
+                chronic inflammation, glycation, telomere shortening, and impaired autophagy.
+              </p>
             </div>
           </div>
         </div>
@@ -243,15 +306,19 @@ const LongevityProtocol = () => {
             Ready to Transform Your Health?
           </h2>
           <p className="text-primary-foreground/80 mb-8 max-w-xl mx-auto">
-            Start the complete ARTLUX Longevity Protocol and experience the difference of science-backed supplementation.
+            Start the complete ARTLUX∞ Ultimate Longevity Formula V2.0 and experience science-backed anti-aging.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-full">
-              Start Full Protocol
-              <ArrowRight className="ml-2 w-4 h-4" />
+            <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-full" asChild>
+              <Link to="/shop">
+                Shop Supplements
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </Link>
             </Button>
-            <Button size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 rounded-full">
-              Take Genetic Test
+            <Button size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 rounded-full" asChild>
+              <Link to="/genetic-testing">
+                Take Genetic Test
+              </Link>
             </Button>
           </div>
         </div>
