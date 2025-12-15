@@ -209,6 +209,65 @@ export const enhancedProductContent: Record<string, EnhancedProductContent> = {
       primary: "Add to Cart",
       secondary: "Brain Performance Bundle"
     }
+  },
+  "artlux-hydrogen-water-bottle": {
+    handle: "artlux-hydrogen-water-bottle",
+    metaTitle: "ARTLUX∞ Hydrogen Water Bottle – Premium Molecular Hydrogen Generator",
+    metaDescription: "Premium hydrogen-rich water generator for optimal cellular hydration, antioxidant support, and longevity. Luxury matte black design with gold ARTLUX branding.",
+    heroHeadline: "ARTLUX∞ HYDROGEN WATER BOTTLE — Molecular Hydration Technology",
+    heroSubtext: "Hydrogen is the smallest molecule in the universe — and one of the most powerful antioxidants known to science. ARTLUX∞ Hydrogen Water Bottle generates molecular hydrogen (H₂) directly in your water, providing deep cellular hydration and protection against oxidative stress.",
+    sections: [
+      {
+        title: "Why Hydrogen Water Changes Everything",
+        content: [
+          "Molecular hydrogen (H₂) is a selective antioxidant that targets only harmful free radicals (hydroxyl radicals) without disrupting beneficial reactive oxygen species needed for cell signaling. Unlike other antioxidants, H₂ is small enough to penetrate every cell, tissue, and even cross the blood-brain barrier.",
+          "Over 1,500 peer-reviewed studies demonstrate hydrogen's benefits for energy, inflammation, cognitive function, athletic performance, and recovery."
+        ],
+        listItems: [
+          "Neutralizes harmful free radicals selectively",
+          "Crosses the blood-brain barrier for neural protection",
+          "Reduces inflammation at the cellular level",
+          "Supports mitochondrial function and ATP production",
+          "Enhances hydration absorption",
+          "Promotes faster athletic recovery"
+        ]
+      },
+      {
+        title: "Premium ARTLUX∞ Design",
+        content: [
+          "The ARTLUX∞ Hydrogen Water Bottle combines cutting-edge hydrogen generation technology with luxury design. Featuring a sleek matte black finish with gold ARTLUX∞ branding, this bottle is as beautiful as it is functional."
+        ],
+        listItems: [
+          "SPE/PEM electrolysis technology for pure H₂ generation",
+          "Food-grade borosilicate glass chamber",
+          "Rechargeable USB-C battery (30+ cycles per charge)",
+          "3-minute rapid hydrogen infusion cycle",
+          "Portable design for daily use",
+          "Premium matte black with gold accents"
+        ]
+      }
+    ],
+    ingredients: [
+      { name: "Molecular Hydrogen (H₂)", benefit: "The universe's smallest antioxidant molecule for deep cellular penetration." },
+      { name: "SPE/PEM Technology", benefit: "Solid Polymer Electrolyte generates pure hydrogen, separating H₂ from oxygen." },
+      { name: "Borosilicate Glass", benefit: "Premium food-grade glass chamber ensures purity and taste." }
+    ],
+    benefits: [
+      { icon: "💧", title: "Deep cellular hydration", description: "H₂ molecules penetrate cells 100x faster than water alone." },
+      { icon: "🛡", title: "Selective antioxidant", description: "Targets only harmful free radicals, preserving beneficial ones." },
+      { icon: "⚡", title: "Enhanced energy", description: "Supports mitochondrial ATP production for natural vitality." },
+      { icon: "🧠", title: "Brain protection", description: "Crosses blood-brain barrier for neurological support." },
+      { icon: "💪", title: "Faster recovery", description: "Reduces exercise-induced oxidative stress and inflammation." },
+      { icon: "✨", title: "Anti-aging support", description: "Combats oxidative damage linked to accelerated aging." }
+    ],
+    howToUse: {
+      instructions: "Fill with filtered water, press the button, and wait 3 minutes for hydrogen infusion. Drink immediately for maximum H₂ concentration. Use 2-3 times daily.",
+      combineWith: ["Morning sunlight", "Cold exposure", "NAD+ Booster", "Grounding practice"]
+    },
+    ctaButtons: {
+      primary: "Add to Cart",
+      secondary: "Complete the 7-Day Protocol Challenge"
+    }
   }
 };
 
