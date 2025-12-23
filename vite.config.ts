@@ -15,4 +15,8 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    // Target ES2020 for better Instagram in-app browser compatibility
+    target: 'es2020',
+  },
 }));
