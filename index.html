@@ -1,6 +1,15 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Temporary redirect .co.uk to .com until domain issues are fixed -->
+    <script>
+      (function() {
+        if (window.location.hostname === 'artlux8.co.uk' || window.location.hostname === 'www.artlux8.co.uk') {
+          var path = window.location.pathname + window.location.search + window.location.hash;
+          window.location.replace('https://artlux8.com' + path);
+        }
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
