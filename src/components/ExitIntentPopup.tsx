@@ -76,6 +76,11 @@ const ExitIntentPopup = () => {
   };
 
   useEffect(() => {
+    // DISABLED FOR NOW - Keeping code for later use with 18.88% and 88.88% offers
+    // To re-enable, uncomment the code below
+    return;
+    
+    /*
     const seenLevel = parseInt(localStorage.getItem("artlux-exit-intent-level") || "0");
     
     // If user has already seen all offers, don't show any
@@ -102,6 +107,7 @@ const ExitIntentPopup = () => {
     return () => {
       timers.forEach(clearTimeout);
     };
+    */
   }, []);
 
   const generateDiscountCode = (level: OfferLevel) => {
