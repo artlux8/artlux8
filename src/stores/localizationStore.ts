@@ -195,30 +195,6 @@ export const useLocalizationStore = create<LocalizationStore>()(
 
           set({ geoData, hasCheckedGeo: true });
 
-          // Auto-redirect based on location
-          const currentHost = window.location.hostname;
-          const isUK = data.country_code === 'GB';
-          const isOnCoUk = currentHost.includes('artlux8.co.uk');
-          const isOnCom = currentHost.includes('artlux8.com');
-          const isLocalhost = currentHost.includes('localhost') || currentHost.includes('lovable.app');
-
-          // Only redirect on production domains, not localhost/preview
-          if (!isLocalhost) {
-            const currentPath = window.location.pathname + window.location.search;
-            
-            // UK users on .com → redirect to .co.uk
-            if (isUK && isOnCom) {
-              window.location.href = `https://artlux8.co.uk${currentPath}`;
-              return;
-            }
-            
-            // Non-UK users on .co.uk → redirect to .com
-            if (!isUK && isOnCoUk) {
-              window.location.href = `https://artlux8.com${currentPath}`;
-              return;
-            }
-          }
-
           // Auto-suggest currency based on location
           const suggestedCurrency = CURRENCIES.find(c => c.code === data.currency);
           if (suggestedCurrency) {
