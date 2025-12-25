@@ -9,18 +9,27 @@ interface LanguageGreeting {
 }
 
 const languageGreetings: LanguageGreeting[] = [
+  // Baltic States - PRIORITY
+  { code: "lv", greeting: "Priecīgus Ziemassvētkus!", wishes: "Laimīgu Jauno gadu un labu veselību!", flag: "🇱🇻" },
+  { code: "et", greeting: "Häid jõule!", wishes: "Head uut aastat ja tugevat tervist!", flag: "🇪🇪" },
+  { code: "lt", greeting: "Linksmų Kalėdų!", wishes: "Laimingų Naujųjų metų ir sveikatos!", flag: "🇱🇹" },
+  // Slavic
   { code: "ru", greeting: "С Рождеством!", wishes: "Счастливого Нового Года и крепкого здоровья!", flag: "🇷🇺" },
   { code: "uk", greeting: "З Різдвом!", wishes: "Щасливого Нового Року та міцного здоров'я!", flag: "🇺🇦" },
+  { code: "pl", greeting: "Wesołych Świąt!", wishes: "Szczęśliwego Nowego Roku i zdrowia!", flag: "🇵🇱" },
+  // Romance
   { code: "es", greeting: "¡Feliz Navidad!", wishes: "¡Próspero Año Nuevo y mucha salud!", flag: "🇪🇸" },
-  { code: "de", greeting: "Frohe Weihnachten!", wishes: "Ein gesundes neues Jahr!", flag: "🇩🇪" },
   { code: "fr", greeting: "Joyeux Noël!", wishes: "Bonne année et bonne santé!", flag: "🇫🇷" },
   { code: "it", greeting: "Buon Natale!", wishes: "Felice Anno Nuovo e tanta salute!", flag: "🇮🇹" },
   { code: "pt", greeting: "Feliz Natal!", wishes: "Feliz Ano Novo e muita saúde!", flag: "🇧🇷" },
-  { code: "pl", greeting: "Wesołych Świąt!", wishes: "Szczęśliwego Nowego Roku i zdrowia!", flag: "🇵🇱" },
+  // Germanic
+  { code: "de", greeting: "Frohe Weihnachten!", wishes: "Ein gesundes neues Jahr!", flag: "🇩🇪" },
   { code: "nl", greeting: "Vrolijk Kerstfeest!", wishes: "Gelukkig Nieuwjaar en een goede gezondheid!", flag: "🇳🇱" },
+  // Asian
   { code: "zh", greeting: "圣诞快乐!", wishes: "新年快乐，身体健康!", flag: "🇨🇳" },
   { code: "ja", greeting: "メリークリスマス!", wishes: "良いお年を、健康でありますように!", flag: "🇯🇵" },
   { code: "ko", greeting: "메리 크리스마스!", wishes: "새해 복 많이 받으시고 건강하세요!", flag: "🇰🇷" },
+  // Other
   { code: "ar", greeting: "!عيد ميلاد مجيد", wishes: "!سنة جديدة سعيدة وصحة جيدة", flag: "🇸🇦" },
   { code: "hi", greeting: "मेरी क्रिसमस!", wishes: "नया साल मुबारक और अच्छी सेहत!", flag: "🇮🇳" },
   { code: "tr", greeting: "Mutlu Noeller!", wishes: "Mutlu Yıllar ve sağlıklı günler!", flag: "🇹🇷" },
