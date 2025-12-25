@@ -10,8 +10,11 @@ interface LanguageGreeting {
 
 const languageGreetings: LanguageGreeting[] = [
   { code: "ru", greeting: "С Рождеством!", wishes: "Счастливого Нового Года и крепкого здоровья!", flag: "🇷🇺" },
-  { code: "uk", greeting: "З Різдвом!", wishes: "Щасливого Нового Року та міцного здоров'я!", flag: "🇺🇦" },
+  { code: "lv", greeting: "Priecīgus Ziemassvētkus!", wishes: "Laimīgu Jauno gadu un labu veselību!", flag: "🇱🇻" },
+  { code: "et", greeting: "Häid jõule!", wishes: "Head uut aastat ja tugevat tervist!", flag: "🇪🇪" },
+  { code: "lt", greeting: "Linksmų Kalėdų!", wishes: "Laimingų Naujųjų metų ir geros sveikatos!", flag: "🇱🇹" },
   { code: "es", greeting: "¡Feliz Navidad!", wishes: "¡Próspero Año Nuevo y mucha salud!", flag: "🇪🇸" },
+  { code: "uk", greeting: "З Різдвом!", wishes: "Щасливого Нового Року та міцного здоров'я!", flag: "🇺🇦" },
   { code: "de", greeting: "Frohe Weihnachten!", wishes: "Ein gesundes neues Jahr!", flag: "🇩🇪" },
   { code: "fr", greeting: "Joyeux Noël!", wishes: "Bonne année et bonne santé!", flag: "🇫🇷" },
   { code: "it", greeting: "Buon Natale!", wishes: "Felice Anno Nuovo e tanta salute!", flag: "🇮🇹" },
