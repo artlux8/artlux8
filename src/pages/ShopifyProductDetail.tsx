@@ -69,9 +69,10 @@ const ShopifyProductDetail = () => {
     );
   }
 
-  const selectedVariant = product.variants.edges[selectedVariantIndex]?.node;
-  const price = selectedVariant?.price || product.priceRange.minVariantPrice;
-  const mainImage = product.images.edges[0]?.node;
+  const selectedVariant = product.variants?.edges?.[selectedVariantIndex]?.node;
+  const price = selectedVariant?.price || product.priceRange?.minVariantPrice;
+  const priceAmount = price?.amount ? parseFloat(price.amount) : 0;
+  const mainImage = product.images?.edges?.[0]?.node;
 
   const handleAddToCart = () => {
     if (!selectedVariant) {
@@ -97,7 +98,7 @@ const ShopifyProductDetail = () => {
     });
   };
 
-  const totalPrice = convertPrice(parseFloat(price.amount)) * quantity;
+  const totalPrice = convertPrice(priceAmount) * quantity;
 
   // Update meta tags for enhanced content
   useEffect(() => {
