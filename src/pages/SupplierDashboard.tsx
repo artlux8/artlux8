@@ -12,7 +12,9 @@ import {
   Link2,
   Link2Off,
   Mail,
-  Send
+  Send,
+  PauseCircle,
+  PlayCircle
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -142,6 +144,50 @@ const SupplierDashboard = () => {
     }
   };
 
+  const pauseAllSuppliers = async () => {
+    try {
+      const { error } = await supabase
+        .from("supplier_integrations")
+        .update({ 
+          is_connected: false, 
+          api_status: "paused",
+          last_sync_at: new Date().toISOString()
+        })
+        .neq("id", "");
+
+      if (error) throw error;
+      
+      toast.success("All suppliers paused");
+      fetchData();
+    } catch (error) {
+      console.error("Error pausing suppliers:", error);
+      toast.error("Failed to pause suppliers");
+    }
+  };
+
+  const resumeAllSuppliers = async () => {
+    try {
+      const { error } = await supabase
+        .from("supplier_integrations")
+        .update({ 
+          is_connected: true, 
+          api_status: "connected",
+          last_sync_at: new Date().toISOString()
+        })
+        .neq("id", "");
+
+      if (error) throw error;
+      
+      toast.success("All suppliers resumed");
+      fetchData();
+    } catch (error) {
+      console.error("Error resuming suppliers:", error);
+      toast.error("Failed to resume suppliers");
+    }
+  };
+
+  const allPaused = integrations.length > 0 && integrations.every(i => !i.is_connected);
+
   const sendStatusEmail = async (order: OrderFulfillment, status: "shipped" | "delivered") => {
     if (!order.customer_email) {
       toast.error("No customer email on this order");
@@ -218,10 +264,23 @@ const SupplierDashboard = () => {
                 Track fulfillment status from Supliful & OKCapsule
               </p>
             </div>
-            <Button onClick={fetchData} variant="outline" className="gap-2">
-              <RefreshCw className="w-4 h-4" />
-              Refresh
-            </Button>
+            <div className="flex gap-2">
+              {allPaused ? (
+                <Button onClick={resumeAllSuppliers} variant="default" className="gap-2 bg-green-600 hover:bg-green-700">
+                  <PlayCircle className="w-4 h-4" />
+                  Resume All
+                </Button>
+              ) : (
+                <Button onClick={pauseAllSuppliers} variant="destructive" className="gap-2">
+                  <PauseCircle className="w-4 h-4" />
+                  Pause All
+                </Button>
+              )}
+              <Button onClick={fetchData} variant="outline" className="gap-2">
+                <RefreshCw className="w-4 h-4" />
+                Refresh
+              </Button>
+            </div>
           </div>
         </div>
       </section>
