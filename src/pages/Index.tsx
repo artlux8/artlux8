@@ -2,7 +2,6 @@ import SEO from "@/components/SEO";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import ChristmasBanner from "@/components/ChristmasBanner";
-import HolidayWelcomeBanner from "@/components/HolidayWelcomeBanner";
 import PressLogos from "@/components/PressLogos";
 import ArtluxEcosystem from "@/components/ArtluxEcosystem";
 import PromotedHydrogenBottle from "@/components/PromotedHydrogenBottle";
@@ -20,7 +19,6 @@ import Footer from "@/components/Footer";
 const Index = () => {
   return (
     <div className="min-h-screen">
-      <HolidayWelcomeBanner />
       <SEO 
         title="ARTLUX∞ - The Luxury Longevity | Premium Supplements & Protocols"
         description="Science-backed longevity supplements and protocols. Premium NAD+, NMN, autophagy activators, and personalized health optimization. Your body is the ultimate luxury asset."
