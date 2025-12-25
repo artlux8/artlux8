@@ -19,18 +19,6 @@ const products = [
     benefits: ["NAD+ Support", "Sirtuin Activation"],
   },
   {
-    id: 2,
-    name: "Essential Multi+",
-    description: "Complete daily foundation with methylated B-vitamins & minerals",
-    price: 49.99,
-    originalPrice: null,
-    rating: 4.9,
-    reviews: 3156,
-    image: "https://images.unsplash.com/photo-1550572017-edd951aa8f72?q=80&w=600&auto=format&fit=crop",
-    badge: "Foundation",
-    benefits: ["Methylation", "Energy"],
-  },
-  {
     id: 3,
     name: "Omega-3 Ultra",
     description: "High-potency EPA/DHA/DPA for brain, heart & inflammation",
@@ -41,18 +29,6 @@ const products = [
     image: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?q=80&w=600&auto=format&fit=crop",
     badge: "Top Rated",
     benefits: ["Brain Health", "Heart Health"],
-  },
-  {
-    id: 4,
-    name: "Sleep Optimizer",
-    description: "Magnesium glycinate, L-theanine & apigenin for deep restorative sleep",
-    price: 44.99,
-    originalPrice: null,
-    rating: 4.8,
-    reviews: 892,
-    image: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?q=80&w=600&auto=format&fit=crop",
-    badge: "Sleep",
-    benefits: ["Sleep Quality", "Recovery"],
   },
 ];
 
@@ -114,7 +90,7 @@ const FeaturedProducts = () => {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
           {products.map((product) => (
             <div
               key={product.id}
