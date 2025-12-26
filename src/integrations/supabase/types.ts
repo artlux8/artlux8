@@ -317,7 +317,6 @@ export type Database = {
           settings: Json | null
           supplier: string
           updated_at: string
-          webhook_secret: string | null
           webhook_url: string | null
         }
         Insert: {
@@ -329,7 +328,6 @@ export type Database = {
           settings?: Json | null
           supplier: string
           updated_at?: string
-          webhook_secret?: string | null
           webhook_url?: string | null
         }
         Update: {
@@ -341,7 +339,6 @@ export type Database = {
           settings?: Json | null
           supplier?: string
           updated_at?: string
-          webhook_secret?: string | null
           webhook_url?: string | null
         }
         Relationships: []
@@ -377,6 +374,10 @@ export type Database = {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
+        Returns: boolean
+      }
+      verify_webhook_source: {
+        Args: { request_signature: string; supplier_name: string }
         Returns: boolean
       }
     }

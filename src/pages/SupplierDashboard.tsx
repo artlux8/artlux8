@@ -33,6 +33,7 @@ interface SupplierIntegration {
   api_status: string;
   last_sync_at: string | null;
   webhook_url: string | null;
+  // Note: webhook_secret has been moved to Supabase Vault for security
 }
 
 
