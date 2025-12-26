@@ -9,6 +9,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
+import ResetPassword from "./pages/ResetPassword";
 import About from "./pages/About";
 import Protocols from "./pages/Protocols";
 import Shop from "./pages/Shop";
@@ -61,6 +62,7 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/about" element={<About />} />
               <Route path="/protocols" element={<Protocols />} />
               <Route path="/longevity-protocol" element={<LongevityProtocol />} />
