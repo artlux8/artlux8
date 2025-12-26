@@ -57,7 +57,7 @@ const App = () => (
           <CartProvider>
             <Toaster />
             <Sonner />
-            <ExitIntentPopup />
+            {/* <ExitIntentPopup /> */}
             <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
