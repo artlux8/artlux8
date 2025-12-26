@@ -6,9 +6,9 @@ import Footer from '@/components/Footer';
 import ProtocolBundles from '@/components/ProtocolBundles';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ShoppingCart, Star, Leaf, Brain, Moon, Zap, Heart, Shield } from 'lucide-react';
+import { ShoppingCart, Star, Leaf, Brain, Moon, Zap, Heart, Shield, Loader2 } from 'lucide-react';
 import { useCartStore } from '@/stores/cartStore';
-import { fetchProducts, ShopifyProduct } from '@/lib/shopify';
+import { fetchProducts, ShopifyProduct, createStorefrontCheckout } from '@/lib/shopify';
 import { toast } from 'sonner';
 import { useLocalizationStore } from '@/stores/localizationStore';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -26,7 +26,8 @@ const Shop = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
   const [loading, setLoading] = useState(true);
-  const { addItem } = useCartStore();
+  const [buyingProductId, setBuyingProductId] = useState<string | null>(null);
+  const { addItem, clearCart } = useCartStore();
   const { formatPrice } = useLocalizationStore();
 
   useEffect(() => {
@@ -58,6 +59,35 @@ const Shop = () => {
     toast.success(`${product.node.title} added to cart`, {
       position: 'top-center'
     });
+  };
+
+  const handleBuyNow = async (product: ShopifyProduct) => {
+    const variant = product.node.variants.edges[0]?.node;
+    if (!variant) {
+      toast.error('Product variant not available');
+      return;
+    }
+
+    setBuyingProductId(product.node.id);
+    
+    try {
+      const cartItem = {
+        product,
+        variantId: variant.id,
+        variantTitle: variant.title,
+        price: variant.price,
+        quantity: 1,
+        selectedOptions: variant.selectedOptions || []
+      };
+      
+      const checkoutUrl = await createStorefrontCheckout([cartItem]);
+      window.open(checkoutUrl, '_blank');
+    } catch (error) {
+      console.error('Checkout failed:', error);
+      toast.error('Failed to create checkout');
+    } finally {
+      setBuyingProductId(null);
+    }
   };
 
 
@@ -192,18 +222,35 @@ const Shop = () => {
                           {product.node.description}
                         </p>
 
-                        {/* Price & Add to Cart */}
-                        <div className="flex items-center justify-between">
+                        {/* Price */}
+                        <div className="mb-3">
                           <span className="text-2xl font-bold text-foreground">
                             {formatPrice(parseFloat(price.amount))}
                           </span>
+                        </div>
+                        
+                        {/* Buttons */}
+                        <div className="flex gap-2">
                           <Button 
                             size="sm" 
+                            variant="outline"
                             onClick={() => handleAddToCart(product)}
-                            className="bg-accent hover:bg-accent/90 text-accent-foreground"
+                            className="flex-1"
                           >
                             <ShoppingCart className="w-4 h-4 mr-1" />
                             Add
+                          </Button>
+                          <Button 
+                            size="sm" 
+                            onClick={() => handleBuyNow(product)}
+                            className="flex-1 bg-accent hover:bg-accent/90 text-accent-foreground"
+                            disabled={buyingProductId === product.node.id}
+                          >
+                            {buyingProductId === product.node.id ? (
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                              'Buy Now'
+                            )}
                           </Button>
                         </div>
                       </div>
