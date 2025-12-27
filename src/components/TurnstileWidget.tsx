@@ -1,8 +1,8 @@
 import { useEffect, useRef, useCallback } from 'react';
 
-// Cloudflare Turnstile Site Key - Use test key for development if no valid key configured
-// Test keys: https://developers.cloudflare.com/turnstile/troubleshooting/testing/
-const TURNSTILE_SITE_KEY = '1x00000000000000000000AA'; // Cloudflare's always-pass test key
+// Cloudflare Turnstile Site Key - Must be configured via environment variable
+// Get your keys from: https://dash.cloudflare.com (Turnstile section)
+const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY || '';
 
 declare global {
   interface Window {
@@ -46,6 +46,11 @@ const TurnstileWidget = ({
   const scriptLoadedRef = useRef(false);
 
   const renderWidget = useCallback(() => {
+    if (!TURNSTILE_SITE_KEY) {
+      console.error('Turnstile site key not configured. Set VITE_TURNSTILE_SITE_KEY environment variable.');
+      onError?.();
+      return;
+    }
     if (containerRef.current && window.turnstile && !widgetIdRef.current) {
       widgetIdRef.current = window.turnstile.render(containerRef.current, {
         sitekey: TURNSTILE_SITE_KEY,

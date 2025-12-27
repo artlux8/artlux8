@@ -30,10 +30,13 @@ function isRateLimited(ip: string): boolean {
 
 // Verify Cloudflare Turnstile token
 async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
-  // Use test secret key if no real key configured
-  // Test secret: https://developers.cloudflare.com/turnstile/troubleshooting/testing/
-  const secretKey = Deno.env.get('TURNSTILE_SECRET_KEY') || '1x0000000000000000000000000000000AA';
-  
+  // TURNSTILE_SECRET_KEY must be configured - no fallback to test key
+  const secretKey = Deno.env.get('TURNSTILE_SECRET_KEY');
+  if (!secretKey) {
+    console.error('TURNSTILE_SECRET_KEY not configured');
+    return false;
+  }
+
   try {
     console.log('Verifying Turnstile token...');
     const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
