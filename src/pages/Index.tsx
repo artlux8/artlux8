@@ -1,7 +1,6 @@
 import SEO from "@/components/SEO";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import ChristmasBanner from "@/components/ChristmasBanner";
 import PressLogos from "@/components/PressLogos";
 import ArtluxEcosystem from "@/components/ArtluxEcosystem";
 import PromotedHydrogenBottle from "@/components/PromotedHydrogenBottle";
@@ -25,7 +24,6 @@ const Index = () => {
         keywords="longevity supplements, NAD+ booster, NMN, autophagy, anti-aging, biohacking, hydrogen water, longevity protocol, Gary Brecka, Bryan Johnson"
         url="https://artlux8.com"
       />
-      <ChristmasBanner />
       <Header />
       <Hero />
       <PressLogos />
