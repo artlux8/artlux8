@@ -15,7 +15,7 @@ export default defineConfig(({ mode }) => ({
     mode === "development" && componentTagger(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["icons/favicon.svg", "icons/apple-touch-icon.png"],
+      includeAssets: ["favicon.ico", "icons/apple-touch-icon.png", "icons/favicon-96x96.png"],
       manifest: {
         name: "ARTLUX∞",
         short_name: "ARTLUX",
@@ -54,7 +54,7 @@ export default defineConfig(({ mode }) => ({
         ],
       },
       workbox: {
-        globPatterns: ["**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp}"],
+        globPatterns: ["**/*.{js,css,html,ico,png,jpg,jpeg,webp}"],
       },
     }),
   ].filter(Boolean),
