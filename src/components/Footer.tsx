@@ -110,7 +110,7 @@ const Footer = () => {
         {/* Bottom */}
         <div className="border-t border-primary-foreground/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-primary-foreground/40 text-sm">
-            © 2024 ARTLUX LTD. All rights reserved.
+            © 2025 ARTLUX LTD. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-primary-foreground/40">
             <a href="/privacy" className="hover:text-primary-foreground transition-colors">Privacy Policy</a>
