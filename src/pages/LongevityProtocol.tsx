@@ -431,8 +431,8 @@ const LongevityProtocol = () => {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 bg-primary">
+      {/* CTA - Hidden for now */}
+      {/* <section className="py-20 bg-primary">
         <div className="container mx-auto px-4 text-center">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
             Ready to Transform Your Health?
@@ -454,7 +454,7 @@ const LongevityProtocol = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <Footer />
     </div>

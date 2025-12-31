@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Dna, Package, Zap, Brain, Shield, Moon, Droplets, Check } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { toast } from 'sonner';
 
 const boxIncludes = [
   { icon: Zap, text: "NAD+ formula adapted to your genes" },
@@ -142,14 +143,27 @@ const PersonalizedSubscription = () => {
               Start Your DNA-Based Journey
             </h2>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+              <Button 
+                size="lg" 
+                className="bg-accent hover:bg-accent/90 text-accent-foreground"
+                onClick={() => toast.info("Coming soon! DNA-based subscriptions will be available shortly.")}
+              >
                 Start Your DNA-Based Subscription
               </Button>
-              <Button size="lg" variant="outline" className="border-accent/30 hover:bg-accent/10">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-accent/30 hover:bg-accent/10"
+                onClick={() => toast.info("Coming soon! Genetic testing will be available shortly.")}
+              >
                 Take the Genetic Test
               </Button>
             </div>
-            <Button variant="link" className="text-accent mt-4">
+            <Button 
+              variant="link" 
+              className="text-accent mt-4"
+              onClick={() => toast.info("Coming soon! Subscription plan comparison will be available shortly.")}
+            >
               Compare Subscription Plans →
             </Button>
           </div>
