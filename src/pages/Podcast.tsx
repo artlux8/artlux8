@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -203,6 +204,13 @@ const podcasts = [
 const Podcast = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Longevity Podcast Hub | Gary Brecka, Huberman & Expert Episodes | ARTLUX8"
+        description="Curated longevity and biohacking podcast episodes from Gary Brecka, Andrew Huberman, Peter Attia, Wim Hof, and David Sinclair. Educational content on human optimization, breathwork, and performance."
+        keywords="longevity podcasts, Gary Brecka podcast, Andrew Huberman Lab, Peter Attia Drive, Wim Hof Method, David Sinclair aging, biohacking podcasts, health optimization content, Joe Rogan longevity"
+        url="https://artlux8.com/podcast"
+        type="website"
+      />
       <Header />
 
       {/* Hero Section */}

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import SEO from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import {
@@ -9,13 +9,14 @@ import {
 } from "@/components/ui/accordion";
 
 const FAQ = () => {
-  useEffect(() => {
-    document.title = "FAQ – ARTLUX Longevity Questions Answered";
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute("content", "Frequently asked questions about ARTLUX supplements, protocols, shipping, returns, and longevity science. Get answers to common questions.");
-    }
-  }, []);
+  // FAQ data for schema markup
+  const faqSchemaItems = [
+    { question: "What makes ARTLUX supplements different?", answer: "ARTLUX supplements are formulated with clinical-grade, bioavailable ingredients at therapeutic doses. We focus on longevity science, including NAD+ support, mitochondrial optimization, and autophagy activation." },
+    { question: "Are ARTLUX supplements third-party tested?", answer: "Yes, all ARTLUX supplements undergo rigorous third-party testing for purity, potency, and contaminants. Certificates of Analysis are available upon request." },
+    { question: "What is the ARTLUX Longevity Protocol?", answer: "The ARTLUX Longevity Protocol is a comprehensive anti-aging system combining supplements, cold exposure, hydrogen water, grounding, and circadian optimization." },
+    { question: "Where do you ship?", answer: "We ship worldwide. Free shipping on orders over £60 (UK), €70 (EU), or $75 (US/International)." },
+    { question: "What is your return policy?", answer: "We offer a 30-day money-back guarantee on all products. If you're not satisfied, contact us for a full refund." },
+  ];
 
   const faqs = [
     {
@@ -103,6 +104,14 @@ const FAQ = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Frequently Asked Questions | Biohacking & Longevity Support | ARTLUX8"
+        description="Get answers to common questions about ARTLUX8 biohacking supplements, longevity protocols, hydrogen water bottles, shipping, returns, and more. Expert support for your wellness journey."
+        keywords="ARTLUX FAQ, biohacking questions, longevity supplements FAQ, hydrogen water questions, supplement shipping, returns policy, longevity protocol questions"
+        url="https://artlux8.com/faq"
+        type="website"
+        faq={faqSchemaItems}
+      />
       <Header />
       
       {/* Hero Section */}

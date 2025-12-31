@@ -71,9 +71,9 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO 
-        title="Longevity Science Blog | ARTLUX∞"
-        description="Science-backed insights on longevity, autophagy, NAD+, and natural health optimization. No pharma propaganda — just truth about living longer and healthier."
-        keywords="longevity blog, autophagy science, NAD+ research, anti-aging articles, biohacking tips, health optimization"
+        title="Biohacking & Longevity Blog | Science-Backed Wellness Articles | ARTLUX8"
+        description="Explore science-backed insights on biohacking, longevity optimization, hydrogen water benefits, red light therapy, and natural health. Expert education without pharmaceutical propaganda."
+        keywords="biohacking blog, longevity science articles, autophagy science, NAD+ research, hydrogen water benefits, red light therapy lifestyle, cold exposure benefits, natural longevity methods, performance optimization tips, wellness education"
         url="https://artlux8.com/blog"
         type="website"
       />

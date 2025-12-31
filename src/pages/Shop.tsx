@@ -94,10 +94,11 @@ const Shop = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO 
-        title="Shop Premium Longevity Supplements"
-        description="Browse our curated collection of science-backed longevity supplements. NAD+ boosters, NMN, autophagy activators, and more. Third-party tested, clean ingredients."
-        keywords="buy longevity supplements, NAD+ supplements, NMN capsules, anti-aging supplements, biohacking supplements"
+        title="Premium Biohacking Supplements & Longevity Products | ARTLUX8"
+        description="Shop the world's most premium biohacking supplements. Third-party tested NAD+ boosters, NMN, organic supplements, and performance optimization tools. Free shipping on orders over £60."
+        keywords="premium biohacking supplements, longevity supplements, NAD+ supplements, NMN capsules, organic supplements lifestyle, performance optimization tools, anti-aging supplements, clean supplements, third-party tested supplements"
         url="https://artlux8.com/shop"
+        type="website"
       />
       <Header />
       
