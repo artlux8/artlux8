@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Heart, Brain, Flame, Snowflake, Users, Target, Dna, Activity, FlaskConical, LucideIcon } from "lucide-react";
@@ -79,6 +80,13 @@ const pioneers: Pioneer[] = [
 const About = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="About ARTLUX8 | Premium Biohacking & Longevity Brand Story"
+        description="Discover the ARTLUX8 story - where science meets luxury in human optimization. Inspired by Bryan Johnson, Gary Brecka, Peter Attia, and leading longevity pioneers. Our mission to democratize longevity science."
+        keywords="ARTLUX8 story, premium biohacking brand, luxury longevity store, biohacking lifestyle, human optimization brand, longevity pioneers, Bryan Johnson inspired, Gary Brecka protocols"
+        url="https://artlux8.com/about"
+        type="website"
+      />
       <Header />
       
       {/* Hero Section */}

@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -134,6 +135,13 @@ const protocols: Protocol[] = [
 const Protocols = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Longevity Protocols | Science-Backed Biohacking Systems | ARTLUX8"
+        description="Explore curated longevity protocols from world-leading experts. Blueprint Protocol, Wim Hof Method, NAD+ optimization, and neuroscience-backed daily practices for human optimization."
+        keywords="longevity protocols, biohacking protocols, Bryan Johnson Blueprint, Wim Hof Method, NAD+ protocol, Peter Attia Medicine 3.0, David Sinclair sirtuin activation, Andrew Huberman protocols, cold exposure protocol, breathwork protocol"
+        url="https://artlux8.com/protocols"
+        type="website"
+      />
       <Header />
       
       {/* Hero Section */}
