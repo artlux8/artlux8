@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { GraduationCap, BookOpen, AlertTriangle, Podcast, Wrench, Mail } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import NewsletterModal from '@/components/NewsletterModal';
 
 const scienceTopics = [
   "Autophagy & Mitophagy",
@@ -38,6 +39,8 @@ const advancedTools = [
 ];
 
 const ExpertBiohacker = () => {
+  const [isNewsletterOpen, setIsNewsletterOpen] = useState(false);
+
   useEffect(() => {
     document.title = "ARTLUX Expert Biohacker – Advanced Science for Longevity Enthusiasts";
     const metaDesc = document.querySelector('meta[name="description"]');
@@ -160,7 +163,12 @@ const ExpertBiohacker = () => {
                   Explore Articles
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="border-accent/30 hover:bg-accent/10">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-accent/30 hover:bg-accent/10"
+                onClick={() => setIsNewsletterOpen(true)}
+              >
                 <Mail className="w-4 h-4 mr-2" />
                 Join Expert Newsletter
               </Button>
@@ -169,6 +177,7 @@ const ExpertBiohacker = () => {
         </section>
       </main>
       <Footer />
+      <NewsletterModal isOpen={isNewsletterOpen} onClose={() => setIsNewsletterOpen(false)} />
     </>
   );
 };
