@@ -9,7 +9,7 @@ import TruthAboutLongevity from "@/components/TruthAboutLongevity";
 import FreeProtocolCTA from "@/components/FreeProtocolCTA";
 import ScienceAutophagy from "@/components/ScienceAutophagy";
 // import FeaturedProducts from "@/components/FeaturedProducts";
-import ProtocolBundles from "@/components/ProtocolBundles";
+// import ProtocolBundles from "@/components/ProtocolBundles";
 import PodcastPreview from "@/components/PodcastPreview";
 import Testimonials from "@/components/Testimonials";
 import CTA from "@/components/CTA";
@@ -34,7 +34,7 @@ const Index = () => {
       <FreeProtocolCTA />
       <ScienceAutophagy />
       {/* <FeaturedProducts /> */}
-      <ProtocolBundles />
+      {/* <ProtocolBundles /> */}
       <PodcastPreview />
       <Testimonials />
       <CTA />
