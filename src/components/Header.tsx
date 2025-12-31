@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Menu, X, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
-import { useNavigate, useLocation } from "react-router-dom";
 import ShopifyCartDrawer from "./ShopifyCartDrawer";
 import LocalizationSelector from "./LocalizationSelector";
 import GeoRedirectBanner from "./GeoRedirectBanner";
@@ -17,12 +17,10 @@ const Header = () => {
 
   const navLinks = [
     { href: "/shop", label: "Shop" },
-    // { href: "/longevity-protocol", label: "Protocols" },
-    // { href: "/genetic-testing", label: "Genetic Test" },
-    { href: "/bundles", label: "Bundles" },
+    { href: "/podcast", label: "Podcast" },
     { href: "/free-protocol", label: "Free Protocol" },
     { href: "/blog", label: "Blog" },
-    { href: "/expert-biohacker", label: "Expert" },
+    // Hidden for now: Bundles, Expert Biohacker, Genetic Test, Protocols
   ];
 
   useEffect(() => {
@@ -49,21 +47,21 @@ const Header = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
-            <a href="/" className="flex flex-col group">
+            <Link to="/" className="flex flex-col group">
               <span className="text-2xl md:text-3xl font-logo font-semibold tracking-[0.25em] text-foreground">
                 ARTLUX<span className="logo-infinity text-3xl md:text-4xl font-bold ml-0.5 group-hover:scale-110 transition-transform inline-block">∞</span>
               </span>
               <span className="text-[9px] md:text-[10px] text-muted-foreground tracking-[0.2em] uppercase font-medium">
                 The Luxury Longevity
               </span>
-            </a>
+            </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-6">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.href}
-                  href={link.href}
+                  to={link.href}
                   className={`text-sm font-medium transition-colors ${
                     isActive(link.href)
                       ? "text-gold"
@@ -71,7 +69,7 @@ const Header = () => {
                   } ${link.href === "/free-protocol" ? "text-gold hover:text-gold/80" : ""}`}
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
             </nav>
 
@@ -114,22 +112,22 @@ const Header = () => {
           <div className="md:hidden bg-background border-t border-border">
             <nav className="container mx-auto px-4 py-6 flex flex-col gap-4">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.href}
-                  href={link.href}
+                  to={link.href}
                   className={`text-lg font-medium py-2 border-b border-border ${
                     isActive(link.href) ? "text-gold" : ""
                   } ${link.href === "/free-protocol" ? "text-gold" : ""}`}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
               {user ? (
                 <>
-                  <a href="/dashboard" className="text-lg font-medium py-2 border-b border-border" onClick={() => setIsMenuOpen(false)}>
+                  <Link to="/dashboard" className="text-lg font-medium py-2 border-b border-border" onClick={() => setIsMenuOpen(false)}>
                     Dashboard
-                  </a>
+                  </Link>
                   <Button onClick={() => { signOut(); setIsMenuOpen(false); }} variant="outline" className="mt-4 w-full">
                     Sign Out
                   </Button>
