@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Instagram, Twitter, Youtube, Linkedin } from "lucide-react";
 
 // Custom TikTok icon
@@ -64,11 +65,10 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Shop</h4>
             <ul className="space-y-3 text-sm text-primary-foreground/60">
-              <li><a href="/shop" className="hover:text-primary-foreground transition-colors">All Products</a></li>
-              <li><a href="/hydrogen-water-bottles" className="hover:text-primary-foreground transition-colors">Hydrogen Bottles</a></li>
-              <li><a href="/cold-plunge" className="hover:text-primary-foreground transition-colors">Cold Plunge</a></li>
-              <li><a href="/grounding" className="hover:text-primary-foreground transition-colors">Grounding</a></li>
-              <li><a href="/bundles" className="hover:text-primary-foreground transition-colors">Bundles</a></li>
+              <li><Link to="/shop" className="hover:text-primary-foreground transition-colors">All Products</Link></li>
+              <li><Link to="/hydrogen-water-bottles" className="hover:text-primary-foreground transition-colors">Hydrogen Bottles</Link></li>
+              <li><Link to="/grounding" className="hover:text-primary-foreground transition-colors">Grounding</Link></li>
+              {/* Hidden for now: Cold Plunge, Bundles */}
             </ul>
           </div>
 
@@ -76,11 +76,11 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Learn</h4>
             <ul className="space-y-3 text-sm text-primary-foreground/60">
-              <li><a href="/longevity-protocol" className="hover:text-primary-foreground transition-colors">Protocols</a></li>
-              <li><a href="/podcast" className="hover:text-primary-foreground transition-colors">Podcast</a></li>
-              <li><a href="/free-protocol" className="hover:text-primary-foreground transition-colors">Free Protocol</a></li>
-              <li><a href="/blog" className="hover:text-primary-foreground transition-colors">Blog</a></li>
-              <li><a href="/faq" className="hover:text-primary-foreground transition-colors">FAQ</a></li>
+              <li><Link to="/longevity-protocol" className="hover:text-primary-foreground transition-colors">Protocols</Link></li>
+              <li><Link to="/podcast" className="hover:text-primary-foreground transition-colors">Podcast</Link></li>
+              <li><Link to="/free-protocol" className="hover:text-primary-foreground transition-colors">Free Protocol</Link></li>
+              <li><Link to="/blog" className="hover:text-primary-foreground transition-colors">Blog</Link></li>
+              <li><Link to="/faq" className="hover:text-primary-foreground transition-colors">FAQ</Link></li>
             </ul>
           </div>
 
@@ -88,10 +88,9 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Company</h4>
             <ul className="space-y-3 text-sm text-primary-foreground/60">
-              <li><a href="/about" className="hover:text-primary-foreground transition-colors">About Us</a></li>
-              <li><a href="/genetic-testing" className="hover:text-primary-foreground transition-colors">Genetic Testing</a></li>
-              <li><a href="/expert-biohacker" className="hover:text-primary-foreground transition-colors">Expert Biohacker</a></li>
-              <li><a href="/contact" className="hover:text-primary-foreground transition-colors">Contact</a></li>
+              <li><Link to="/about" className="hover:text-primary-foreground transition-colors">About Us</Link></li>
+              <li><Link to="/contact" className="hover:text-primary-foreground transition-colors">Contact</Link></li>
+              {/* Hidden for now: Genetic Testing, Expert Biohacker */}
             </ul>
           </div>
 
@@ -99,10 +98,10 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Support</h4>
             <ul className="space-y-3 text-sm text-primary-foreground/60">
-              <li><a href="/shipping" className="hover:text-primary-foreground transition-colors">Shipping</a></li>
-              <li><a href="/returns" className="hover:text-primary-foreground transition-colors">Returns</a></li>
-              <li><a href="/privacy" className="hover:text-primary-foreground transition-colors">Privacy Policy</a></li>
-              <li><a href="/terms" className="hover:text-primary-foreground transition-colors">Terms of Service</a></li>
+              <li><Link to="/shipping" className="hover:text-primary-foreground transition-colors">Shipping</Link></li>
+              <li><Link to="/returns" className="hover:text-primary-foreground transition-colors">Returns</Link></li>
+              <li><Link to="/privacy" className="hover:text-primary-foreground transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/terms" className="hover:text-primary-foreground transition-colors">Terms of Service</Link></li>
             </ul>
           </div>
         </div>
@@ -113,9 +112,8 @@ const Footer = () => {
             © 2025 ARTLUX LTD. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-primary-foreground/40">
-            <a href="/privacy" className="hover:text-primary-foreground transition-colors">Privacy Policy</a>
-            <a href="/terms" className="hover:text-primary-foreground transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-primary-foreground transition-colors">Accessibility</a>
+            <Link to="/privacy" className="hover:text-primary-foreground transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-primary-foreground transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>
