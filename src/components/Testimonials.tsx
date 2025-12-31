@@ -6,7 +6,7 @@ const testimonials = [
   {
     name: "DANA WHITE",
     image: danaWhiteImage,
-    content: "I was on blood pressure medicine, thyroid medicine, and cholesterol medicine. I am on nothing now except [ARTLUX∞] supplements...so I'm off all these meds I've been on for 12 years, and I lost 40lbs.",
+    content: "I was on blood pressure medicine, thyroid medicine, and cholesterol medicine. I am on nothing now except Gary Brecka said to do...so I'm off all these meds I've been on for 12 years, and I lost 40lbs.",
   },
   {
     name: "DR. SARAH CHEN",
