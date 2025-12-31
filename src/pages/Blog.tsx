@@ -16,6 +16,44 @@ import {
   TrendingUp
 } from "lucide-react";
 
+// Import hero images for articles
+import hydrogenWaterHero from "@/assets/blog/hydrogen-water-hero.jpg";
+import morningProtocolHero from "@/assets/blog/morning-protocol-hero.jpg";
+import longevitySupplementsHero from "@/assets/blog/longevity-supplements-hero.jpg";
+
+// Article images mapping
+const articleImages: Record<string, string> = {
+  "what-is-hydrogen-water-science-benefits": hydrogenWaterHero,
+  "gary-brecka-30-30-30-protocol-explained": morningProtocolHero,
+  "best-longevity-supplements-2025-science-based": longevitySupplementsHero,
+};
+
+// Category fallback images
+const categoryImages: Record<string, string> = {
+  "Hydrogen Therapy": hydrogenWaterHero,
+  "Protocols": morningProtocolHero,
+  "Supplements": longevitySupplementsHero,
+  "NAD+ Science": longevitySupplementsHero,
+  "Mitochondria": longevitySupplementsHero,
+  "Cold Exposure": morningProtocolHero,
+  "Light Therapy": morningProtocolHero,
+  "Grounding": morningProtocolHero,
+  "Autophagy": longevitySupplementsHero,
+  "Anti-Pharma": longevitySupplementsHero,
+  "Detox": hydrogenWaterHero,
+  "Stress": morningProtocolHero,
+  "Anti-Aging": longevitySupplementsHero,
+  "Water": hydrogenWaterHero,
+  "Air": hydrogenWaterHero,
+  "Peptides": longevitySupplementsHero,
+  "Epigenetics": longevitySupplementsHero,
+  "Routines": morningProtocolHero,
+};
+
+const getArticleImage = (slug: string, category: string): string | null => {
+  return articleImages[slug] || categoryImages[category] || null;
+};
+
 const Blog = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -87,35 +125,49 @@ const Blog = () => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {featuredArticles.map((article, index) => (
-              <Link
-                key={article.id}
-                to={`/blog/${article.slug}`}
-                className="group bg-card border border-border rounded-2xl overflow-hidden hover:border-gold/50 transition-all duration-300"
-              >
-                <div className="h-48 bg-gradient-to-br from-gold/20 via-secondary to-secondary flex items-center justify-center">
-                  <BookOpen className="w-16 h-16 text-gold/50 group-hover:text-gold transition-colors" />
-                </div>
-                <div className="p-6">
-                  <Badge variant="outline" className="mb-3 text-gold border-gold/30">
-                    {article.category}
-                  </Badge>
-                  <h3 className="font-semibold text-lg text-foreground mb-2 group-hover:text-gold transition-colors line-clamp-2">
-                    {article.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm line-clamp-2 mb-4">
-                    {article.excerpt}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-muted-foreground flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
-                      {article.readTime} read
-                    </span>
-                    <ArrowRight className="w-4 h-4 text-gold opacity-0 group-hover:opacity-100 transition-opacity" />
+            {featuredArticles.map((article) => {
+              const image = getArticleImage(article.slug, article.category);
+              return (
+                <Link
+                  key={article.id}
+                  to={`/blog/${article.slug}`}
+                  className="group bg-card border border-border rounded-2xl overflow-hidden hover:border-gold/50 transition-all duration-300 hover:shadow-lg hover:shadow-gold/5"
+                >
+                  <div className="h-48 relative overflow-hidden">
+                    {image ? (
+                      <img 
+                        src={image} 
+                        alt={article.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-gold/20 via-secondary to-secondary flex items-center justify-center">
+                        <BookOpen className="w-16 h-16 text-gold/50 group-hover:text-gold transition-colors" />
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
-                </div>
-              </Link>
-            ))}
+                  <div className="p-6">
+                    <Badge variant="outline" className="mb-3 text-gold border-gold/30">
+                      {article.category}
+                    </Badge>
+                    <h3 className="font-semibold text-lg text-foreground mb-2 group-hover:text-gold transition-colors line-clamp-2">
+                      {article.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm line-clamp-2 mb-4">
+                      {article.excerpt}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        {article.readTime} read
+                      </span>
+                      <ArrowRight className="w-4 h-4 text-gold opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -152,36 +204,50 @@ const Blog = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredArticles.map(article => (
-              <Link
-                key={article.id}
-                to={`/blog/${article.slug}`}
-                className="group bg-card border border-border rounded-xl p-6 hover:border-gold/50 transition-all duration-300"
-              >
-                <Badge variant="outline" className="mb-3 text-xs text-gold border-gold/30">
-                  {article.category}
-                </Badge>
-                <h3 className="font-semibold text-foreground mb-2 group-hover:text-gold transition-colors line-clamp-2">
-                  {article.title}
-                </h3>
-                <p className="text-muted-foreground text-sm line-clamp-3 mb-4">
-                  {article.excerpt}
-                </p>
-                <div className="flex items-center justify-between">
-                  <div className="flex flex-wrap gap-1">
-                    {article.keywords.slice(0, 2).map(keyword => (
-                      <span key={keyword} className="text-xs text-muted-foreground bg-secondary px-2 py-0.5 rounded">
-                        {keyword}
+            {filteredArticles.map(article => {
+              const image = getArticleImage(article.slug, article.category);
+              return (
+                <Link
+                  key={article.id}
+                  to={`/blog/${article.slug}`}
+                  className="group bg-card border border-border rounded-xl overflow-hidden hover:border-gold/50 transition-all duration-300 hover:shadow-lg hover:shadow-gold/5"
+                >
+                  {image && (
+                    <div className="h-32 overflow-hidden">
+                      <img 
+                        src={image} 
+                        alt={article.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                  )}
+                  <div className="p-6">
+                    <Badge variant="outline" className="mb-3 text-xs text-gold border-gold/30">
+                      {article.category}
+                    </Badge>
+                    <h3 className="font-semibold text-foreground mb-2 group-hover:text-gold transition-colors line-clamp-2">
+                      {article.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm line-clamp-3 mb-4">
+                      {article.excerpt}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <div className="flex flex-wrap gap-1">
+                        {article.keywords.slice(0, 2).map(keyword => (
+                          <span key={keyword} className="text-xs text-muted-foreground bg-secondary px-2 py-0.5 rounded">
+                            {keyword}
+                          </span>
+                        ))}
+                      </div>
+                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        {article.readTime}
                       </span>
-                    ))}
+                    </div>
                   </div>
-                  <span className="text-xs text-muted-foreground flex items-center gap-1">
-                    <Clock className="w-3 h-3" />
-                    {article.readTime}
-                  </span>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
 
           {filteredArticles.length === 0 && (
