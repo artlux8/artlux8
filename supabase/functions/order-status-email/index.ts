@@ -97,7 +97,7 @@ const getShippedEmailHtml = (data: OrderStatusEmailRequest) => `
     </div>
     
     <div style="text-align: center; color: #666; font-size: 12px;">
-      <p style="margin: 0 0 10px;">Questions? <a href="mailto:contact@artlux8.com" style="color: #d4af37;">contact@artlux8.com</a></p>
+      <p style="margin: 0 0 10px;">Questions? <a href="mailto:hello@artlux8.com" style="color: #d4af37;">hello@artlux8.com</a></p>
       <p style="margin: 0;">© ${new Date().getFullYear()} ARTLUX LTD</p>
     </div>
   </div>
@@ -148,7 +148,7 @@ const getDeliveredEmailHtml = (data: OrderStatusEmailRequest) => `
     </div>
     
     <div style="text-align: center; color: #666; font-size: 12px;">
-      <p style="margin: 0 0 10px;">Questions? <a href="mailto:contact@artlux8.com" style="color: #d4af37;">contact@artlux8.com</a></p>
+      <p style="margin: 0 0 10px;">Questions? <a href="mailto:hello@artlux8.com" style="color: #d4af37;">hello@artlux8.com</a></p>
       <p style="margin: 0;">© ${new Date().getFullYear()} ARTLUX LTD</p>
     </div>
   </div>
@@ -204,7 +204,7 @@ const handler = async (req: Request): Promise<Response> => {
       },
       body: JSON.stringify({
         from: "ARTLUX∞ <hello@artlux8.com>",
-        reply_to: "contact@artlux8.com",
+        reply_to: "hello@artlux8.com",
         to: [data.customer_email],
         subject: subject,
         html: emailHtml,

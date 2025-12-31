@@ -85,7 +85,7 @@ const Returns = () => {
 
             <h2 className="font-display text-2xl font-bold text-foreground mt-10">How to Return</h2>
             <ol>
-              <li><strong>Contact Us:</strong> Email <a href="mailto:contact@artlux8.com" className="text-accent hover:underline">contact@artlux8.com</a> with your order number and reason for return</li>
+              <li><strong>Contact Us:</strong> Email <a href="mailto:hello@artlux8.com" className="text-accent hover:underline">hello@artlux8.com</a> with your order number and reason for return</li>
               <li><strong>Receive Instructions:</strong> We'll provide a return shipping label and instructions</li>
               <li><strong>Ship Items:</strong> Pack items securely and ship using the provided label</li>
               <li><strong>Get Refunded:</strong> Once we receive and inspect your return, we'll process your refund within 5-7 business days</li>
@@ -112,7 +112,7 @@ const Returns = () => {
             <h2 className="font-display text-2xl font-bold text-foreground mt-10">Questions?</h2>
             <p>
               If you have any questions about our return policy, please contact our support team at{" "}
-              <a href="mailto:contact@artlux8.com" className="text-accent hover:underline">contact@artlux8.com</a>
+              <a href="mailto:hello@artlux8.com" className="text-accent hover:underline">hello@artlux8.com</a>
             </p>
           </div>
         </div>

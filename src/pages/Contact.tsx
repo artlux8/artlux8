@@ -115,8 +115,8 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-foreground mb-1">Email</h3>
-                    <a href="mailto:contact@artlux8.com" className="text-muted-foreground hover:text-foreground transition-colors">
-                      contact@artlux8.com
+                    <a href="mailto:hello@artlux8.com" className="text-muted-foreground hover:text-foreground transition-colors">
+                      hello@artlux8.com
                     </a>
                   </div>
                 </CardContent>

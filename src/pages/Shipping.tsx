@@ -158,7 +158,7 @@ const Shipping = () => {
             <p>For international orders, customs duties and import taxes may apply depending on your country's regulations. These charges are the responsibility of the recipient.</p>
             
             <h3 className="text-foreground">Questions?</h3>
-            <p>If you have any questions about shipping, please contact us at <a href="mailto:contact@artlux8.com" className="text-accent hover:underline">contact@artlux8.com</a></p>
+            <p>If you have any questions about shipping, please contact us at <a href="mailto:hello@artlux8.com" className="text-accent hover:underline">hello@artlux8.com</a></p>
           </div>
         </div>
       </section>

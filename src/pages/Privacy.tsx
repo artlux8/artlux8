@@ -97,7 +97,7 @@ const Privacy = () => {
               <li>Data portability</li>
               <li>Withdraw consent at any time</li>
             </ul>
-            <p>To exercise these rights, contact us at <a href="mailto:contact@artlux8.com" className="text-accent hover:underline">contact@artlux8.com</a></p>
+            <p>To exercise these rights, contact us at <a href="mailto:hello@artlux8.com" className="text-accent hover:underline">hello@artlux8.com</a></p>
 
             <h2 className="font-display text-2xl font-bold text-foreground mt-8">7. Data Security</h2>
             <p>
@@ -124,7 +124,7 @@ const Privacy = () => {
             <p>
               ARTLUX LTD<br />
               92 Markby Road, Birmingham, West Midlands, B18 4PN, UK<br />
-              Email: <a href="mailto:contact@artlux8.com" className="text-accent hover:underline">contact@artlux8.com</a>
+              Email: <a href="mailto:hello@artlux8.com" className="text-accent hover:underline">hello@artlux8.com</a>
             </p>
           </div>
         </div>
