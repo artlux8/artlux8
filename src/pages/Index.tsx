@@ -28,9 +28,9 @@ const Index = () => {
       <Hero />
       <PressLogos />
       <ArtluxEcosystem />
-      <PromotedHydrogenBottle />
-      <LongevityProtocolPreview />
       <TruthAboutLongevity />
+      <LongevityProtocolPreview />
+      <PromotedHydrogenBottle />
       <FreeProtocolCTA />
       <ScienceAutophagy />
       {/* <FeaturedProducts /> */}
