@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Truck, Globe, Clock, Package } from "lucide-react";
+import { Truck, Globe, Clock, Package, MapPin } from "lucide-react";
 import { useLocalizationStore } from "@/stores/localizationStore";
+import OrderTracker from "@/components/OrderTracker";
 
 const Shipping = () => {
   const { formatPrice, fetchLiveRates } = useLocalizationStore();
@@ -133,8 +134,21 @@ const Shipping = () => {
         </div>
       </section>
 
-      {/* Compact Additional Info */}
+      {/* Order Tracking */}
       <section className="py-10 bg-secondary/30">
+        <div className="container mx-auto px-4 max-w-2xl">
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <MapPin className="w-5 h-5 text-accent" />
+            <h2 className="font-display text-xl font-bold text-foreground">
+              Track Your Order
+            </h2>
+          </div>
+          <OrderTracker />
+        </div>
+      </section>
+
+      {/* Compact Additional Info */}
+      <section className="py-10">
         <div className="container mx-auto px-4 max-w-3xl">
           <h2 className="font-display text-xl font-bold text-foreground mb-4">
             Additional Information
