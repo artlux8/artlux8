@@ -19,9 +19,9 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       <SEO 
-        title="ARTLUX∞ - The Luxury Longevity | Premium Supplements & Protocols"
-        description="Science-backed longevity supplements and protocols. Premium NAD+, NMN, autophagy activators, and personalized health optimization. Your body is the ultimate luxury asset."
-        keywords="longevity supplements, NAD+ booster, NMN, autophagy, anti-aging, biohacking, hydrogen water, longevity protocol, Gary Brecka, Bryan Johnson"
+        title="ARTLUX8 | World's Premier Biohacking & Longevity Lifestyle Store"
+        description="Discover premium biohacking technology and longevity lifestyle tools. Hydrogen water bottles, red light therapy, cold plunge systems, organic supplements, and advanced performance optimization. Technology-driven human optimization without pharmaceuticals."
+        keywords="biohacking lifestyle, longevity optimization, hydrogen water bottle, red light therapy, LED mask, cold plunge, grounding mat, earthing, organic supplements, super aminos, genetic methylation test, performance optimization, elite wellness technology, premium biohacking brand, luxury longevity store, natural longevity methods, molecular hydrogen water"
         url="https://artlux8.com"
       />
       <Header />

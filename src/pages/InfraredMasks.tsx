@@ -1,18 +1,17 @@
-import { useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Sun, Sparkles, Clock, Shield, Zap } from "lucide-react";
 
 const InfraredMasks = () => {
-  useEffect(() => {
-    document.title = "ARTLUX Infrared LED Masks – Red Light Therapy for Skin & Anti-Aging";
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute("content", "Professional LED light therapy masks with red and near-infrared wavelengths. Boost collagen, reduce wrinkles, and enhance cellular energy.");
-    }
-  }, []);
+  const redLightFAQ = [
+    { question: "What is red light therapy?", answer: "Red light therapy uses specific wavelengths of red and near-infrared light to support cellular energy production. It's a non-invasive wellness technology used for skin optimization and general wellness support." },
+    { question: "How often should I use an LED mask?", answer: "Most users incorporate LED mask sessions 3-5 times per week, with each session lasting 10-20 minutes. Consistency is key for experiencing the full benefits of light therapy as a lifestyle practice." },
+    { question: "What wavelengths are most effective?", answer: "Red light at 630-660nm and near-infrared at 830-850nm are commonly used in LED therapy devices. Different wavelengths penetrate to different depths, supporting various aspects of skin and cellular wellness." },
+    { question: "Is LED light therapy safe?", answer: "LED light therapy at appropriate intensities is considered safe for most people. It's a non-thermal, non-invasive technology. Those with photosensitivity conditions should consult a professional before use." },
+  ];
 
   const benefits = [
     { icon: Sparkles, title: "Collagen Production", description: "Stimulates fibroblasts for natural collagen synthesis" },
@@ -39,6 +38,13 @@ const InfraredMasks = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Red Light LED Masks | Professional Light Therapy Devices"
+        description="Premium red light LED masks and therapy devices for skin optimization and cellular wellness. Professional-grade LED light therapy with red and near-infrared wavelengths for your biohacking lifestyle."
+        keywords="red light LED mask, red light therapy, LED light therapy, near-infrared therapy, skin optimization, cellular wellness, biohacking light therapy, photobiomodulation, red light devices, premium LED mask"
+        url="https://artlux8.com/infrared-masks"
+        faq={redLightFAQ}
+      />
       <Header />
       
       {/* Hero Section */}
