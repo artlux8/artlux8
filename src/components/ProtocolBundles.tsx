@@ -170,11 +170,14 @@ const ProtocolBundles = () => {
                       </p>
                     </div>
                     <div className="flex gap-2">
-                      <Link to={`/bundle/${bundle.id}`}>
-                        <Button variant="outline" size="sm" className="border-accent/50 text-accent hover:bg-accent/10">
-                          View Details
-                        </Button>
-                      </Link>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="border-accent/50 text-accent hover:bg-accent/10"
+                        onClick={() => toast.info('Coming soon!', { description: 'Bundle details will be available shortly.' })}
+                      >
+                        View Details
+                      </Button>
                       <Button
                         onClick={() => handleAddBundle(bundle)}
                         className="bg-accent hover:bg-accent/90 text-accent-foreground"
