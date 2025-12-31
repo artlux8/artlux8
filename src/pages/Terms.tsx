@@ -125,7 +125,7 @@ const Terms = () => {
             <h2 className="font-display text-2xl font-bold text-foreground mt-8">14. Contact Us</h2>
             <p>
               For questions about these Terms of Service, contact us at:<br />
-              Email: <a href="mailto:contact@artlux8.com" className="text-accent hover:underline">contact@artlux8.com</a>
+              Email: <a href="mailto:hello@artlux8.com" className="text-accent hover:underline">hello@artlux8.com</a>
             </p>
           </div>
         </div>

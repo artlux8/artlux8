@@ -65,7 +65,7 @@ const FAQ = () => {
         },
         {
           q: "How do I return a product?",
-          a: "Contact our support team at contact@artlux8.com with your order number. We'll provide return instructions and process your refund within 5-7 business days.",
+          a: "Contact our support team at hello@artlux8.com with your order number. We'll provide return instructions and process your refund within 5-7 business days.",
         },
       ],
     },

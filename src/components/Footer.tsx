@@ -31,8 +31,8 @@ const Footer = () => {
               <p>Company No: 12280833</p>
               <p>92 Markby Road, Birmingham</p>
               <p>West Midlands, B18 4PN, UK</p>
-              <a href="mailto:contact@artlux8.com" className="hover:text-primary-foreground transition-colors block">
-                contact@artlux8.com
+              <a href="mailto:hello@artlux8.com" className="hover:text-primary-foreground transition-colors block">
+                hello@artlux8.com
               </a>
             </div>
             <div className="flex gap-3 flex-wrap">
