@@ -25,6 +25,7 @@ import WholesaleCatalog from "./pages/WholesaleCatalog";
 import SupplierDashboard from "./pages/SupplierDashboard";
 import ExitIntentPopup from "./components/ExitIntentPopup";
 import Blog from "./pages/Blog";
+import BlogArticle from "./pages/BlogArticle";
 import GeneticTesting from "./pages/GeneticTesting";
 import Peptides from "./pages/Peptides";
 import Bundles from "./pages/Bundles";
@@ -73,7 +74,7 @@ const App = () => (
               <Route path="/podcasts" element={<Podcast />} />
               <Route path="/free-protocol" element={<FreeProtocol />} />
               <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogArticle />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/dashboard/challenge" element={<ChallengeProgress />} />
               <Route path="/dashboard/upload" element={<UploadProof />} />
