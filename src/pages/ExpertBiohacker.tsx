@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { GraduationCap, BookOpen, AlertTriangle, Podcast, Wrench, Mail } from 'lucide-react';
 import Header from '@/components/Header';
@@ -153,8 +154,11 @@ const ExpertBiohacker = () => {
               Go Deeper
             </h2>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
-                Explore Articles
+              <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+                <Link to="/blog">
+                  <BookOpen className="w-4 h-4 mr-2" />
+                  Explore Articles
+                </Link>
               </Button>
               <Button size="lg" variant="outline" className="border-accent/30 hover:bg-accent/10">
                 <Mail className="w-4 h-4 mr-2" />
