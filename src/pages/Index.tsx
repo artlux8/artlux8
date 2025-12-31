@@ -12,7 +12,7 @@ import ScienceAutophagy from "@/components/ScienceAutophagy";
 // import ProtocolBundles from "@/components/ProtocolBundles";
 import PodcastPreview from "@/components/PodcastPreview";
 import Testimonials from "@/components/Testimonials";
-import CTA from "@/components/CTA";
+// import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -37,7 +37,7 @@ const Index = () => {
       {/* <ProtocolBundles /> */}
       <PodcastPreview />
       <Testimonials />
-      <CTA />
+      {/* <CTA /> */}
       <Footer />
     </div>
   );
