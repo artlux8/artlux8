@@ -22,18 +22,9 @@ const ProtocolBundles = () => {
   const { formatPrice } = useLocalizationStore();
 
   const handleAddBundle = (bundle: ProtocolBundle) => {
-    if (!user) {
-      toast.error('Please sign in to add items to cart');
-      return;
-    }
-    
-    const bundleProducts = getBundleProducts(bundle);
-    bundleProducts.forEach(product => {
-      const discountedPrice = product.price * (1 - bundle.savingsPercent / 100);
-      addToCart({ id: product.id, name: product.name, price: discountedPrice }, 1, false);
+    toast.info('Coming soon!', {
+      description: 'Bundles will be available shortly.'
     });
-    
-    toast.success(`${bundle.name} added to cart!`);
   };
 
   return (
