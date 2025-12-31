@@ -1,18 +1,17 @@
-import { useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Leaf, Brain, Shield, Heart, Sparkles } from "lucide-react";
 
 const BioactiveNutrients = () => {
-  useEffect(() => {
-    document.title = "ARTLUX Bioactive Nutrients – Mushrooms, Colostrum & Peptides";
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute("content", "Premium bioactive supplements including medicinal mushrooms, colostrum, and bioactive peptides for immune support, cognitive enhancement, and longevity.");
-    }
-  }, []);
+  const bioactiveFAQ = [
+    { question: "What are bioactive nutrients?", answer: "Bioactive nutrients are natural compounds found in foods and supplements that have positive effects on cellular health and metabolism. They include compounds from mushrooms, colostrum, and other natural sources that support immune function, cognitive performance, and overall wellness." },
+    { question: "What are the benefits of medicinal mushrooms?", answer: "Medicinal mushrooms like Lion's Mane, Reishi, and Cordyceps have been used for centuries in traditional wellness practices. They contain compounds that may support immune function, cognitive health, energy levels, and stress adaptation as part of a healthy lifestyle." },
+    { question: "What is bovine colostrum?", answer: "Bovine colostrum is the first milk produced by cows after giving birth. It's rich in immunoglobulins, growth factors, and other bioactive compounds that support gut health and immune function. It's a popular supplement among biohackers and athletes." },
+    { question: "How should I incorporate bioactive supplements into my routine?", answer: "Bioactive supplements work best as part of a consistent wellness routine. Many people take them in the morning or with meals. Quality and sourcing matter, so choose supplements from reputable sources with proper extraction methods." },
+  ];
 
   const products = [
     {
@@ -61,6 +60,13 @@ const BioactiveNutrients = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Organic Supplements & Bioactive Nutrients | Mushrooms, Colostrum"
+        description="Premium organic supplements and bioactive nutrients including Lion's Mane, Reishi, Cordyceps mushrooms, and bovine colostrum. Natural compounds for immune support, cognitive optimization, and longevity lifestyle."
+        keywords="organic supplements, bioactive nutrients, medicinal mushrooms, lion's mane extract, reishi mushroom, cordyceps, bovine colostrum, immune support supplements, cognitive supplements, natural longevity supplements"
+        url="https://artlux8.com/bioactive-nutrients"
+        faq={bioactiveFAQ}
+      />
       <Header />
       
       {/* Hero Section */}

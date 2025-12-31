@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Syringe, Heart, Brain, Sparkles, Moon, AlertTriangle, Download, ArrowRight } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 
 const peptides = [
   {
@@ -44,15 +44,24 @@ const pharmaReasons = [
   "They repair instead of suppressing symptoms."
 ];
 
+const peptideFAQ = [
+  { question: "What are peptides?", answer: "Peptides are short chains of amino acids that serve as signaling molecules in the body. They are the subject of ongoing scientific research for their potential roles in regeneration, recovery, and cellular communication. This is educational content only." },
+  { question: "Is this page selling peptides?", answer: "No. ARTLUX provides educational information about peptides for research and knowledge purposes only. We do not sell, distribute, or recommend the use of peptides for human consumption. Always consult with healthcare professionals regarding any health-related decisions." },
+  { question: "Why is peptide research significant?", answer: "Peptides are being studied for their potential roles in tissue repair, inflammation modulation, and cellular signaling. Research continues to explore how these naturally occurring compounds function in biological systems." },
+  { question: "Where can I learn more about peptide science?", answer: "Reputable sources include peer-reviewed scientific journals, academic institutions, and qualified healthcare professionals. This page provides an educational overview of the topic based on published research." },
+];
+
 const Peptides = () => {
-  useEffect(() => {
-    document.title = "ARTLUX Peptide Education – BPC-157, TB-500, GHK-Cu & Regeneration Science";
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) metaDesc.setAttribute('content', 'Learn about the world\'s most powerful regenerative peptides: BPC-157, TB-500, GHK-Cu, Epitalon and more. Science-based educational resource inspired by Gary Brecka.');
-  }, []);
 
   return (
     <>
+      <SEO 
+        title="Peptides Education | BPC-157, TB-500 & Regeneration Science"
+        description="Educational resource about peptides and regeneration science. Learn about BPC-157, TB-500, GHK-Cu, and other peptides studied for their roles in recovery and cellular signaling. Research and educational content only."
+        keywords="peptides education, BPC-157, TB-500, GHK-Cu, Epitalon, peptide research, regeneration science, peptide information, peptide learning, biohacking education"
+        url="https://artlux8.com/peptides"
+        faq={peptideFAQ}
+      />
       <Header />
       <main className="min-h-screen bg-background pt-20">
         {/* Hero Section */}

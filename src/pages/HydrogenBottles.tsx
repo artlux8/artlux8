@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Droplets, Zap, Shield, Brain, Heart, ShoppingCart, Loader2, Check } from "lucide-react";
@@ -17,13 +18,12 @@ const HydrogenBottles = () => {
   const { addItem } = useCartStore();
   const { formatPrice, convertPrice } = useLocalizationStore();
 
-  useEffect(() => {
-    document.title = "ARTLUX∞ Hydrogen Water Bottles – Premium H2 Generators";
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute("content", "Premium portable hydrogen water bottles with SPE/PEM technology. Generate antioxidant-rich hydrogen water on the go for enhanced energy, recovery, and longevity.");
-    }
-  }, []);
+  const hydrogenFAQ = [
+    { question: "What is hydrogen water?", answer: "Hydrogen water is regular water infused with molecular hydrogen (H₂) gas. It acts as a selective antioxidant, neutralizing harmful free radicals while supporting cellular energy production." },
+    { question: "How does hydrogen water support performance?", answer: "Molecular hydrogen crosses cell membranes easily, supporting athletic recovery, reducing exercise-induced oxidative stress, and helping maintain energy levels during physical activity." },
+    { question: "How often should I drink hydrogen water?", answer: "For optimal lifestyle benefits, many biohackers drink 1-3 glasses of freshly generated hydrogen water daily, particularly before or after workouts or as part of a morning routine." },
+    { question: "How long does hydrogen stay in water?", answer: "Hydrogen gas naturally dissipates from water over time. For best results, drink the water within 15-30 minutes of generation. Our bottles are designed for on-demand hydrogen production." },
+  ];
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -78,6 +78,13 @@ const HydrogenBottles = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Premium Hydrogen Water Bottles | Molecular Hydrogen Generator"
+        description="Premium portable hydrogen water bottles with SPE/PEM technology. Generate antioxidant-rich molecular hydrogen water for performance hydration, recovery optimization, and longevity lifestyle support."
+        keywords="hydrogen water bottle, molecular hydrogen water, premium hydrogen water bottle, performance hydration, hydrogen water benefits, SPE PEM technology, portable hydrogen generator, antioxidant water, biohacking hydration, longevity water"
+        url="https://artlux8.com/hydrogen-water-bottles"
+        faq={hydrogenFAQ}
+      />
       <Header />
       
       {/* Hero Section */}

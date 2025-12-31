@@ -1,12 +1,13 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Check, Dna, Brain, Heart, Zap, Shield, Clock, FileText } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { useCartStore } from '@/stores/cartStore';
 import { fetchProductByHandle, createStorefrontCheckout } from '@/lib/shopify';
 import { toast } from 'sonner';
+
 const measures = [
   "Biological age (vs chronological age)",
   "Rate of cellular aging",
@@ -40,15 +41,16 @@ const protocolItems = [
   { icon: Dna, text: "Long-term longevity strategy" }
 ];
 
+const geneticFAQ = [
+  { question: "What is methylation genetic testing?", answer: "Methylation testing analyzes genes involved in methylation pathways, which are essential for detoxification, energy production, and cellular repair. It provides insights into how your body processes nutrients, handles stress, and manages inflammation." },
+  { question: "Is this a medical diagnostic test?", answer: "No. This is a lifestyle and educational genetic test that provides insights into your genetic predispositions. It is not intended to diagnose, treat, or prevent any disease. The results are meant to inform personalized lifestyle optimization strategies." },
+  { question: "What information will I receive from the test?", answer: "You'll receive a comprehensive report covering methylation efficiency, detox gene variants (like MTHFR), inflammation markers, and personalized recommendations for supplements and lifestyle practices based on your genetic profile." },
+  { question: "How is the test administered?", answer: "The test uses a simple at-home saliva collection kit. You collect your sample, send it to the lab in the prepaid envelope, and receive your results and personalized protocol digitally within 2-4 weeks." },
+];
+
 const GeneticTesting = () => {
   const navigate = useNavigate();
   const addItem = useCartStore(state => state.addItem);
-
-  useEffect(() => {
-    document.title = "ARTLUX Methylation Genetic Testing – Precision Longevity Blueprint";
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) metaDesc.setAttribute('content', 'Discover your biological age, detox capacity, inflammation markers and optimal supplement protocol using methylation-based DNA testing. ARTLUX provides personalized longevity plans based on your genes.');
-  }, []);
 
   const handleOrderTest = async () => {
     try {
@@ -87,6 +89,13 @@ const GeneticTesting = () => {
 
   return (
     <>
+      <SEO 
+        title="Genetic Methylation Testing | Personalized Longevity Insights"
+        description="Discover your biological age and personalized optimization insights with methylation genetic testing. Educational genetic analysis for detox capacity, inflammation patterns, and lifestyle optimization. Not a medical diagnostic."
+        keywords="genetic methylation test, MTHFR testing, biological age test, methylation genetic testing, personalized optimization, genetic lifestyle insights, detox gene testing, inflammation genetic markers, longevity genetic test"
+        url="https://artlux8.com/genetic-testing"
+        faq={geneticFAQ}
+      />
       <Header />
       <main className="min-h-screen bg-background pt-20">
         {/* Hero Section */}

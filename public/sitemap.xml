@@ -1,171 +1,188 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Homepage -->
+  <!-- Homepage - Biohacking & Longevity Lifestyle Hub -->
   <url>
     <loc>https://artlux8.com/</loc>
-    <lastmod>2024-12-14</lastmod>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- Main Pages -->
+  <!-- Main Commercial Pages -->
   <url>
     <loc>https://artlux8.com/shop</loc>
-    <lastmod>2024-12-14</lastmod>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <priority>0.95</priority>
   </url>
   <url>
     <loc>https://artlux8.com/bundles</loc>
-    <lastmod>2024-12-14</lastmod>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://artlux8.com/free-protocol</loc>
-    <lastmod>2024-12-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://artlux8.com/blog</loc>
-    <lastmod>2024-12-14</lastmod>
-    <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- Protocols & Science -->
+  <!-- TOP PRODUCT CATEGORIES (HIGH PRIORITY) -->
+  <!-- Hydrogen Water - Core Product -->
+  <url>
+    <loc>https://artlux8.com/hydrogen-water-bottles</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  
+  <!-- Red Light Therapy - Core Product -->
+  <url>
+    <loc>https://artlux8.com/infrared-masks</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  
+  <!-- Cold Plunge - Core Product -->
+  <url>
+    <loc>https://artlux8.com/cold-plunge</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Grounding / Earthing - Core Product -->
+  <url>
+    <loc>https://artlux8.com/grounding</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Bioactive Nutrients / Organic Supplements -->
+  <url>
+    <loc>https://artlux8.com/bioactive-nutrients</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Genetic Methylation Testing - Educational -->
+  <url>
+    <loc>https://artlux8.com/genetic-testing</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  
+  <!-- Peptides - Educational/Research -->
+  <url>
+    <loc>https://artlux8.com/peptides</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Water & Air Systems -->
+  <url>
+    <loc>https://artlux8.com/water-systems</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://artlux8.com/oxygen-air-systems</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- Protocols & Science Content -->
   <url>
     <loc>https://artlux8.com/protocols</loc>
-    <lastmod>2024-12-14</lastmod>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://artlux8.com/longevity-protocol</loc>
-    <lastmod>2024-12-14</lastmod>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://artlux8.com/genetic-testing</loc>
-    <lastmod>2024-12-14</lastmod>
+    <loc>https://artlux8.com/free-protocol</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://artlux8.com/personalized-subscription</loc>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Educational Content -->
+  <url>
+    <loc>https://artlux8.com/blog</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://artlux8.com/podcast</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://artlux8.com/expert-biohacker</loc>
-    <lastmod>2024-12-14</lastmod>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.75</priority>
   </url>
 
-  <!-- Products & Services -->
-  <url>
-    <loc>https://artlux8.com/peptides</loc>
-    <lastmod>2024-12-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://artlux8.com/personalized-subscription</loc>
-    <lastmod>2024-12-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://artlux8.com/hydrogen-water-bottles</loc>
-    <lastmod>2024-12-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://artlux8.com/cold-plunge</loc>
-    <lastmod>2024-12-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://artlux8.com/infrared-masks</loc>
-    <lastmod>2024-12-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://artlux8.com/grounding</loc>
-    <lastmod>2024-12-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://artlux8.com/water-systems</loc>
-    <lastmod>2024-12-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://artlux8.com/oxygen-air-systems</loc>
-    <lastmod>2024-12-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://artlux8.com/bioactive-nutrients</loc>
-    <lastmod>2024-12-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Content -->
-  <url>
-    <loc>https://artlux8.com/podcast</loc>
-    <lastmod>2024-12-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
+  <!-- About & Trust -->
   <url>
     <loc>https://artlux8.com/about</loc>
-    <lastmod>2024-12-14</lastmod>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
 
   <!-- Support Pages -->
   <url>
     <loc>https://artlux8.com/contact</loc>
-    <lastmod>2024-12-14</lastmod>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://artlux8.com/faq</loc>
-    <lastmod>2024-12-14</lastmod>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://artlux8.com/shipping</loc>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://artlux8.com/shipping</loc>
-    <lastmod>2024-12-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
     <loc>https://artlux8.com/returns</loc>
-    <lastmod>2024-12-14</lastmod>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <priority>0.5</priority>
   </url>
 
   <!-- Legal -->
   <url>
     <loc>https://artlux8.com/privacy</loc>
-    <lastmod>2024-12-14</lastmod>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://artlux8.com/terms</loc>
-    <lastmod>2024-12-14</lastmod>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

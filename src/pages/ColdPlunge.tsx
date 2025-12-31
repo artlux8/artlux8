@@ -1,18 +1,17 @@
-import { useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Snowflake, Heart, Brain, Zap, Timer, ThermometerSnowflake } from "lucide-react";
 
 const ColdPlunge = () => {
-  useEffect(() => {
-    document.title = "ARTLUX Cold Plunge – Ice Bath & Cold Therapy Systems";
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute("content", "Premium cold plunge tubs and ice bath systems for cold therapy, recovery, and longevity. Reduce inflammation, boost dopamine, and activate autophagy.");
-    }
-  }, []);
+  const coldPlungeFAQ = [
+    { question: "What are the benefits of cold exposure?", answer: "Cold exposure is associated with dopamine enhancement, improved circulation, metabolic activation, and recovery support. Many athletes and longevity enthusiasts incorporate cold therapy as part of their optimization routine." },
+    { question: "How cold should the water be?", answer: "Most cold plunge protocols recommend water temperatures between 50-59°F (10-15°C). Beginners often start at the warmer end and gradually work toward colder temperatures as tolerance develops." },
+    { question: "How long should I stay in a cold plunge?", answer: "Sessions typically range from 2-10 minutes depending on experience level and water temperature. Start with shorter sessions and gradually increase duration as your body adapts." },
+    { question: "Is cold plunge safe for everyone?", answer: "Cold exposure is a lifestyle practice that may not be suitable for everyone. Those with cardiovascular conditions or other health concerns should consult with a healthcare professional before beginning cold therapy." },
+  ];
 
   const benefits = [
     { icon: Snowflake, title: "Reduced Inflammation", description: "Cold exposure activates anti-inflammatory pathways" },
@@ -46,6 +45,13 @@ const ColdPlunge = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Portable Cold Plunge Systems | Ice Bath & Cold Therapy"
+        description="Premium portable cold plunge tubs and ice bath systems for cold exposure lifestyle. Support recovery optimization, dopamine enhancement, and metabolic activation. Elite cold therapy technology for biohackers."
+        keywords="portable cold plunge, ice bath, cold therapy systems, cold exposure lifestyle, dopamine boost, recovery optimization, metabolic activation, biohacking cold therapy, Wim Hof method, longevity cold exposure"
+        url="https://artlux8.com/cold-plunge"
+        faq={coldPlungeFAQ}
+      />
       <Header />
       
       {/* Hero Section */}

@@ -1,18 +1,17 @@
-import { useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Leaf, Heart, Moon, Zap, Shield } from "lucide-react";
 
 const Grounding = () => {
-  useEffect(() => {
-    document.title = "ARTLUX Grounding & Earthing – Reduce Inflammation Naturally";
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute("content", "Premium grounding mats, sheets, and earthing products. Reduce inflammation, improve sleep, and balance cortisol through earth connection.");
-    }
-  }, []);
+  const groundingFAQ = [
+    { question: "What is grounding or earthing?", answer: "Grounding (also called earthing) involves direct physical contact with the Earth's surface, allowing the transfer of free electrons from the ground into your body. It's a natural wellness practice rooted in reconnecting with Earth's electrical field." },
+    { question: "How do grounding mats work?", answer: "Grounding mats connect to the grounding port of your electrical outlet, providing an indoor connection to Earth's electrical field. They contain conductive materials that transfer electrons when you make skin contact." },
+    { question: "How long should I ground each day?", answer: "Many grounding enthusiasts aim for 30-60 minutes daily, though some use grounding sheets for overnight sessions. The practice can be incorporated into daily activities like working at a desk or sleeping." },
+    { question: "What are the lifestyle benefits of grounding?", answer: "Grounding is associated with improved sleep quality, reduced stress, enhanced energy levels, and overall wellness support. Many biohackers include grounding as part of their daily optimization routine." },
+  ];
 
   const benefits = [
     { icon: Shield, title: "Reduced Inflammation", description: "Free electrons neutralize inflammatory free radicals" },
@@ -45,6 +44,13 @@ const Grounding = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Grounding & Earthing Mats | Premium Earthing Products"
+        description="Premium grounding mats, sheets, and earthing products for natural wellness support. Connect to Earth's electrical field to support sleep quality, stress reduction, and energy optimization."
+        keywords="grounding mat, earthing mat, grounding sheet, earthing products, grounding benefits, reduce inflammation naturally, improve sleep grounding, earth connection, biohacking earthing, wellness grounding"
+        url="https://artlux8.com/grounding"
+        faq={groundingFAQ}
+      />
       <Header />
       
       {/* Hero Section */}
