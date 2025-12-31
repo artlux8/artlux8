@@ -263,8 +263,8 @@ const Shop = () => {
         </div>
       </section>
 
-      {/* Protocol Bundles */}
-      <ProtocolBundles />
+      {/* Protocol Bundles - Hidden for later */}
+      {/* <ProtocolBundles /> */}
 
       {/* Benefits Banner */}
       <section className="py-16 bg-secondary/30">
