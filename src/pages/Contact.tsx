@@ -1,171 +1,58 @@
-import { useEffect, useState } from "react";
-import Header from "@/components/Header";
+import { useEffect } from "react";
+import HeaderMinimal from "@/components/HeaderMinimal";
 import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent } from "@/components/ui/card";
-import { Mail, MapPin, Phone, Clock, Instagram, MessageCircle } from "lucide-react";
-import { toast } from "sonner";
+import { Mail, MapPin, Building2 } from "lucide-react";
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
-
   useEffect(() => {
-    document.title = "Contact ARTLUX – Customer Support & Inquiries";
+    document.title = "Contact – ARTLUX LTD";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute("content", "Get in touch with ARTLUX customer support. We're here to help with orders, products, protocols, and longevity guidance.");
+      metaDescription.setAttribute("content", "Contact ARTLUX LTD - Premium longevity supplements company based in Birmingham, United Kingdom.");
     }
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast.success("Message sent! We'll get back to you within 24 hours.");
-    setFormData({ name: "", email: "", subject: "", message: "" });
-  };
-
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <HeaderMinimal />
       
-      {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-primary via-primary to-primary/90">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-primary-foreground mb-4">
-            Contact Us
-          </h1>
-          <p className="text-primary-foreground/80 text-lg max-w-xl mx-auto">
-            Have questions about our products or protocols? We're here to help you on your longevity journey.
-          </p>
-        </div>
-      </section>
-
       {/* Contact Content */}
-      <section className="py-20">
+      <section className="py-20 md:py-32">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Contact Form */}
-            <div>
-              <h2 className="font-display text-2xl font-bold text-foreground mb-6">
-                Send Us a Message
-              </h2>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Name</label>
-                    <Input
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="Your name"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Email</label>
-                    <Input
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="your@email.com"
-                      required
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Subject</label>
-                  <Input
-                    value={formData.subject}
-                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    placeholder="How can we help?"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Message</label>
-                  <Textarea
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Tell us more..."
-                    rows={6}
-                    required
-                  />
-                </div>
-                <Button type="submit" size="lg" className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
-                  Send Message
-                </Button>
-              </form>
+          <div className="max-w-xl mx-auto text-center">
+            {/* Company Name */}
+            <div className="mb-12">
+              <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-2">
+                ARTLUX LTD
+              </h1>
+              <p className="text-muted-foreground">
+                Company No: 12280833
+              </p>
             </div>
 
-            {/* Contact Info */}
-            <div className="space-y-6">
-              <h2 className="font-display text-2xl font-bold text-foreground mb-6">
-                Get In Touch
-              </h2>
-              
-              <Card className="bg-card border-border">
-                <CardContent className="p-6 flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-5 h-5 text-accent" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-foreground mb-1">Email</h3>
-                    <a href="mailto:hello@artlux8.com" className="text-muted-foreground hover:text-foreground transition-colors">
-                      hello@artlux8.com
-                    </a>
-                  </div>
-                </CardContent>
-              </Card>
+            {/* Address */}
+            <div className="mb-8 p-6 bg-card rounded-xl border border-border">
+              <div className="flex items-start justify-center gap-3 text-left">
+                <MapPin className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
+                <div className="text-foreground">
+                  <p>92 Markby Road, Birmingham</p>
+                  <p>West Midlands, B18 4PN</p>
+                  <p>United Kingdom</p>
+                </div>
+              </div>
+            </div>
 
-              <Card className="bg-card border-border">
-                <CardContent className="p-6 flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-5 h-5 text-accent" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-foreground mb-1">Address</h3>
-                    <p className="text-muted-foreground">
-                      ARTLUX LTD<br />
-                      92 Markby Road<br />
-                      Birmingham, West Midlands<br />
-                      B18 4PN, United Kingdom
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-card border-border">
-                <CardContent className="p-6 flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-5 h-5 text-accent" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-foreground mb-1">Response Time</h3>
-                    <p className="text-muted-foreground">
-                      We typically respond within 24 hours during business days.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-card border-border">
-                <CardContent className="p-6 flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
-                    <Instagram className="w-5 h-5 text-accent" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-foreground mb-1">Social Media</h3>
-                    <a href="https://www.instagram.com/artlux_88" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
-                      @artlux_88
-                    </a>
-                  </div>
-                </CardContent>
-              </Card>
+            {/* Email */}
+            <div className="p-6 bg-card rounded-xl border border-border">
+              <div className="flex items-center justify-center gap-3">
+                <Mail className="w-5 h-5 text-accent flex-shrink-0" />
+                <a 
+                  href="mailto:hello@artlux8.com" 
+                  className="text-foreground hover:text-accent transition-colors"
+                >
+                  hello@artlux8.com
+                </a>
+              </div>
             </div>
           </div>
         </div>
