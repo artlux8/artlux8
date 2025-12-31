@@ -67,8 +67,7 @@ const Footer = () => {
             <ul className="space-y-3 text-sm text-primary-foreground/60">
               <li><Link to="/shop" className="hover:text-primary-foreground transition-colors">All Products</Link></li>
               <li><Link to="/hydrogen-water-bottles" className="hover:text-primary-foreground transition-colors">Hydrogen Bottles</Link></li>
-              <li><Link to="/grounding" className="hover:text-primary-foreground transition-colors">Grounding</Link></li>
-              {/* Hidden for now: Cold Plunge, Bundles */}
+              {/* Hidden for now: Cold Plunge, Bundles, Grounding */}
             </ul>
           </div>
 
@@ -80,7 +79,7 @@ const Footer = () => {
               <li><Link to="/podcast" className="hover:text-primary-foreground transition-colors">Podcast</Link></li>
               <li><Link to="/free-protocol" className="hover:text-primary-foreground transition-colors">Free Protocol</Link></li>
               <li><Link to="/blog" className="hover:text-primary-foreground transition-colors">Blog</Link></li>
-              <li><Link to="/faq" className="hover:text-primary-foreground transition-colors">FAQ</Link></li>
+              {/* Hidden for now: FAQ */}
             </ul>
           </div>
 
