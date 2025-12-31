@@ -8,7 +8,7 @@ import LongevityProtocolPreview from "@/components/LongevityProtocolPreview";
 import TruthAboutLongevity from "@/components/TruthAboutLongevity";
 import FreeProtocolCTA from "@/components/FreeProtocolCTA";
 import ScienceAutophagy from "@/components/ScienceAutophagy";
-import FeaturedProducts from "@/components/FeaturedProducts";
+// import FeaturedProducts from "@/components/FeaturedProducts";
 import ProtocolBundles from "@/components/ProtocolBundles";
 import PodcastPreview from "@/components/PodcastPreview";
 import Testimonials from "@/components/Testimonials";
@@ -33,7 +33,7 @@ const Index = () => {
       <TruthAboutLongevity />
       <FreeProtocolCTA />
       <ScienceAutophagy />
-      <FeaturedProducts />
+      {/* <FeaturedProducts /> */}
       <ProtocolBundles />
       <PodcastPreview />
       <Testimonials />
