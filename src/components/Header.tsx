@@ -17,8 +17,8 @@ const Header = () => {
 
   const navLinks = [
     { href: "/shop", label: "Shop" },
-    { href: "/longevity-protocol", label: "Protocols" },
-    { href: "/genetic-testing", label: "Genetic Test" },
+    // { href: "/longevity-protocol", label: "Protocols" },
+    // { href: "/genetic-testing", label: "Genetic Test" },
     { href: "/bundles", label: "Bundles" },
     { href: "/free-protocol", label: "Free Protocol" },
     { href: "/blog", label: "Blog" },
