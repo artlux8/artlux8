@@ -2,6 +2,10 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import danaWhiteImage from "@/assets/dana-white-interview.png";
 import wimHofImage from "@/assets/wimhof-breathing.jpg";
+import garyBreckaImage from "@/assets/gary-brecka-real.jpg";
+import hubermanImage from "@/assets/huberman-brain-body.jpg";
+import attiaImage from "@/assets/podcast-attia.jpg";
+import sinclairImage from "@/assets/sinclair-aging.jpg";
 
 const testimonials = [
   {
@@ -11,58 +15,34 @@ const testimonials = [
     content: "I was on blood pressure medicine, thyroid medicine, and cholesterol medicine. I am on nothing now except Gary Brecka said to do...so I'm off all these meds I've been on for 12 years, and I lost 40lbs.",
   },
   {
-    name: "JOE ROGAN",
-    title: "Podcast Host & Comedian",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face",
-    content: "I do cold plunge every single morning. The mental clarity you get from that 3 minutes of discomfort is unmatched. It sets the tone for everything else.",
-  },
-  {
-    name: "DR. RHONDA PATRICK",
-    title: "Biomedical Scientist",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&h=200&fit=crop&crop=face",
-    content: "Sulforaphane, omega-3s, and vitamin D are the foundation. But what matters most is consistency and quality. Your mitochondria will thank you.",
-  },
-  {
-    name: "BEN GREENFIELD",
-    title: "Biohacker & Author",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face",
-    content: "I test everything on myself first. Hydrogen water, red light therapy, grounding—these aren't trends, they're tools backed by real science.",
-  },
-  {
-    name: "DAVE ASPREY",
-    title: "Father of Biohacking",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop&crop=face",
-    content: "I spent over $2 million hacking my own biology. The ROI on quality supplements and protocols is the best investment you can make.",
-  },
-  {
-    name: "DR. PETER ATTIA",
-    title: "Longevity Physician",
-    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=200&h=200&fit=crop&crop=face",
-    content: "Zone 2 cardio, strength training, sleep optimization, and targeted supplementation. These are the pillars of extending healthspan, not just lifespan.",
+    name: "GARY BRECKA",
+    title: "Human Biologist & Performance Coach",
+    image: garyBreckaImage,
+    content: "Your genes are not your destiny. With the right methylation support, hydrogen water, and targeted supplementation, you can completely transform your health in 90 days.",
   },
   {
     name: "ANDREW HUBERMAN",
     title: "Stanford Neuroscientist",
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&h=200&fit=crop&crop=face",
+    image: hubermanImage,
     content: "Morning sunlight, cold exposure, and proper sleep hygiene cost nothing. Add quality supplements and you have a complete optimization protocol.",
+  },
+  {
+    name: "DR. PETER ATTIA",
+    title: "Longevity Physician",
+    image: attiaImage,
+    content: "Zone 2 cardio, strength training, sleep optimization, and targeted supplementation. These are the pillars of extending healthspan, not just lifespan.",
+  },
+  {
+    name: "DR. DAVID SINCLAIR",
+    title: "Harvard Geneticist & Aging Researcher",
+    image: sinclairImage,
+    content: "We now have the science to slow and even reverse aspects of aging. NMN, resveratrol, and fasting are tools that activate your longevity genes.",
   },
   {
     name: "WIM HOF",
     title: "The Iceman",
     image: wimHofImage,
     content: "The cold is your teacher. Combined with breathwork, it activates your body's natural healing response. This is not belief—this is science.",
-  },
-  {
-    name: "LAIRD HAMILTON",
-    title: "Big Wave Surfer",
-    image: "https://images.unsplash.com/photo-1504257432389-52343af06ae3?w=200&h=200&fit=crop&crop=face",
-    content: "At 60, I perform better than I did at 40. Hydrogen water, sauna, ice baths, and clean supplementation are my daily non-negotiables.",
-  },
-  {
-    name: "GABBY REECE",
-    title: "Pro Volleyball & Wellness Advocate",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&h=200&fit=crop&crop=face",
-    content: "Recovery is where the magic happens. Quality sleep, magnesium, and stress management have transformed how I age and perform.",
   },
 ];
 
