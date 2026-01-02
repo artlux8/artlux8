@@ -169,24 +169,36 @@ const LongevityChat = () => {
   };
 
   const streamChat = async (userMessage: string) => {
+    // Require authentication to use AI chat
+    if (!userId) {
+      toast.error("Please sign in to use the AI chat");
+      navigate("/auth");
+      return;
+    }
+
     const newMessages: Message[] = [...messages, { role: "user", content: userMessage }];
     setMessages(newMessages);
     setInput("");
     setIsLoading(true);
 
-    // Save user message if authenticated
-    if (userId) {
-      await saveMessage("user", userMessage);
-    }
+    // Save user message
+    await saveMessage("user", userMessage);
 
     let assistantContent = "";
 
     try {
+      // Get the current session to get a fresh token
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session?.access_token) {
+        throw new Error("Session expired. Please sign in again.");
+      }
+
       const resp = await fetch(CHAT_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          Authorization: `Bearer ${session.access_token}`,
         },
         body: JSON.stringify({ messages: newMessages }),
       });
@@ -444,26 +456,32 @@ const LongevityChat = () => {
             <p className="text-sm text-muted-foreground mb-4">
               Ask me about longevity, supplements, protocols, or health optimization.
             </p>
-            {!userId && (
-              <button
-                onClick={() => navigate("/auth")}
-                className="flex items-center gap-2 mx-auto text-sm text-teal hover:underline mb-4"
-              >
-                <LogIn className="w-4 h-4" />
-                Sign in to save chat history
-              </button>
-            )}
-            <div className="flex flex-wrap gap-2 justify-center">
-              {["NAD+ benefits?", "Sleep protocol", "Best for energy"].map((q) => (
+            {!userId ? (
+              <div className="space-y-3">
+                <p className="text-sm text-muted-foreground">
+                  Sign in to use the AI chat assistant
+                </p>
                 <button
-                  key={q}
-                  onClick={() => streamChat(q)}
-                  className="text-xs px-3 py-1.5 bg-secondary hover:bg-secondary/80 rounded-full transition-colors"
+                  onClick={() => navigate("/auth")}
+                  className="flex items-center gap-2 mx-auto px-4 py-2 bg-teal text-white rounded-lg hover:bg-teal-dark transition-colors"
                 >
-                  {q}
+                  <LogIn className="w-4 h-4" />
+                  Sign in to continue
                 </button>
-              ))}
-            </div>
+              </div>
+            ) : (
+              <div className="flex flex-wrap gap-2 justify-center">
+                {["NAD+ benefits?", "Sleep protocol", "Best for energy"].map((q) => (
+                  <button
+                    key={q}
+                    onClick={() => streamChat(q)}
+                    className="text-xs px-3 py-1.5 bg-secondary hover:bg-secondary/80 rounded-full transition-colors"
+                  >
+                    {q}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         ) : (
           <div className="space-y-4">
