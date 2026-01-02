@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import danaWhiteImage from "@/assets/dana-white-interview.png";
+import wimHofImage from "@/assets/wimhof-breathing.jpg";
 
 const testimonials = [
   {
@@ -48,7 +49,7 @@ const testimonials = [
   {
     name: "WIM HOF",
     title: "The Iceman",
-    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&h=200&fit=crop&crop=face",
+    image: wimHofImage,
     content: "The cold is your teacher. Combined with breathwork, it activates your body's natural healing response. This is not belief—this is science.",
   },
   {
