@@ -119,7 +119,7 @@ const PromotedHydrogenBottle = () => {
               </span>
             </h3>
             
-            <p className="font-display text-sm md:text-base tracking-widest mb-6 text-transparent bg-clip-text bg-gradient-to-r from-gold via-gold-light to-gold italic">
+            <p className="font-display text-base md:text-lg tracking-[0.2em] mb-6 text-accent font-medium">
               By ARTLUX∞
             </p>
             
