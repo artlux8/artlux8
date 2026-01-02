@@ -75,7 +75,7 @@ const PromotedHydrogenBottle = () => {
   };
 
   return (
-    <section className="py-20 md:py-32 bg-gradient-to-b from-background via-secondary/30 to-background relative overflow-hidden">
+    <section className="pt-8 pb-20 md:pt-12 md:pb-32 bg-gradient-to-b from-background via-secondary/30 to-background relative overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-20 left-10 w-72 h-72 bg-accent rounded-full blur-3xl" />
