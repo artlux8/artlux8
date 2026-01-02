@@ -30,14 +30,25 @@ const ALLOWED_URL_DOMAINS = [
 
 // Validation schema for proof submission
 const proofSchema = z.object({
-  proofUrl: z.string().url("Please enter a valid URL").refine((url) => {
-    try {
-      const hostname = new URL(url).hostname.replace("www.", "");
-      return ALLOWED_URL_DOMAINS.some(domain => hostname.includes(domain));
-    } catch {
-      return false;
-    }
-  }, "Please use a supported platform: YouTube, Google Drive, Dropbox, Imgur, iCloud, OneDrive, or cloud storage"),
+  proofUrl: z.string()
+    .url("Please enter a valid URL")
+    .max(2000, "URL is too long (max 2000 characters)")
+    .refine((url) => {
+      try {
+        const parsed = new URL(url);
+        // Require HTTPS protocol only
+        if (parsed.protocol !== 'https:') {
+          return false;
+        }
+        const hostname = parsed.hostname.toLowerCase().replace(/^www\./i, '');
+        // Exact match OR proper subdomain match only (prevents evil-youtube.com attacks)
+        return ALLOWED_URL_DOMAINS.some(domain => 
+          hostname === domain || hostname.endsWith('.' + domain)
+        );
+      } catch {
+        return false;
+      }
+    }, "Please use a supported platform with HTTPS: YouTube, Google Drive, Dropbox, Imgur, iCloud, OneDrive, or cloud storage"),
   notes: z.string().max(1000, "Notes are too long (max 1000 characters)").optional(),
 });
 
