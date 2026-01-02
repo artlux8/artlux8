@@ -25,8 +25,8 @@ const Index = () => {
         url="https://artlux8.com"
       />
       <Header />
-      <Hero />
       <PromotedHydrogenBottle />
+      <Hero />
       <PressLogos />
       <ArtluxEcosystem />
       <TruthAboutLongevity />
