@@ -109,16 +109,15 @@ const PromotedHydrogenBottle = () => {
 
           {/* Content */}
           <div className="order-1 lg:order-2 text-center lg:text-left">
-            <p className="text-accent font-medium text-sm tracking-widest uppercase mb-4">
-              Featured Product
-            </p>
+            <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-2 leading-tight">
+              ARTLUX∞
+            </h2>
             
-            <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-              ARTLUX∞<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-teal to-accent">
+            <h3 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-6">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-teal to-accent underline decoration-accent decoration-2 underline-offset-4">
                 Hydrogen Water Bottle
               </span>
-            </h2>
+            </h3>
             
             <p className="text-muted-foreground text-lg md:text-xl mb-8 max-w-xl mx-auto lg:mx-0">
               Transform ordinary water into molecular hydrogen-rich water in minutes. 
