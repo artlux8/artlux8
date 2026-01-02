@@ -113,11 +113,15 @@ const PromotedHydrogenBottle = () => {
               ARTLUX∞
             </h2>
             
-            <h3 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-6">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-teal to-accent underline decoration-accent decoration-2 underline-offset-4">
+            <h3 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-2">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-teal to-accent">
                 Hydrogen Water Bottle
               </span>
             </h3>
+            
+            <p className="font-display text-sm md:text-base tracking-widest mb-6 text-transparent bg-clip-text bg-gradient-to-r from-gold via-gold-light to-gold italic">
+              By ARTLUX∞
+            </p>
             
             <p className="text-muted-foreground text-lg md:text-xl mb-8 max-w-xl mx-auto lg:mx-0">
               Transform ordinary water into molecular hydrogen-rich water in minutes. 
