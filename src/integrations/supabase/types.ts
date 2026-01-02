@@ -212,6 +212,7 @@ export type Database = {
           tracking_number: string | null
           tracking_url: string | null
           updated_at: string
+          user_id: string | null
         }
         Insert: {
           carrier?: string | null
@@ -234,6 +235,7 @@ export type Database = {
           tracking_number?: string | null
           tracking_url?: string | null
           updated_at?: string
+          user_id?: string | null
         }
         Update: {
           carrier?: string | null
@@ -256,6 +258,7 @@ export type Database = {
           tracking_number?: string | null
           tracking_url?: string | null
           updated_at?: string
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -304,6 +307,36 @@ export type Database = {
           shipping_country?: string | null
           shipping_postal_code?: string | null
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      security_audit_log: {
+        Row: {
+          action: string
+          created_at: string | null
+          id: string
+          ip_address: string | null
+          record_id: string | null
+          table_name: string
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string | null
+          id?: string
+          ip_address?: string | null
+          record_id?: string | null
+          table_name: string
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string | null
+          id?: string
+          ip_address?: string | null
+          record_id?: string | null
+          table_name?: string
+          user_id?: string | null
         }
         Relationships: []
       }

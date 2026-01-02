@@ -5,6 +5,38 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// In-memory rate limiting (per IP)
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT_WINDOW = 3600000; // 1 hour
+const MAX_ANONYMOUS_REQUESTS = 10; // 10 requests per hour for anonymous users
+const MAX_AUTHENTICATED_REQUESTS = 50; // 50 requests per hour for authenticated users
+
+function isRateLimited(key: string, maxRequests: number): boolean {
+  const now = Date.now();
+  const record = rateLimitMap.get(key);
+  
+  // Clean up old entries periodically (every 100 checks)
+  if (Math.random() < 0.01) {
+    for (const [k, v] of rateLimitMap.entries()) {
+      if (now > v.resetTime) {
+        rateLimitMap.delete(k);
+      }
+    }
+  }
+  
+  if (!record || now > record.resetTime) {
+    rateLimitMap.set(key, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
+    return false;
+  }
+  
+  if (record.count >= maxRequests) {
+    return true;
+  }
+  
+  record.count++;
+  return false;
+}
+
 const SYSTEM_PROMPT = `You are ARTLUX∞ Longevity Advisor, an expert AI consultant specializing in longevity science, supplements, and health optimization protocols.
 
 Your expertise includes:
@@ -60,14 +92,84 @@ serve(async (req) => {
   }
 
   try {
+    // Get client IP for rate limiting
+    const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 
+               req.headers.get('x-real-ip') || 
+               'unknown';
+
+    // Check for authentication token
+    const authHeader = req.headers.get('Authorization');
+    let isAuthenticated = false;
+    let userId: string | null = null;
+
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.replace('Bearer ', '');
+      // Check if it's a valid JWT (not just the anon key)
+      // The anon key is a public key, so we need to verify if it's a user JWT
+      try {
+        // Simple check: user JWTs are typically longer than the anon key
+        if (token.length > 200) {
+          // This is likely a user JWT, mark as authenticated
+          isAuthenticated = true;
+          // Extract user ID from JWT payload (base64 decode the middle part)
+          const parts = token.split('.');
+          if (parts.length === 3) {
+            const payload = JSON.parse(atob(parts[1]));
+            userId = payload.sub || null;
+          }
+        }
+      } catch {
+        // Invalid token format, treat as anonymous
+        isAuthenticated = false;
+      }
+    }
+
+    // Apply rate limiting based on authentication status
+    const rateLimitKey = isAuthenticated && userId ? `user:${userId}` : `ip:${ip}`;
+    const maxRequests = isAuthenticated ? MAX_AUTHENTICATED_REQUESTS : MAX_ANONYMOUS_REQUESTS;
+
+    if (isRateLimited(rateLimitKey, maxRequests)) {
+      console.log(`Rate limit exceeded for ${rateLimitKey}`);
+      return new Response(
+        JSON.stringify({ error: 'Rate limit exceeded. Please try again later.' }),
+        { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const { messages } = await req.json();
+
+    // Validate messages input
+    if (!messages || !Array.isArray(messages)) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid request: messages array required' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Limit message count and content length
+    const MAX_MESSAGES = 20;
+    const MAX_MESSAGE_LENGTH = 2000;
+    
+    if (messages.length > MAX_MESSAGES) {
+      return new Response(
+        JSON.stringify({ error: `Too many messages. Maximum ${MAX_MESSAGES} allowed.` }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Validate and sanitize each message
+    const sanitizedMessages = messages.slice(-MAX_MESSAGES).map((msg: any) => ({
+      role: msg.role === 'assistant' ? 'assistant' : 'user',
+      content: String(msg.content || '').slice(0, MAX_MESSAGE_LENGTH),
+    }));
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
     if (!LOVABLE_API_KEY) {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
-    console.log("Processing chat request with", messages.length, "messages");
+    console.log(`Processing chat request: ${sanitizedMessages.length} messages, authenticated: ${isAuthenticated}, key: ${rateLimitKey.substring(0, 10)}...`);
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -79,7 +181,7 @@ serve(async (req) => {
         model: "google/gemini-2.5-flash",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
-          ...messages,
+          ...sanitizedMessages,
         ],
         stream: true,
       }),

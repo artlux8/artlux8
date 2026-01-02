@@ -14,11 +14,23 @@ Deno.serve(async (req) => {
   try {
     const { orderId, email } = await req.json();
 
-    console.log('Order tracking request:', { orderId, email: email ? '***@***' : undefined });
+    console.log('Order tracking request:', { orderId: orderId ? '***' : undefined, email: email ? '***@***' : undefined });
 
-    if (!orderId && !email) {
+    // Require BOTH order ID AND email for verification (prevents email enumeration)
+    if (!orderId || !email) {
       return new Response(
-        JSON.stringify({ error: 'Order ID or email is required' }),
+        JSON.stringify({ error: 'Both order ID and email are required' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Basic input validation
+    const trimmedOrderId = String(orderId).trim().slice(0, 100);
+    const trimmedEmail = String(email).toLowerCase().trim().slice(0, 255);
+
+    if (!trimmedOrderId || !trimmedEmail || !trimmedEmail.includes('@')) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid order ID or email format' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -28,16 +40,13 @@ Deno.serve(async (req) => {
     
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    let query = supabase
+    // Query requires BOTH order ID match AND email match for security
+    const query = supabase
       .from('order_fulfillments')
-      .select('order_id, shopify_order_id, status, carrier, tracking_number, tracking_url, shipped_at, delivered_at, customer_name, created_at');
-
-    if (orderId) {
-      // Search by order_id or shopify_order_id
-      query = query.or(`order_id.eq.${orderId},shopify_order_id.eq.${orderId}`);
-    } else if (email) {
-      query = query.eq('customer_email', email.toLowerCase().trim());
-    }
+      .select('order_id, shopify_order_id, status, carrier, tracking_number, tracking_url, shipped_at, delivered_at, customer_name, created_at')
+      .or(`order_id.eq.${trimmedOrderId},shopify_order_id.eq.${trimmedOrderId}`)
+      .eq('customer_email', trimmedEmail)
+      .limit(5);
 
     const { data: orders, error } = await query.order('created_at', { ascending: false });
 
