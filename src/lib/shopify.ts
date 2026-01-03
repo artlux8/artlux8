@@ -167,45 +167,22 @@ const PRODUCT_BY_HANDLE_QUERY = `
   }
 `;
 
-const CART_CREATE_MUTATION = `
-  mutation cartCreate($input: CartInput!) {
-    cartCreate(input: $input) {
-      cart {
+// Use checkoutCreate mutation - returns proper /checkouts/ URLs (not /cart/c/)
+const CHECKOUT_CREATE_MUTATION = `
+  mutation checkoutCreate($input: CheckoutCreateInput!) {
+    checkoutCreate(input: $input) {
+      checkout {
         id
-        checkoutUrl
-        totalQuantity
-        cost {
-          totalAmount {
-            amount
-            currencyCode
-          }
-        }
-        lines(first: 100) {
-          edges {
-            node {
-              id
-              quantity
-              merchandise {
-                ... on ProductVariant {
-                  id
-                  title
-                  price {
-                    amount
-                    currencyCode
-                  }
-                  product {
-                    title
-                    handle
-                  }
-                }
-              }
-            }
-          }
+        webUrl
+        totalPrice {
+          amount
+          currencyCode
         }
       }
-      userErrors {
+      checkoutUserErrors {
         field
         message
+        code
       }
     }
   }
@@ -277,7 +254,7 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
   }
 }
 
-// Create checkout - returns checkout URL or throws error
+// Create checkout using checkoutCreate mutation - returns proper /checkouts/ URLs
 export async function createStorefrontCheckout(items: CartItem[]): Promise<string> {
   // Validate items before proceeding
   if (!items || items.length === 0) {
@@ -295,37 +272,38 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
   }
 
   try {
-    const lines = items.map(item => ({
+    // Format line items for checkoutCreate mutation
+    const lineItems = items.map(item => ({
       quantity: item.quantity,
-      merchandiseId: item.variantId,
+      variantId: item.variantId,
     }));
 
-    console.log('Creating checkout with items:', lines);
+    console.log('Creating checkout with items:', lineItems);
 
-    const data = await storefrontApiRequest(CART_CREATE_MUTATION, {
-      input: { lines },
+    const data = await storefrontApiRequest(CHECKOUT_CREATE_MUTATION, {
+      input: { lineItems },
     });
 
     if (!data) {
       throw new Error('Failed to create checkout - no response from Shopify');
     }
 
-    if (data.data?.cartCreate?.userErrors?.length > 0) {
-      const errorMessages = data.data.cartCreate.userErrors.map((e: { message: string }) => e.message).join(', ');
-      console.error('Shopify cart creation errors:', errorMessages);
-      throw new Error(`Cart creation failed: ${errorMessages}`);
+    if (data.data?.checkoutCreate?.checkoutUserErrors?.length > 0) {
+      const errorMessages = data.data.checkoutCreate.checkoutUserErrors.map((e: { message: string }) => e.message).join(', ');
+      console.error('Shopify checkout creation errors:', errorMessages);
+      throw new Error(`Checkout creation failed: ${errorMessages}`);
     }
 
-    const cart = data.data?.cartCreate?.cart;
+    const checkout = data.data?.checkoutCreate?.checkout;
     
-    if (!cart || !cart.checkoutUrl) {
+    if (!checkout || !checkout.webUrl) {
       console.error('No checkout URL in response:', data);
       throw new Error('No checkout URL returned from Shopify');
     }
 
     // CRITICAL: Replace custom domain with myshopify.com domain for checkout
     // Headless Shopify checkout MUST use *.myshopify.com domain
-    let checkoutUrl = cart.checkoutUrl;
+    let checkoutUrl = checkout.webUrl;
     checkoutUrl = checkoutUrl.replace('https://artlux8.com', `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`);
     
     console.log('Checkout URL created:', checkoutUrl);
