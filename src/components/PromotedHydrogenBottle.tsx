@@ -197,7 +197,7 @@ const PromotedHydrogenBottle = () => {
                   variant="outline"
                   className="border-accent/50 text-accent hover:bg-accent/10 px-8 py-6 text-lg w-full sm:w-auto"
                 >
-                  Shop Now
+                  Buy It Now
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </Link>

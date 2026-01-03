@@ -268,6 +268,65 @@ export const enhancedProductContent: Record<string, EnhancedProductContent> = {
       primary: "Add to Cart",
       secondary: "Complete the 7-Day Protocol Challenge"
     }
+  },
+  "artlux8-hydrogen-water-bottle-go": {
+    handle: "artlux8-hydrogen-water-bottle-go",
+    metaTitle: "ARTLUX∞ Hydrogen Water Bottle Go+ – Premium Portable H₂ Generator",
+    metaDescription: "Portable hydrogen-rich water generator for optimal cellular hydration, antioxidant support, and longevity on the go. Premium design with Black or Gold finish.",
+    heroHeadline: "ARTLUX∞ HYDROGEN WATER BOTTLE GO+ — Molecular Hydration Technology",
+    heroSubtext: "Hydration. Simplified. Elevated. The ARTLUX∞ Hydrogen Water Bottle Go+ transforms ordinary water into a modern hydration upgrade — with clean design, effortless use, and portable format.",
+    sections: [
+      {
+        title: "Why Hydrogen Water Changes Everything",
+        content: [
+          "Molecular hydrogen (H₂) is a selective antioxidant that targets only harmful free radicals without disrupting beneficial reactive oxygen species. Unlike other antioxidants, H₂ is small enough to penetrate every cell, tissue, and even cross the blood-brain barrier.",
+          "Over 1,500 peer-reviewed studies demonstrate hydrogen's benefits for energy, inflammation, cognitive function, athletic performance, and recovery."
+        ],
+        listItems: [
+          "Neutralizes harmful free radicals selectively",
+          "Crosses the blood-brain barrier for neural protection",
+          "Reduces inflammation at the cellular level",
+          "Supports mitochondrial function and ATP production",
+          "Enhances hydration absorption",
+          "Promotes faster athletic recovery"
+        ]
+      },
+      {
+        title: "Premium ARTLUX∞ Design",
+        content: [
+          "The ARTLUX∞ Hydrogen Water Bottle Go+ combines cutting-edge hydrogen generation technology with luxury portable design. Available in sleek Black or stunning Gold finish."
+        ],
+        listItems: [
+          "SPE/PEM electrolysis technology for pure H₂ generation",
+          "Food-grade borosilicate glass chamber",
+          "Rechargeable USB battery (30+ cycles per charge)",
+          "3-minute rapid hydrogen infusion cycle",
+          "Portable 450ml design for daily use",
+          "Premium Black or Gold finish"
+        ]
+      }
+    ],
+    ingredients: [
+      { name: "Molecular Hydrogen (H₂)", benefit: "The universe's smallest antioxidant molecule for deep cellular penetration." },
+      { name: "SPE/PEM Technology", benefit: "Solid Polymer Electrolyte generates pure hydrogen, separating H₂ from oxygen." },
+      { name: "Borosilicate Glass", benefit: "Premium food-grade glass chamber ensures purity and taste." }
+    ],
+    benefits: [
+      { icon: "💧", title: "Deep cellular hydration", description: "H₂ molecules penetrate cells 100x faster than water alone." },
+      { icon: "🛡", title: "Selective antioxidant", description: "Targets only harmful free radicals, preserving beneficial ones." },
+      { icon: "⚡", title: "Enhanced energy", description: "Supports mitochondrial ATP production for natural vitality." },
+      { icon: "🧠", title: "Brain protection", description: "Crosses blood-brain barrier for neurological support." },
+      { icon: "💪", title: "Faster recovery", description: "Reduces exercise-induced oxidative stress and inflammation." },
+      { icon: "✨", title: "Anti-aging support", description: "Combats oxidative damage linked to accelerated aging." }
+    ],
+    howToUse: {
+      instructions: "Fill with filtered water, press the button, and wait 3 minutes for hydrogen infusion. Drink immediately for maximum H₂ concentration. Use 2-3 times daily.",
+      combineWith: ["Morning sunlight", "Cold exposure", "NAD+ Booster", "Grounding practice"]
+    },
+    ctaButtons: {
+      primary: "Add to Cart",
+      secondary: "Complete the 7-Day Protocol Challenge"
+    }
   }
 };
 
