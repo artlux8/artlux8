@@ -2,8 +2,8 @@ import { toast } from 'sonner';
 
 // Shopify Configuration - Storefront API tokens are designed for client-side use
 // See: https://shopify.dev/docs/api/storefront#authentication
-const SHOPIFY_API_VERSION = '2025-07';
-const SHOPIFY_STORE_PERMANENT_DOMAIN = 'artlux8-ypxf4.myshopify.com';
+const SHOPIFY_API_VERSION = '2024-10';
+const SHOPIFY_STORE_PERMANENT_DOMAIN = 'artlux8.myshopify.com';
 const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 // Storefront Access Token is a publishable key meant for client-side use (read-only product data)
 const SHOPIFY_STOREFRONT_TOKEN = '33e073344fd0491eb2329ec9d56269b8';
