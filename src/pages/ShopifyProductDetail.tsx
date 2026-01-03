@@ -26,6 +26,7 @@ const ShopifyProductDetail = () => {
   const [enhancedContent, setEnhancedContent] = useState<EnhancedProductContent | null>(null);
   const [reviews, setReviews] = useState<ProductReview[]>([]);
 
+  // All useEffects must be before any conditional returns
   useEffect(() => {
     const loadProduct = async () => {
       if (!handle) return;
@@ -47,6 +48,53 @@ const ShopifyProductDetail = () => {
     loadProduct();
   }, [handle]);
 
+  // Update meta tags - this useEffect must be called on every render
+  useEffect(() => {
+    if (enhancedContent) {
+      document.title = enhancedContent.metaTitle;
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) {
+        metaDesc.setAttribute('content', enhancedContent.metaDescription);
+      }
+    } else if (product) {
+      document.title = `${product.title} | ARTLUX∞`;
+    }
+  }, [enhancedContent, product]);
+
+  // Compute derived values - safe to compute even when product is null
+  const selectedVariant = product?.variants?.edges?.[selectedVariantIndex]?.node;
+  const price = selectedVariant?.price || product?.priceRange?.minVariantPrice;
+  const priceAmount = price?.amount ? parseFloat(price.amount) : 0;
+  const mainImage = product?.images?.edges?.[0]?.node;
+  const variantEdges = product?.variants?.edges || [];
+  const hasMultipleVariants = variantEdges.length > 1;
+  const totalPrice = priceAmount > 0 ? convertPrice(priceAmount) * quantity : 0;
+
+  const handleAddToCart = () => {
+    if (!product || !selectedVariant) {
+      toast.error('Please select a variant');
+      return;
+    }
+
+    const shopifyProduct: ShopifyProduct = {
+      node: product
+    };
+
+    addItem({
+      product: shopifyProduct,
+      variantId: selectedVariant.id,
+      variantTitle: selectedVariant.title,
+      price: selectedVariant.price,
+      quantity,
+      selectedOptions: selectedVariant.selectedOptions || []
+    });
+    
+    toast.success(`${product.title} added to cart`, {
+      position: 'top-center'
+    });
+  };
+
+  // Early returns AFTER all hooks
   if (loading) {
     return (
       <div className="min-h-screen bg-background">
@@ -76,53 +124,6 @@ const ShopifyProductDetail = () => {
       </div>
     );
   }
-
-  const selectedVariant = product.variants?.edges?.[selectedVariantIndex]?.node;
-  const price = selectedVariant?.price || product.priceRange?.minVariantPrice;
-  const priceAmount = price?.amount ? parseFloat(price.amount) : 0;
-  const mainImage = product.images?.edges?.[0]?.node;
-  const variantEdges = product.variants?.edges || [];
-  const hasMultipleVariants = variantEdges.length > 1;
-
-  const handleAddToCart = () => {
-    if (!selectedVariant) {
-      toast.error('Please select a variant');
-      return;
-    }
-
-    const shopifyProduct: ShopifyProduct = {
-      node: product
-    };
-
-    addItem({
-      product: shopifyProduct,
-      variantId: selectedVariant.id,
-      variantTitle: selectedVariant.title,
-      price: selectedVariant.price,
-      quantity,
-      selectedOptions: selectedVariant.selectedOptions || []
-    });
-    
-    toast.success(`${product.title} added to cart`, {
-      position: 'top-center'
-    });
-  };
-
-  const totalPrice = priceAmount > 0 ? convertPrice(priceAmount) * quantity : 0;
-
-  // Update meta tags for enhanced content
-  useEffect(() => {
-    if (enhancedContent) {
-      document.title = enhancedContent.metaTitle;
-      const metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) {
-        metaDesc.setAttribute('content', enhancedContent.metaDescription);
-      }
-    } else if (product) {
-      document.title = `${product.title} | ARTLUX∞`;
-    }
-  }, [enhancedContent, product]);
-
   return (
     <div className="min-h-screen bg-background">
       <Header />

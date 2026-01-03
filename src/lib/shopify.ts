@@ -123,7 +123,7 @@ const PRODUCTS_QUERY = `
 
 const PRODUCT_BY_HANDLE_QUERY = `
   query GetProductByHandle($handle: String!) {
-    productByHandle(handle: $handle) {
+    product(handle: $handle) {
       id
       title
       description
@@ -270,7 +270,7 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
   try {
     const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, { handle });
     if (!data) return null;
-    return data.data.productByHandle || null;
+    return data.data.product || null;
   } catch (error) {
     console.error('Error fetching product:', error);
     return null;
