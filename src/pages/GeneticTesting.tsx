@@ -5,7 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
 import { useCartStore } from '@/stores/cartStore';
-import { fetchProductByHandle, createStorefrontCheckout } from '@/lib/shopify';
+import { fetchProductByHandle, createStorefrontCheckout, redirectToCheckout } from '@/lib/shopify';
 import { toast } from 'sonner';
 
 const measures = [
@@ -79,7 +79,8 @@ const GeneticTesting = () => {
       
       const checkoutUrl = await createStorefrontCheckout([cartItem]);
       if (checkoutUrl) {
-        window.open(checkoutUrl, '_blank');
+        // CRITICAL: Use window.location.assign for instant redirect
+        redirectToCheckout(checkoutUrl);
       }
     } catch (error) {
       console.error('Checkout error:', error);
