@@ -323,10 +323,10 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
       throw new Error('No checkout URL returned from Shopify');
     }
 
-    // Add channel parameter for proper checkout access
-    const url = new URL(cart.checkoutUrl);
-    url.searchParams.set('channel', 'online_store');
-    const checkoutUrl = url.toString();
+    // CRITICAL: Replace custom domain with myshopify.com domain for checkout
+    // Headless Shopify checkout MUST use *.myshopify.com domain
+    let checkoutUrl = cart.checkoutUrl;
+    checkoutUrl = checkoutUrl.replace('https://artlux8.com', `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`);
     
     console.log('Checkout URL created:', checkoutUrl);
     return checkoutUrl;
