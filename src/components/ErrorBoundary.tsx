@@ -48,9 +48,14 @@ class ErrorBoundary extends Component<Props, State> {
           <h1 style={{ fontSize: '24px', marginBottom: '16px', color: '#d4af37' }}>
             ARTLUX∞
           </h1>
-          <p style={{ marginBottom: '24px', color: '#999' }}>
+          <p style={{ marginBottom: '8px', color: '#999' }}>
             Something went wrong loading the page.
           </p>
+          {this.state.error && (
+            <p style={{ marginBottom: '24px', color: '#ff6666', fontSize: '12px', maxWidth: '400px', wordBreak: 'break-word' }}>
+              {this.state.error.message}
+            </p>
+          )}
           <button
             onClick={this.handleReload}
             style={{
