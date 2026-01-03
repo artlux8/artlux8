@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 /**
  * Handles /cart/c/* routes (Shopify cart permalinks)
- * Redirects to Shopify domain to complete checkout
+ * Immediately redirects to Shopify domain - renders nothing
  */
 const CartPermalinkRedirect = () => {
   const location = useLocation();
@@ -13,16 +13,10 @@ const CartPermalinkRedirect = () => {
     const target = `https://artlux8.myshopify.com${location.pathname}${location.search}`;
     console.log('Redirecting to Shopify cart permalink:', target);
     window.location.replace(target);
-  }, [location]);
+  }, [location.pathname, location.search]);
 
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent mx-auto mb-4"></div>
-        <p className="text-muted-foreground">Redirecting to checkout...</p>
-      </div>
-    </div>
-  );
+  // Return null for fastest redirect - no UI needed
+  return null;
 };
 
 export default CartPermalinkRedirect;
