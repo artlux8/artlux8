@@ -87,14 +87,9 @@ const Shop = () => {
         selectedOptions: variant.selectedOptions || []
       };
       
-      let checkoutUrl = await createStorefrontCheckout([cartItem]);
+      const checkoutUrl = await createStorefrontCheckout([cartItem]);
       
       if (checkoutUrl) {
-        // CRITICAL: Ensure myshopify.com domain is used
-        if (checkoutUrl.includes('artlux8.com') && !checkoutUrl.includes('myshopify.com')) {
-          checkoutUrl = checkoutUrl.replace(/https?:\/\/(www\.)?artlux8\.com/gi, 'https://artlux8-ypxf4.myshopify.com');
-        }
-        console.log('Buy Now redirecting to:', checkoutUrl);
         redirectToCheckout(checkoutUrl);
       } else {
         throw new Error('No checkout URL received');
