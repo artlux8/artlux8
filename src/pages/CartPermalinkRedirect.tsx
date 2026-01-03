@@ -2,14 +2,16 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 /**
- * Catches all /cart/* routes and redirects to Shopify checkout
- * This prevents 404 errors when Shopify returns checkout URLs with /cart/c/... paths
+ * Handles /cart/c/* routes (Shopify cart permalinks)
+ * Redirects to Shopify domain to complete checkout
  */
-const ShopifyCartRedirect = () => {
+const CartPermalinkRedirect = () => {
   const location = useLocation();
 
   useEffect(() => {
+    // Build full URL with path and query string
     const target = `https://artlux8.myshopify.com${location.pathname}${location.search}`;
+    console.log('Redirecting to Shopify cart permalink:', target);
     window.location.replace(target);
   }, [location]);
 
@@ -23,4 +25,4 @@ const ShopifyCartRedirect = () => {
   );
 };
 
-export default ShopifyCartRedirect;
+export default CartPermalinkRedirect;
