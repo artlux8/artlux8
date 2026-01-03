@@ -297,12 +297,12 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
     }
 
     // The checkoutUrl from Cart API is the correct checkout path
-    // Just ensure it uses the myshopify.com domain and has the channel param
+    // Shopify returns the URL with the store's primary domain
+    // We just need to ensure it has the channel param for headless checkout
     let checkoutUrl = cart.checkoutUrl;
     
-    // Ensure URL uses the myshopify.com permanent domain
+    // Parse and add channel parameter
     const url = new URL(checkoutUrl);
-    url.hostname = SHOPIFY_STORE_PERMANENT_DOMAIN;
     url.searchParams.set('channel', 'online_store');
     
     return url.toString();
