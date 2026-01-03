@@ -256,6 +256,9 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
 
 // Create checkout using checkoutCreate mutation - returns proper /checkouts/ URLs
 export async function createStorefrontCheckout(items: CartItem[]): Promise<string> {
+  console.log('=== CHECKOUT DEBUG START ===');
+  console.log('Items received:', JSON.stringify(items, null, 2));
+  
   // Validate items before proceeding
   if (!items || items.length === 0) {
     throw new Error('No items to checkout');
@@ -278,11 +281,14 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
       variantId: item.variantId,
     }));
 
-    console.log('Creating checkout with items:', lineItems);
+    console.log('Creating checkout with lineItems:', JSON.stringify(lineItems, null, 2));
+    console.log('Using mutation: CHECKOUT_CREATE_MUTATION');
 
     const data = await storefrontApiRequest(CHECKOUT_CREATE_MUTATION, {
       input: { lineItems },
     });
+
+    console.log('Shopify API raw response:', JSON.stringify(data, null, 2));
 
     if (!data) {
       throw new Error('Failed to create checkout - no response from Shopify');
@@ -295,18 +301,35 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
     }
 
     const checkout = data.data?.checkoutCreate?.checkout;
+    console.log('Checkout object:', checkout);
     
     if (!checkout || !checkout.webUrl) {
       console.error('No checkout URL in response:', data);
       throw new Error('No checkout URL returned from Shopify');
     }
 
-    // CRITICAL: Replace custom domain with myshopify.com domain for checkout
-    // Headless Shopify checkout MUST use *.myshopify.com domain
-    let checkoutUrl = checkout.webUrl;
-    checkoutUrl = checkoutUrl.replace('https://artlux8.com', `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`);
+    console.log('Raw webUrl from Shopify:', checkout.webUrl);
     
-    console.log('Checkout URL created:', checkoutUrl);
+    // CRITICAL: Ensure we're using the myshopify.com domain for headless checkout
+    let checkoutUrl = checkout.webUrl;
+    
+    // Replace any custom domain with the myshopify.com domain
+    if (checkoutUrl.includes('artlux8.com')) {
+      checkoutUrl = checkoutUrl.replace('https://artlux8.com', `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`);
+      console.log('Replaced artlux8.com with myshopify domain');
+    }
+    
+    console.log('Final checkout URL:', checkoutUrl);
+    console.log('URL contains /checkouts/:', checkoutUrl.includes('/checkouts/'));
+    console.log('URL contains /cart/:', checkoutUrl.includes('/cart/'));
+    console.log('=== CHECKOUT DEBUG END ===');
+    
+    // SAFETY CHECK: Ensure URL is a proper checkout URL
+    if (checkoutUrl.includes('/cart/')) {
+      console.error('WARNING: Checkout URL contains /cart/ path - this is incorrect!');
+      console.error('Expected URL pattern: https://artlux8-ypxf4.myshopify.com/checkouts/...');
+    }
+    
     return checkoutUrl;
   } catch (error) {
     console.error('Error creating checkout:', error);
