@@ -326,7 +326,20 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
     // CRITICAL: Replace custom domain with myshopify.com domain for checkout
     // Headless Shopify checkout MUST use *.myshopify.com domain
     let checkoutUrl = cart.checkoutUrl;
-    checkoutUrl = checkoutUrl.replace('https://artlux8.com', `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`);
+    
+    // Use URL object for robust domain replacement
+    try {
+      const url = new URL(checkoutUrl);
+      // Replace any custom domain with myshopify.com
+      if (url.hostname === 'artlux8.com' || url.hostname === 'www.artlux8.com') {
+        url.hostname = SHOPIFY_STORE_PERMANENT_DOMAIN;
+      }
+      checkoutUrl = url.toString();
+    } catch {
+      // Fallback: simple string replacement for any edge cases
+      checkoutUrl = checkoutUrl
+        .replace(/https?:\/\/(www\.)?artlux8\.com/gi, `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`);
+    }
     
     console.log('Checkout URL created:', checkoutUrl);
     return checkoutUrl;
@@ -343,22 +356,36 @@ export function openCheckoutUrl(url: string): boolean {
     return false;
   }
   
+  // Ensure URL is absolute and uses myshopify.com
+  let finalUrl = url;
   try {
-    // Open in new tab
-    const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+    const parsedUrl = new URL(url);
+    if (parsedUrl.hostname === 'artlux8.com' || parsedUrl.hostname === 'www.artlux8.com') {
+      parsedUrl.hostname = 'artlux8-ypxf4.myshopify.com';
+      finalUrl = parsedUrl.toString();
+    }
+  } catch {
+    console.error('Invalid URL format:', url);
+  }
+  
+  console.log('Opening checkout URL:', finalUrl);
+  
+  try {
+    // Open in new tab - use simple window.open without extra params for better compatibility
+    const newWindow = window.open(finalUrl, '_blank');
     
     // Check if popup was blocked
     if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-      // Popup was blocked, try direct navigation
+      // Popup was blocked, navigate directly
       console.warn('Popup blocked, redirecting in current window');
-      window.location.href = url;
+      window.location.assign(finalUrl);
     }
     
     return true;
   } catch (error) {
     console.error('Failed to open checkout URL:', error);
     // Fallback to direct navigation
-    window.location.href = url;
+    window.location.assign(finalUrl);
     return true;
   }
 }
