@@ -167,22 +167,38 @@ const PRODUCT_BY_HANDLE_QUERY = `
   }
 `;
 
-// Use checkoutCreate mutation - returns proper /checkouts/ URLs (not /cart/c/)
-const CHECKOUT_CREATE_MUTATION = `
-  mutation checkoutCreate($input: CheckoutCreateInput!) {
-    checkoutCreate(input: $input) {
-      checkout {
+// Use Cart API (cartCreate) for 2025-07 API version
+// checkoutCreate is deprecated - Cart API returns checkoutUrl
+const CART_CREATE_MUTATION = `
+  mutation cartCreate($input: CartInput!) {
+    cartCreate(input: $input) {
+      cart {
         id
-        webUrl
-        totalPrice {
-          amount
-          currencyCode
+        checkoutUrl
+        cost {
+          totalAmount {
+            amount
+            currencyCode
+          }
+        }
+        lines(first: 100) {
+          edges {
+            node {
+              id
+              quantity
+              merchandise {
+                ... on ProductVariant {
+                  id
+                  title
+                }
+              }
+            }
+          }
         }
       }
-      checkoutUserErrors {
+      userErrors {
         field
         message
-        code
       }
     }
   }
@@ -254,7 +270,7 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
   }
 }
 
-// Create checkout using checkoutCreate mutation - returns proper /checkouts/ URLs
+// Create checkout using Cart API (cartCreate mutation) - for 2025-07 API
 export async function createStorefrontCheckout(items: CartItem[]): Promise<string> {
   console.log('=== CHECKOUT DEBUG START ===');
   console.log('Items received:', JSON.stringify(items, null, 2));
@@ -275,64 +291,49 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
   }
 
   try {
-    // Format line items for checkoutCreate mutation
-    const lineItems = items.map(item => ({
+    // Format lines for cartCreate mutation (uses merchandiseId, not variantId)
+    const lines = items.map(item => ({
       quantity: item.quantity,
-      variantId: item.variantId,
+      merchandiseId: item.variantId, // Cart API uses merchandiseId
     }));
 
-    console.log('Creating checkout with lineItems:', JSON.stringify(lineItems, null, 2));
-    console.log('Using mutation: CHECKOUT_CREATE_MUTATION');
+    console.log('Creating cart with lines:', JSON.stringify(lines, null, 2));
+    console.log('Using mutation: CART_CREATE_MUTATION');
 
-    const data = await storefrontApiRequest(CHECKOUT_CREATE_MUTATION, {
-      input: { lineItems },
+    const data = await storefrontApiRequest(CART_CREATE_MUTATION, {
+      input: { lines },
     });
 
     console.log('Shopify API raw response:', JSON.stringify(data, null, 2));
 
     if (!data) {
-      throw new Error('Failed to create checkout - no response from Shopify');
+      throw new Error('Failed to create cart - no response from Shopify');
     }
 
-    if (data.data?.checkoutCreate?.checkoutUserErrors?.length > 0) {
-      const errorMessages = data.data.checkoutCreate.checkoutUserErrors.map((e: { message: string }) => e.message).join(', ');
-      console.error('Shopify checkout creation errors:', errorMessages);
-      throw new Error(`Checkout creation failed: ${errorMessages}`);
+    if (data.data?.cartCreate?.userErrors?.length > 0) {
+      const errorMessages = data.data.cartCreate.userErrors.map((e: { message: string }) => e.message).join(', ');
+      console.error('Shopify cart creation errors:', errorMessages);
+      throw new Error(`Cart creation failed: ${errorMessages}`);
     }
 
-    const checkout = data.data?.checkoutCreate?.checkout;
-    console.log('Checkout object:', checkout);
+    const cart = data.data?.cartCreate?.cart;
+    console.log('Cart object:', cart);
     
-    if (!checkout || !checkout.webUrl) {
+    if (!cart || !cart.checkoutUrl) {
       console.error('No checkout URL in response:', data);
       throw new Error('No checkout URL returned from Shopify');
     }
 
-    console.log('Raw webUrl from Shopify:', checkout.webUrl);
+    console.log('Raw checkoutUrl from Shopify:', cart.checkoutUrl);
     
-    // CRITICAL: Ensure we're using the myshopify.com domain for headless checkout
-    let checkoutUrl = checkout.webUrl;
+    // Add channel=online_store parameter for headless checkout
+    const url = new URL(cart.checkoutUrl);
+    url.searchParams.set('channel', 'online_store');
+    let checkoutUrl = url.toString();
     
-    // Handle all possible domain variations that Shopify might return
-    // Replace artlux8.com (custom domain) with myshopify.com domain
-    checkoutUrl = checkoutUrl.replace(/https?:\/\/(www\.)?artlux8\.com/gi, `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`);
-    checkoutUrl = checkoutUrl.replace(/https?:\/\/(www\.)?artlux8\.co\.uk/gi, `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`);
-    
-    console.log('After domain replacement:', checkoutUrl);
     console.log('Final checkout URL:', checkoutUrl);
     console.log('URL contains /checkouts/:', checkoutUrl.includes('/checkouts/'));
-    console.log('URL contains /cart/:', checkoutUrl.includes('/cart/'));
     console.log('=== CHECKOUT DEBUG END ===');
-    
-    // CRITICAL SAFETY CHECK: If URL contains /cart/ it's WRONG
-    // checkoutCreate should NEVER return /cart/ URLs - only /checkouts/ URLs
-    if (checkoutUrl.includes('/cart/')) {
-      console.error('CRITICAL ERROR: checkoutCreate returned /cart/ URL instead of /checkouts/');
-      console.error('This should NOT happen with checkoutCreate mutation');
-      console.error('Raw URL was:', checkout.webUrl);
-      // Attempt to fix by replacing /cart/c/ with /checkouts/
-      // This is a last-resort fix - the API should return correct URLs
-    }
     
     return checkoutUrl;
   } catch (error) {
