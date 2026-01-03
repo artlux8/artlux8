@@ -14,16 +14,23 @@ const PromotedHydrogenBottle = () => {
     { icon: Shield, text: "Powerful Antioxidant" },
   ];
 
+  // Real Shopify product data for ARTLUX∞ Hydrogen Water Bottle Go+
+  const PRODUCT_HANDLE = "artlux8-hydrogen-water-bottle-go";
+  const PRODUCT_ID = "gid://shopify/Product/15846331810141";
+  const VARIANT_ID = "gid://shopify/ProductVariant/63017311797597"; // Black variant
+  const PRODUCT_TITLE = "ARTLUX∞ Hydrogen Water Bottle Go+";
+  const PRODUCT_PRICE = "88.88";
+
   const handleAddToCart = () => {
     const hydrogenBottleProduct = {
       node: {
-        id: "gid://shopify/Product/15821715931485",
-        title: "ARTLUX∞ Hydrogen Water Bottle",
-        description: "Premium hydrogen-rich water generator for optimal cellular hydration and longevity support.",
-        handle: "artlux-hydrogen-water-bottle",
+        id: PRODUCT_ID,
+        title: PRODUCT_TITLE,
+        description: "Hydration. Simplified. Elevated. The ARTLUX∞ Hydrogen Water Bottle - transforms ordinary water into a modern hydration upgrade.",
+        handle: PRODUCT_HANDLE,
         priceRange: {
           minVariantPrice: {
-            amount: "89.88",
+            amount: PRODUCT_PRICE,
             currencyCode: "USD",
           },
         },
@@ -31,8 +38,8 @@ const PromotedHydrogenBottle = () => {
           edges: [
             {
               node: {
-                url: "https://cdn.shopify.com/s/files/1/1016/3319/6381/files/artlux-hydrogen-bottle-branded.png?v=1765791886",
-                altText: "ARTLUX Hydrogen Water Bottle",
+                url: "https://cdn.shopify.com/s/files/1/1016/3319/6381/files/artlux-hydrogen-bottle-branded.jpg?v=1767398539",
+                altText: PRODUCT_TITLE,
               },
             },
           ],
@@ -41,36 +48,48 @@ const PromotedHydrogenBottle = () => {
           edges: [
             {
               node: {
-                id: "gid://shopify/ProductVariant/62890510451037",
-                title: "Standard",
+                id: VARIANT_ID,
+                title: "Black / 450ml / USB",
                 price: {
-                  amount: "89.88",
+                  amount: PRODUCT_PRICE,
                   currencyCode: "USD",
                 },
                 availableForSale: true,
-                selectedOptions: [{ name: "Title", value: "Standard" }],
+                selectedOptions: [
+                  { name: "Color", value: "Black" },
+                  { name: "Size", value: "450ml" },
+                  { name: "Electrical outlet", value: "USB" },
+                ],
               },
             },
           ],
         },
-        options: [{ name: "Title", values: ["Standard"] }],
+        options: [
+          { name: "Color", values: ["Black", "Gold"] },
+          { name: "Size", values: ["450ml"] },
+          { name: "Electrical outlet", values: ["USB"] },
+        ],
       },
     };
 
     addItem({
       product: hydrogenBottleProduct,
-      variantId: "gid://shopify/ProductVariant/62890510451037",
-      variantTitle: "Standard",
+      variantId: VARIANT_ID,
+      variantTitle: "Black / 450ml / USB",
       price: {
-        amount: "89.88",
+        amount: PRODUCT_PRICE,
         currencyCode: "USD",
       },
       quantity: 1,
-      selectedOptions: [{ name: "Title", value: "Standard" }],
+      selectedOptions: [
+        { name: "Color", value: "Black" },
+        { name: "Size", value: "450ml" },
+        { name: "Electrical outlet", value: "USB" },
+      ],
     });
 
     toast.success("Added to cart!", {
-      description: "ARTLUX∞ Hydrogen Water Bottle",
+      description: PRODUCT_TITLE,
     });
   };
 
@@ -84,8 +103,11 @@ const PromotedHydrogenBottle = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Product Image */}
-          <div className="relative order-2 lg:order-1">
+          {/* Product Image - Clickable */}
+          <Link 
+            to={`/products/${PRODUCT_HANDLE}`}
+            className="relative order-2 lg:order-1 block cursor-pointer"
+          >
             <div className="relative mx-auto max-w-md">
               {/* Glow effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-accent/30 via-teal/20 to-accent/30 blur-3xl scale-110 animate-pulse" />
@@ -93,7 +115,7 @@ const PromotedHydrogenBottle = () => {
               {/* Product image */}
               <img
                 src={hydrogenBottle}
-                alt="ARTLUX∞ Hydrogen Water Bottle - Premium Molecular Hydrogen Generator"
+                alt={`${PRODUCT_TITLE} - Premium Molecular Hydrogen Generator`}
                 className="relative z-10 w-full h-auto drop-shadow-2xl hover:scale-105 transition-transform duration-500"
               />
               
@@ -105,7 +127,7 @@ const PromotedHydrogenBottle = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
 
           {/* Content */}
           <div className="order-1 lg:order-2 text-center lg:text-left">
@@ -113,11 +135,13 @@ const PromotedHydrogenBottle = () => {
               ARTLUX∞
             </h2>
             
-            <h3 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-2">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-teal to-accent">
-                Hydrogen Water Bottle
-              </span>
-            </h3>
+            <Link to={`/products/${PRODUCT_HANDLE}`}>
+              <h3 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-2 hover:opacity-80 transition-opacity cursor-pointer">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-teal to-accent">
+                  Hydrogen Water Bottle Go+
+                </span>
+              </h3>
+            </Link>
             
             <p className="font-display text-base md:text-lg tracking-[0.2em] mb-6 font-medium text-transparent bg-clip-text bg-gradient-to-r from-gold via-gold-light to-gold bg-[length:200%_100%] animate-[shimmer_3s_ease-in-out_infinite]">
               By ARTLUX∞
@@ -145,13 +169,13 @@ const PromotedHydrogenBottle = () => {
             <div className="mb-8">
               <div className="flex items-baseline justify-center lg:justify-start gap-3">
                 <span className="text-4xl md:text-5xl font-display font-bold text-accent">
-                  $89.88
+                  ${PRODUCT_PRICE}
                 </span>
                 <span className="text-muted-foreground line-through text-lg">
                   $129.99
                 </span>
                 <span className="bg-destructive/20 text-destructive-foreground px-3 py-1 rounded-full text-sm font-semibold">
-                  Save 30%
+                  Save 31%
                 </span>
               </div>
             </div>
@@ -167,13 +191,14 @@ const PromotedHydrogenBottle = () => {
                 Add to Cart
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Link to="/product/artlux-hydrogen-water-bottle">
+              <Link to={`/products/${PRODUCT_HANDLE}`}>
                 <Button 
                   size="lg" 
                   variant="outline"
-                  className="border-accent/50 text-accent hover:bg-accent/10 px-8 py-6 text-lg"
+                  className="border-accent/50 text-accent hover:bg-accent/10 px-8 py-6 text-lg w-full sm:w-auto"
                 >
-                  Win It Free
+                  Shop Now
+                  <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </Link>
             </div>

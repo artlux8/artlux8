@@ -69,6 +69,7 @@ const App = () => (
               <Route path="/longevity-protocol" element={<LongevityProtocol />} />
               <Route path="/shop" element={<Shop />} />
               <Route path="/product/:handle" element={<ShopifyProductDetail />} />
+              <Route path="/products/:handle" element={<ShopifyProductDetail />} />
               <Route path="/bundle/:id" element={<BundleDetail />} />
               <Route path="/podcast" element={<Podcast />} />
               <Route path="/podcasts" element={<Podcast />} />
