@@ -103,7 +103,11 @@ const ShopifyProductDetail = () => {
     });
     
     toast.success(`${product.title} added to cart`, {
-      position: 'top-center'
+      position: 'top-center',
+      action: {
+        label: "View Cart",
+        onClick: () => window.location.href = '/cart'
+      }
     });
   };
 

@@ -55,7 +55,11 @@ const HydrogenBottles = () => {
 
     toast.success("Added to cart!", {
       description: product.node.title,
-      position: "top-center"
+      position: "top-center",
+      action: {
+        label: "View Cart",
+        onClick: () => window.location.href = '/cart'
+      }
     });
   };
 

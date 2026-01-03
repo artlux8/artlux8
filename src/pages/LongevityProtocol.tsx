@@ -82,6 +82,10 @@ const LongevityProtocol = () => {
       if (addedCount > 0) {
         toast.success(`${stackType.charAt(0).toUpperCase() + stackType.slice(1)} Stack Added!`, {
           description: `${addedCount} supplement${addedCount > 1 ? 's' : ''} added to your cart.`,
+          action: {
+            label: "View Cart",
+            onClick: () => window.location.href = '/cart'
+          }
         });
       }
     } catch (error) {

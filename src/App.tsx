@@ -52,6 +52,17 @@ import CartPermalinkRedirect from "./pages/CartPermalinkRedirect";
 
 const queryClient = new QueryClient();
 
+// Canonical host redirect - run immediately before React renders
+// Redirects artlux.com and www.artlux.com to www.artlux8.com
+(function() {
+  const hostname = window.location.hostname;
+  if (hostname === 'artlux.com' || hostname === 'www.artlux.com') {
+    const newUrl = 'https://www.artlux8.com' + window.location.pathname + window.location.search;
+    console.log('[Canonical Redirect] Redirecting from', hostname, 'to www.artlux8.com');
+    window.location.replace(newUrl);
+  }
+})();
+
 const App = () => (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
