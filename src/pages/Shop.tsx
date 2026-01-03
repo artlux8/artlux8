@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ShoppingCart, Star, Leaf, Brain, Moon, Zap, Heart, Shield, Loader2 } from 'lucide-react';
 import { useCartStore } from '@/stores/cartStore';
-import { fetchProducts, ShopifyProduct, createStorefrontCheckout } from '@/lib/shopify';
+import { fetchProducts, ShopifyProduct, createStorefrontCheckout, openCheckoutUrl } from '@/lib/shopify';
 import { toast } from 'sonner';
 import { useLocalizationStore } from '@/stores/localizationStore';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -68,6 +68,11 @@ const Shop = () => {
       return;
     }
 
+    if (!variant.availableForSale) {
+      toast.error('This product is currently out of stock');
+      return;
+    }
+
     setBuyingProductId(product.node.id);
     
     try {
@@ -81,10 +86,19 @@ const Shop = () => {
       };
       
       const checkoutUrl = await createStorefrontCheckout([cartItem]);
-      window.open(checkoutUrl, '_blank');
+      
+      if (checkoutUrl) {
+        openCheckoutUrl(checkoutUrl);
+      } else {
+        throw new Error('No checkout URL received');
+      }
     } catch (error) {
       console.error('Checkout failed:', error);
-      toast.error('Failed to create checkout');
+      toast.error('Failed to create checkout. Please try adding to cart instead.', {
+        position: 'top-center'
+      });
+      // Fallback: add to cart
+      handleAddToCart(product);
     } finally {
       setBuyingProductId(null);
     }

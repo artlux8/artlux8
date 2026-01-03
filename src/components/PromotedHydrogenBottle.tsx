@@ -1,11 +1,14 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles, Droplets, Zap, Shield, ShoppingCart } from "lucide-react";
+import { ArrowRight, Sparkles, Droplets, Zap, Shield, ShoppingCart, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import hydrogenBottle from "@/assets/artlux-hydrogen-bottle-branded.png";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
+import { createStorefrontCheckout, openCheckoutUrl } from "@/lib/shopify";
 
 const PromotedHydrogenBottle = () => {
+  const [isBuying, setIsBuying] = useState(false);
   const addItem = useCartStore((state) => state.addItem);
 
   const benefits = [
@@ -90,7 +93,62 @@ const PromotedHydrogenBottle = () => {
 
     toast.success("Added to cart!", {
       description: PRODUCT_TITLE,
+      position: 'top-center'
     });
+  };
+
+  const handleBuyNow = async () => {
+    setIsBuying(true);
+    
+    try {
+      const cartItem = {
+        product: {
+          node: {
+            id: PRODUCT_ID,
+            title: PRODUCT_TITLE,
+            description: "Hydration. Simplified. Elevated.",
+            handle: PRODUCT_HANDLE,
+            priceRange: {
+              minVariantPrice: {
+                amount: PRODUCT_PRICE,
+                currencyCode: "USD",
+              },
+            },
+            images: { edges: [] },
+            variants: { edges: [] },
+            options: [],
+          },
+        },
+        variantId: VARIANT_ID,
+        variantTitle: "Black / 450ml / USB",
+        price: {
+          amount: PRODUCT_PRICE,
+          currencyCode: "USD",
+        },
+        quantity: 1,
+        selectedOptions: [
+          { name: "Color", value: "Black" },
+          { name: "Size", value: "450ml" },
+          { name: "Electrical outlet", value: "USB" },
+        ],
+      };
+
+      const checkoutUrl = await createStorefrontCheckout([cartItem]);
+      
+      if (checkoutUrl) {
+        openCheckoutUrl(checkoutUrl);
+      } else {
+        throw new Error('No checkout URL received');
+      }
+    } catch (error) {
+      console.error('Buy now failed:', error);
+      toast.error('Failed to create checkout. Adding to cart instead.', {
+        position: 'top-center'
+      });
+      handleAddToCart();
+    } finally {
+      setIsBuying(false);
+    }
   };
 
   return (
@@ -191,16 +249,25 @@ const PromotedHydrogenBottle = () => {
                 Add to Cart
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Link to={`/products/${PRODUCT_HANDLE}`}>
-                <Button 
-                  size="lg" 
-                  variant="outline"
-                  className="border-accent/50 text-accent hover:bg-accent/10 px-8 py-6 text-lg w-full sm:w-auto"
-                >
-                  Buy It Now
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              </Link>
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="border-accent/50 text-accent hover:bg-accent/10 px-8 py-6 text-lg w-full sm:w-auto"
+                onClick={handleBuyNow}
+                disabled={isBuying}
+              >
+                {isBuying ? (
+                  <>
+                    <Loader2 className="mr-2 w-5 h-5 animate-spin" />
+                    Processing...
+                  </>
+                ) : (
+                  <>
+                    Buy It Now
+                    <ArrowRight className="ml-2 w-5 h-5" />
+                  </>
+                )}
+              </Button>
             </div>
 
             {/* Trust badge */}

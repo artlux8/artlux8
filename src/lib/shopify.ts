@@ -277,37 +277,88 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
   }
 }
 
-// Create checkout
+// Create checkout - returns checkout URL or throws error
 export async function createStorefrontCheckout(items: CartItem[]): Promise<string> {
+  // Validate items before proceeding
+  if (!items || items.length === 0) {
+    throw new Error('No items to checkout');
+  }
+
+  // Validate each item has required fields
+  for (const item of items) {
+    if (!item.variantId) {
+      throw new Error('Invalid cart item: missing variant ID');
+    }
+    if (!item.quantity || item.quantity < 1) {
+      throw new Error('Invalid cart item: invalid quantity');
+    }
+  }
+
   try {
     const lines = items.map(item => ({
       quantity: item.quantity,
       merchandiseId: item.variantId,
     }));
 
+    console.log('Creating checkout with items:', lines);
+
     const data = await storefrontApiRequest(CART_CREATE_MUTATION, {
       input: { lines },
     });
 
     if (!data) {
-      throw new Error('Failed to create checkout');
+      throw new Error('Failed to create checkout - no response from Shopify');
     }
 
-    if (data.data.cartCreate.userErrors.length > 0) {
-      throw new Error(`Cart creation failed: ${data.data.cartCreate.userErrors.map((e: { message: string }) => e.message).join(', ')}`);
+    if (data.data?.cartCreate?.userErrors?.length > 0) {
+      const errorMessages = data.data.cartCreate.userErrors.map((e: { message: string }) => e.message).join(', ');
+      console.error('Shopify cart creation errors:', errorMessages);
+      throw new Error(`Cart creation failed: ${errorMessages}`);
     }
 
-    const cart = data.data.cartCreate.cart;
+    const cart = data.data?.cartCreate?.cart;
     
-    if (!cart.checkoutUrl) {
+    if (!cart || !cart.checkoutUrl) {
+      console.error('No checkout URL in response:', data);
       throw new Error('No checkout URL returned from Shopify');
     }
 
+    // Add channel parameter for proper checkout access
     const url = new URL(cart.checkoutUrl);
     url.searchParams.set('channel', 'online_store');
-    return url.toString();
+    const checkoutUrl = url.toString();
+    
+    console.log('Checkout URL created:', checkoutUrl);
+    return checkoutUrl;
   } catch (error) {
     console.error('Error creating checkout:', error);
     throw error;
+  }
+}
+
+// Helper to open checkout URL safely
+export function openCheckoutUrl(url: string): boolean {
+  if (!url) {
+    console.error('No checkout URL provided');
+    return false;
+  }
+  
+  try {
+    // Open in new tab
+    const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+    
+    // Check if popup was blocked
+    if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+      // Popup was blocked, try direct navigation
+      console.warn('Popup blocked, redirecting in current window');
+      window.location.href = url;
+    }
+    
+    return true;
+  } catch (error) {
+    console.error('Failed to open checkout URL:', error);
+    // Fallback to direct navigation
+    window.location.href = url;
+    return true;
   }
 }

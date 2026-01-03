@@ -5,7 +5,7 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ShoppingCart, Minus, Plus, Loader2 } from 'lucide-react';
 import { useCartStore } from '@/stores/cartStore';
-import { fetchProductByHandle, ShopifyProduct } from '@/lib/shopify';
+import { fetchProductByHandle, ShopifyProduct, createStorefrontCheckout, openCheckoutUrl } from '@/lib/shopify';
 import { toast } from 'sonner';
 import { useLocalizationStore } from '@/stores/localizationStore';
 import { getEnhancedContent, EnhancedProductContent } from '@/data/enhancedProductContent';
@@ -25,6 +25,7 @@ const ShopifyProductDetail = () => {
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const [enhancedContent, setEnhancedContent] = useState<EnhancedProductContent | null>(null);
   const [reviews, setReviews] = useState<ProductReview[]>([]);
+  const [isBuying, setIsBuying] = useState(false);
 
   // All useEffects must be before any conditional returns
   useEffect(() => {
@@ -102,6 +103,52 @@ const ShopifyProductDetail = () => {
     toast.success(`${product.title} added to cart`, {
       position: 'top-center'
     });
+  };
+
+  const handleBuyNow = async () => {
+    if (!product || !selectedVariant) {
+      toast.error('Please select a variant');
+      return;
+    }
+
+    if (!selectedVariant.availableForSale) {
+      toast.error('This product is currently out of stock');
+      return;
+    }
+
+    setIsBuying(true);
+    
+    try {
+      const shopifyProduct: ShopifyProduct = {
+        node: product
+      };
+
+      const cartItem = {
+        product: shopifyProduct,
+        variantId: selectedVariant.id,
+        variantTitle: selectedVariant.title,
+        price: selectedVariant.price,
+        quantity,
+        selectedOptions: selectedVariant.selectedOptions || []
+      };
+      
+      const checkoutUrl = await createStorefrontCheckout([cartItem]);
+      
+      if (checkoutUrl) {
+        openCheckoutUrl(checkoutUrl);
+      } else {
+        throw new Error('No checkout URL received');
+      }
+    } catch (error) {
+      console.error('Buy now failed:', error);
+      toast.error('Failed to create checkout. Please try adding to cart instead.', {
+        position: 'top-center'
+      });
+      // Fallback: add to cart
+      handleAddToCart();
+    } finally {
+      setIsBuying(false);
+    }
   };
 
   // Early returns AFTER all hooks
@@ -243,15 +290,32 @@ const ShopifyProductDetail = () => {
               </div>
             </div>
 
-            {/* Add to Cart Button */}
-            <Button
-              onClick={handleAddToCart}
-              className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-14 text-lg"
-              disabled={!selectedVariant?.availableForSale}
-            >
-              <ShoppingCart className="w-5 h-5 mr-2" />
-              {selectedVariant?.availableForSale ? 'Add to Cart' : 'Sold Out'}
-            </Button>
+            {/* Action Buttons */}
+            <div className="flex gap-3 mb-4">
+              <Button
+                onClick={handleAddToCart}
+                variant="outline"
+                className="flex-1 h-14 text-lg border-accent/50 text-accent hover:bg-accent/10"
+                disabled={!selectedVariant?.availableForSale}
+              >
+                <ShoppingCart className="w-5 h-5 mr-2" />
+                Add to Cart
+              </Button>
+              <Button
+                onClick={handleBuyNow}
+                className="flex-1 bg-accent hover:bg-accent/90 text-accent-foreground h-14 text-lg"
+                disabled={!selectedVariant?.availableForSale || isBuying}
+              >
+                {isBuying ? (
+                  <>
+                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                    Processing...
+                  </>
+                ) : (
+                  'Buy It Now'
+                )}
+              </Button>
+            </div>
 
             {!selectedVariant?.availableForSale && (
               <p className="text-center text-muted-foreground mt-4">
