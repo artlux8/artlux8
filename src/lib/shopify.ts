@@ -326,13 +326,23 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
 
     console.log('Raw checkoutUrl from Shopify:', cart.checkoutUrl);
     
-    // Add channel=online_store parameter for headless checkout
-    const url = new URL(cart.checkoutUrl);
-    url.searchParams.set('channel', 'online_store');
-    let checkoutUrl = url.toString();
+    // CRITICAL: Replace custom domain with myshopify.com domain
+    // Shopify returns URLs with custom domain (artlux8.com) but cart paths only work on myshopify.com
+    let checkoutUrl = cart.checkoutUrl;
     
-    console.log('Final checkout URL:', checkoutUrl);
-    console.log('URL contains /checkouts/:', checkoutUrl.includes('/checkouts/'));
+    // Replace artlux8.com (custom domain) with the permanent myshopify.com domain
+    checkoutUrl = checkoutUrl.replace(/https?:\/\/(www\.)?artlux8\.com/gi, `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`);
+    checkoutUrl = checkoutUrl.replace(/https?:\/\/(www\.)?artlux8\.co\.uk/gi, `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`);
+    
+    console.log('After domain replacement:', checkoutUrl);
+    
+    // Add channel=online_store parameter for headless checkout
+    const url = new URL(checkoutUrl);
+    url.searchParams.set('channel', 'online_store');
+    checkoutUrl = url.toString();
+    
+    console.log('FINAL CHECKOUT URL:', checkoutUrl);
+    console.log('Domain used:', SHOPIFY_STORE_PERMANENT_DOMAIN);
     console.log('=== CHECKOUT DEBUG END ===');
     
     return checkoutUrl;
