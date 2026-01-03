@@ -94,6 +94,7 @@ const App = () => (
               <Route path="/oxygen-air-systems" element={<AirSystems />} />
               <Route path="/bioactive-nutrients" element={<BioactiveNutrients />} />
               <Route path="/hydrogen-water-bottles" element={<HydrogenBottles />} />
+              <Route path="/collections/hydrogen-water" element={<HydrogenBottles />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/shipping" element={<Shipping />} />

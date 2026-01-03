@@ -56,6 +56,16 @@ const ShopifyProductDetail = () => {
       if (metaDesc) {
         metaDesc.setAttribute('content', enhancedContent.metaDescription);
       }
+      // Add meta keywords if available
+      if (enhancedContent.metaKeywords) {
+        let metaKeywords = document.querySelector('meta[name="keywords"]');
+        if (!metaKeywords) {
+          metaKeywords = document.createElement('meta');
+          metaKeywords.setAttribute('name', 'keywords');
+          document.head.appendChild(metaKeywords);
+        }
+        metaKeywords.setAttribute('content', enhancedContent.metaKeywords);
+      }
     } else if (product) {
       document.title = `${product.title} | ARTLUX∞`;
     }
@@ -162,6 +172,13 @@ const ShopifyProductDetail = () => {
             <p className="text-muted-foreground mb-6 text-lg">
               {product.description}
             </p>
+            
+            {/* Internal linking for hydrogen products */}
+            {handle?.includes('hydrogen') && (
+              <p className="text-muted-foreground mb-6">
+                Explore our <Link to="/collections/hydrogen-water" className="text-accent hover:underline">Hydrogen Water collection</Link> — premium hydrogen water bottles and portable hydrogen water generators designed for modern longevity-focused lifestyles inspired by discussions from Gary Brecka and Bryan Johnson.
+              </p>
+            )}
 
             {/* Variant Selector */}
             {hasMultipleVariants && (
