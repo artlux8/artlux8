@@ -12,7 +12,6 @@ import {
 import { ShoppingCart, Minus, Plus, Trash2, Lock, Loader2 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { useLocalizationStore } from "@/stores/localizationStore";
-import { redirectToCheckout } from "@/lib/shopify";
 import { toast } from "sonner";
 import CheckoutLoadingOverlay from "./CheckoutLoadingOverlay";
 
@@ -35,14 +34,33 @@ export const ShopifyCartDrawer = () => {
   const totalPrice = getTotalPrice();
 
   const handleCheckout = async () => {
+    // Validate all items have valid variantId before proceeding
+    for (const item of items) {
+      if (!item.variantId || !item.variantId.includes('gid://shopify/ProductVariant/')) {
+        toast.error(`Invalid cart item: "${item.product?.node?.title || 'Unknown product'}" has no valid variant ID`);
+        return;
+      }
+    }
+
     try {
       setIsRedirecting(true);
       const checkoutUrl = await createCheckout();
       
       if (checkoutUrl) {
+        // Debug log - must contain artlux8.myshopify.com/checkouts/
+        console.log("CHECKOUT URL:", checkoutUrl);
+        
+        if (!checkoutUrl.includes('artlux8.myshopify.com')) {
+          console.error('Invalid checkout URL - not pointing to Shopify:', checkoutUrl);
+          toast.error('Checkout configuration error. Please try again.');
+          setIsRedirecting(false);
+          return;
+        }
+        
         clearCart();
         setIsOpen(false);
-        redirectToCheckout(checkoutUrl);
+        // Use window.location.assign for same-tab redirect (no router navigation)
+        window.location.assign(checkoutUrl);
       } else {
         setIsRedirecting(false);
         toast.error('Failed to create checkout. Please try again.');
@@ -94,13 +112,18 @@ export const ShopifyCartDrawer = () => {
                     {items.map((item) => (
                       <div key={item.variantId} className="flex gap-4 p-3 bg-secondary/30 rounded-lg">
                         <div className="w-16 h-16 bg-secondary/50 rounded-md overflow-hidden flex-shrink-0">
-                          {item.product.node.images?.edges?.[0]?.node && (
-                            <img
-                              src={item.product.node.images.edges[0].node.url}
-                              alt={item.product.node.title}
-                              className="w-full h-full object-cover"
-                            />
-                          )}
+                          <img
+                            src={
+                              // Priority: variant image > product featured image > placeholder
+                              item.product?.node?.images?.edges?.[0]?.node?.url ||
+                              '/placeholder.svg'
+                            }
+                            alt={item.product?.node?.title || 'Product'}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = '/placeholder.svg';
+                            }}
+                          />
                         </div>
                         
                         <div className="flex-1 min-w-0">
