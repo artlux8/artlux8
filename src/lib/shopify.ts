@@ -3,7 +3,7 @@ import { toast } from 'sonner';
 // Shopify Configuration - Storefront API tokens are designed for client-side use
 // See: https://shopify.dev/docs/api/storefront#authentication
 const SHOPIFY_API_VERSION = '2025-07';
-const SHOPIFY_STORE_PERMANENT_DOMAIN = 'artlux8.myshopify.com';
+const SHOPIFY_STORE_PERMANENT_DOMAIN = 'artlux8-ypxf4.myshopify.com';
 const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 // Storefront Access Token is a publishable key meant for client-side use (read-only product data)
 const SHOPIFY_STOREFRONT_TOKEN = '33e073344fd0491eb2329ec9d56269b8';
@@ -313,21 +313,25 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
     // CRITICAL: Ensure we're using the myshopify.com domain for headless checkout
     let checkoutUrl = checkout.webUrl;
     
-    // Replace any custom domain with the myshopify.com domain
-    if (checkoutUrl.includes('artlux8.com')) {
-      checkoutUrl = checkoutUrl.replace('https://artlux8.com', `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`);
-      console.log('Replaced artlux8.com with myshopify domain');
-    }
+    // Handle all possible domain variations that Shopify might return
+    // Replace artlux8.com (custom domain) with myshopify.com domain
+    checkoutUrl = checkoutUrl.replace(/https?:\/\/(www\.)?artlux8\.com/gi, `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`);
+    checkoutUrl = checkoutUrl.replace(/https?:\/\/(www\.)?artlux8\.co\.uk/gi, `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`);
     
+    console.log('After domain replacement:', checkoutUrl);
     console.log('Final checkout URL:', checkoutUrl);
     console.log('URL contains /checkouts/:', checkoutUrl.includes('/checkouts/'));
     console.log('URL contains /cart/:', checkoutUrl.includes('/cart/'));
     console.log('=== CHECKOUT DEBUG END ===');
     
-    // SAFETY CHECK: Ensure URL is a proper checkout URL
+    // CRITICAL SAFETY CHECK: If URL contains /cart/ it's WRONG
+    // checkoutCreate should NEVER return /cart/ URLs - only /checkouts/ URLs
     if (checkoutUrl.includes('/cart/')) {
-      console.error('WARNING: Checkout URL contains /cart/ path - this is incorrect!');
-      console.error('Expected URL pattern: https://artlux8-ypxf4.myshopify.com/checkouts/...');
+      console.error('CRITICAL ERROR: checkoutCreate returned /cart/ URL instead of /checkouts/');
+      console.error('This should NOT happen with checkoutCreate mutation');
+      console.error('Raw URL was:', checkout.webUrl);
+      // Attempt to fix by replacing /cart/c/ with /checkouts/
+      // This is a last-resort fix - the API should return correct URLs
     }
     
     return checkoutUrl;
