@@ -9,17 +9,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ShoppingCart, Minus, Plus, Trash2, Loader2, Lock } from "lucide-react";
+import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { useLocalizationStore } from "@/stores/localizationStore";
 import { toast } from "sonner";
-import { redirectToCheckout } from "@/lib/shopify";
-import CheckoutLoadingOverlay from "@/components/CheckoutLoadingOverlay";
-import CheckoutTrustSignals from "@/components/CheckoutTrustSignals";
 
 export const ShopifyCartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isRedirecting, setIsRedirecting] = useState(false);
   const { 
     items, 
     isLoading, 
@@ -30,37 +26,31 @@ export const ShopifyCartDrawer = () => {
     getTotalItems,
     getTotalPrice
   } = useCartStore();
-  const { formatPrice } = useLocalizationStore();
+  const { formatPrice, convertPrice } = useLocalizationStore();
   
   const totalItems = getTotalItems();
   const totalPrice = getTotalPrice();
 
   const handleCheckout = async () => {
-    setIsRedirecting(true);
     try {
       const checkoutUrl = await createCheckout();
       if (checkoutUrl) {
-        // CRITICAL: Use redirectToCheckout which uses window.location.assign
-        // This ensures we go to myshopify.com domain, NOT custom domain
-        console.log('Cart drawer redirecting to checkout:', checkoutUrl);
-        redirectToCheckout(checkoutUrl);
-        // Don't clear cart or close sheet - we're redirecting away
+        // Open checkout in new tab
+        window.open(checkoutUrl, '_blank');
+        setIsOpen(false);
+        clearCart();
       } else {
         toast.error('Failed to create checkout. Please try again.');
-        setIsRedirecting(false);
       }
     } catch (error) {
       console.error('Checkout failed:', error);
       toast.error('Checkout failed. Please try again.');
-      setIsRedirecting(false);
     }
   };
 
   return (
-    <>
-      <CheckoutLoadingOverlay isVisible={isRedirecting} />
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <SheetTrigger asChild>
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <SheetTrigger asChild>
         <Button variant="outline" size="icon" className="relative border-border/50 hover:border-accent">
           <ShoppingCart className="h-5 w-5" />
           {totalItems > 0 && (
@@ -165,28 +155,25 @@ export const ShopifyCartDrawer = () => {
                   onClick={handleCheckout}
                   className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" 
                   size="lg"
-                  disabled={items.length === 0 || isLoading || isRedirecting}
+                  disabled={items.length === 0 || isLoading}
                 >
-                  {isLoading || isRedirecting ? (
+                  {isLoading ? (
                     <>
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      {isRedirecting ? 'Redirecting...' : 'Creating Checkout...'}
+                      Creating Checkout...
                     </>
                   ) : (
                     <>
-                      <Lock className="w-4 h-4 mr-2" />
-                      Secure Checkout
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      Checkout
                     </>
                   )}
                 </Button>
-                
-                <CheckoutTrustSignals />
 
                 <Button 
                   variant="ghost" 
                   className="w-full text-muted-foreground hover:text-foreground"
                   onClick={clearCart}
-                  disabled={isRedirecting}
                 >
                   Clear Cart
                 </Button>
@@ -194,9 +181,8 @@ export const ShopifyCartDrawer = () => {
             </>
           )}
         </div>
-        </SheetContent>
-      </Sheet>
-    </>
+      </SheetContent>
+    </Sheet>
   );
 };
 
