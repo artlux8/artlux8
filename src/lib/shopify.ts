@@ -336,29 +336,14 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
   }
 }
 
-// Helper to open checkout URL safely
-export function openCheckoutUrl(url: string): boolean {
+// Helper to redirect to checkout URL - instant redirect, no popups
+export function redirectToCheckout(url: string): void {
   if (!url) {
     console.error('No checkout URL provided');
-    return false;
+    return;
   }
   
-  try {
-    // Open in new tab
-    const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
-    
-    // Check if popup was blocked
-    if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-      // Popup was blocked, try direct navigation
-      console.warn('Popup blocked, redirecting in current window');
-      window.location.href = url;
-    }
-    
-    return true;
-  } catch (error) {
-    console.error('Failed to open checkout URL:', error);
-    // Fallback to direct navigation
-    window.location.href = url;
-    return true;
-  }
+  console.log('Redirecting to checkout:', url);
+  // Use location.assign for instant redirect to myshopify.com checkout
+  window.location.assign(url);
 }

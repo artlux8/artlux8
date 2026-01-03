@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 import hydrogenBottle from "@/assets/artlux-hydrogen-bottle-branded.png";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
-import { createStorefrontCheckout, openCheckoutUrl } from "@/lib/shopify";
+import { createStorefrontCheckout, redirectToCheckout } from "@/lib/shopify";
+import CheckoutLoadingOverlay from "@/components/CheckoutLoadingOverlay";
+import CheckoutTrustSignals from "@/components/CheckoutTrustSignals";
 
 const PromotedHydrogenBottle = () => {
   const [isBuying, setIsBuying] = useState(false);
@@ -136,7 +138,8 @@ const PromotedHydrogenBottle = () => {
       const checkoutUrl = await createStorefrontCheckout([cartItem]);
       
       if (checkoutUrl) {
-        openCheckoutUrl(checkoutUrl);
+        // Instant redirect to Shopify checkout
+        redirectToCheckout(checkoutUrl);
       } else {
         throw new Error('No checkout URL received');
       }
@@ -146,13 +149,15 @@ const PromotedHydrogenBottle = () => {
         position: 'top-center'
       });
       handleAddToCart();
-    } finally {
       setIsBuying(false);
     }
+    // Note: don't reset isBuying on success since we're redirecting
   };
 
   return (
-    <section className="pt-8 pb-20 md:pt-12 md:pb-32 bg-gradient-to-b from-background via-secondary/30 to-background relative overflow-hidden">
+    <>
+      <CheckoutLoadingOverlay isVisible={isBuying} />
+      <section className="pt-8 pb-20 md:pt-12 md:pb-32 bg-gradient-to-b from-background via-secondary/30 to-background relative overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-20 left-10 w-72 h-72 bg-accent rounded-full blur-3xl" />
@@ -270,8 +275,11 @@ const PromotedHydrogenBottle = () => {
               </Button>
             </div>
 
+            {/* Trust signals - checkout security */}
+            <CheckoutTrustSignals className="mt-4" />
+
             {/* Trust badge */}
-            <p className="text-muted-foreground text-sm mt-6 flex items-center justify-center lg:justify-start gap-2">
+            <p className="text-muted-foreground text-sm mt-4 flex items-center justify-center lg:justify-start gap-2">
               <Shield className="w-4 h-4 text-accent" />
               Free Shipping • 30-Day Money Back Guarantee
             </p>
@@ -279,6 +287,7 @@ const PromotedHydrogenBottle = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 
