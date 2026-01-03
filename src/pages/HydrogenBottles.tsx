@@ -79,10 +79,10 @@ const HydrogenBottles = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO 
-        title="Premium Hydrogen Water Bottles | Molecular Hydrogen Generator"
-        description="Premium portable hydrogen water bottles with SPE/PEM technology. Generate antioxidant-rich molecular hydrogen water for performance hydration, recovery optimization, and longevity lifestyle support."
-        keywords="hydrogen water bottle, molecular hydrogen water, premium hydrogen water bottle, performance hydration, hydrogen water benefits, SPE PEM technology, portable hydrogen generator, antioxidant water, biohacking hydration, longevity water"
-        url="https://artlux8.com/hydrogen-water-bottles"
+        title="Hydrogen Water Collection | Premium Hydrogen Water Bottles & Generators"
+        description="Explore our Hydrogen Water collection — premium hydrogen water bottles and portable hydrogen water generators designed for modern longevity-focused lifestyles inspired by discussions from Gary Brecka and Bryan Johnson."
+        keywords="hydrogen water bottle, hydrogen water, hydrogen rich water bottle, portable hydrogen water generator, longevity hydration, biohacking hydration, premium hydrogen water"
+        url="https://artlux8.com/collections/hydrogen-water"
         faq={hydrogenFAQ}
       />
       <Header />
@@ -170,6 +170,7 @@ const HydrogenBottles = () => {
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto">
               Premium hydrogen water generators with luxury design and cutting-edge technology.
+              Our flagship product, the <Link to="/products/artlux8-hydrogen-water-bottle-go" className="text-accent hover:underline">ARTLUX∞ Hydrogen Water Bottle Go+</Link>, is a premium portable hydrogen water bottle designed for daily hydration and longevity-focused routines.
             </p>
           </div>
 

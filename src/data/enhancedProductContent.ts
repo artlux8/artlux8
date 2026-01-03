@@ -13,6 +13,7 @@ export interface EnhancedProductContent {
   handle: string;
   metaTitle: string;
   metaDescription: string;
+  metaKeywords?: string;
   heroHeadline: string;
   heroSubtext: string;
   sections: {
@@ -271,8 +272,9 @@ export const enhancedProductContent: Record<string, EnhancedProductContent> = {
   },
   "artlux8-hydrogen-water-bottle-go": {
     handle: "artlux8-hydrogen-water-bottle-go",
-    metaTitle: "ARTLUX∞ Hydrogen Water Bottle Go+ – Premium Portable H₂ Generator",
-    metaDescription: "Portable hydrogen-rich water generator for optimal cellular hydration, antioxidant support, and longevity on the go. Premium design with Black or Gold finish.",
+    metaTitle: "ARTLUX∞ Hydrogen Water Bottle Go+ | Premium Hydrogen Water Bottle",
+    metaDescription: "Premium hydrogen water bottle and portable hydrogen water generator inspired by modern longevity and hydration protocols discussed by Gary Brecka and Bryan Johnson.",
+    metaKeywords: "hydrogen water bottle, hydrogen water, hydrogen rich water bottle, portable hydrogen water generator, longevity hydration, biohacking hydration, premium hydrogen water",
     heroHeadline: "ARTLUX∞ HYDROGEN WATER BOTTLE GO+ — Molecular Hydration Technology",
     heroSubtext: "Hydration. Simplified. Elevated. The ARTLUX∞ Hydrogen Water Bottle Go+ transforms ordinary water into a modern hydration upgrade — with clean design, effortless use, and portable format.",
     sections: [
