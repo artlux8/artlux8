@@ -12,6 +12,7 @@ import {
 import { ShoppingCart, Minus, Plus, Trash2, Lock, Loader2 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { useLocalizationStore } from "@/stores/localizationStore";
+import { normalizeCheckoutUrl } from "@/lib/shopify";
 import { toast } from "sonner";
 import CheckoutLoadingOverlay from "./CheckoutLoadingOverlay";
 
@@ -44,23 +45,25 @@ export const ShopifyCartDrawer = () => {
 
     try {
       setIsRedirecting(true);
-      const checkoutUrl = await createCheckout();
+      const rawCheckoutUrl = await createCheckout();
       
-      if (checkoutUrl) {
-        // Debug log - must contain artlux8.myshopify.com/checkouts/
-        console.log("CHECKOUT URL:", checkoutUrl);
+      if (rawCheckoutUrl) {
+        // Normalize URL to always use Shopify domain
+        const checkoutUrl = normalizeCheckoutUrl(rawCheckoutUrl);
+        console.log("FINAL CHECKOUT URL:", checkoutUrl);
         
-        if (!checkoutUrl.includes('artlux8.myshopify.com')) {
-          console.error('Invalid checkout URL - not pointing to Shopify:', checkoutUrl);
+        if (!checkoutUrl.startsWith('https://artlux8.myshopify.com')) {
+          console.error('Invalid checkout URL:', checkoutUrl);
           toast.error('Checkout configuration error. Please try again.');
           setIsRedirecting(false);
           return;
         }
         
-        clearCart();
         setIsOpen(false);
-        // Use window.location.assign for same-tab redirect (no router navigation)
+        // Redirect FIRST, then clear cart (clearCart after navigation starts)
         window.location.assign(checkoutUrl);
+        // Clear cart after redirect initiated (page will navigate away)
+        clearCart();
       } else {
         setIsRedirecting(false);
         toast.error('Failed to create checkout. Please try again.');
