@@ -253,6 +253,8 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
 
 // Create checkout using Cart API (cartCreate mutation) - for 2025-07 API
 export async function createStorefrontCheckout(items: CartItem[]): Promise<string> {
+  console.log('[Checkout] Starting checkout with items:', items.length);
+  
   // Validate items before proceeding
   if (!items || items.length === 0) {
     throw new Error('No items to checkout');
@@ -275,9 +277,13 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
       merchandiseId: item.variantId, // Cart API uses merchandiseId
     }));
 
+    console.log('[Checkout] Calling Shopify cartCreate with lines:', JSON.stringify(lines));
+
     const data = await storefrontApiRequest(CART_CREATE_MUTATION, {
       input: { lines },
     });
+
+    console.log('[Checkout] Shopify response:', JSON.stringify(data));
 
     if (!data) {
       throw new Error('Failed to create cart - no response from Shopify');
@@ -287,12 +293,14 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
       const errorMessages = data.data.cartCreate.userErrors.map((e: { message: string; code?: string }) => 
         e.code ? `${e.code}: ${e.message}` : e.message
       ).join(', ');
+      console.error('[Checkout] User errors:', errorMessages);
       throw new Error(`Cart creation failed: ${errorMessages}`);
     }
 
     const cart = data.data?.cartCreate?.cart;
     
     if (!cart || !cart.checkoutUrl) {
+      console.error('[Checkout] No checkout URL in cart:', cart);
       throw new Error('No checkout URL returned from Shopify');
     }
 
@@ -300,22 +308,28 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
     // Shopify returns the URL with the store's primary domain
     // We just need to ensure it has the channel param for headless checkout
     let checkoutUrl = cart.checkoutUrl;
+    console.log('[Checkout] Raw checkoutUrl from Shopify:', checkoutUrl);
     
     // Parse and add channel parameter
     const url = new URL(checkoutUrl);
     url.searchParams.set('channel', 'online_store');
     
-    return url.toString();
+    const finalUrl = url.toString();
+    console.log('[Checkout] Final checkout URL:', finalUrl);
+    
+    return finalUrl;
   } catch (error) {
-    console.error('Error creating checkout:', error);
+    console.error('[Checkout] Error creating checkout:', error);
     throw error;
   }
 }
 
 // Helper to redirect to checkout URL - opens in new tab for Shopify checkout
 export function redirectToCheckout(url: string): void {
+  console.log('[Checkout] Redirecting to:', url);
+  
   if (!url) {
-    console.error('No checkout URL provided');
+    console.error('[Checkout] No checkout URL provided');
     return;
   }
   
