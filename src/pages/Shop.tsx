@@ -8,10 +8,12 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ShoppingCart, Star, Leaf, Brain, Moon, Zap, Heart, Shield, Loader2 } from 'lucide-react';
 import { useCartStore } from '@/stores/cartStore';
-import { fetchProducts, ShopifyProduct, createStorefrontCheckout, openCheckoutUrl } from '@/lib/shopify';
+import { fetchProducts, ShopifyProduct, createStorefrontCheckout, redirectToCheckout } from '@/lib/shopify';
 import { toast } from 'sonner';
 import { useLocalizationStore } from '@/stores/localizationStore';
 import { Skeleton } from '@/components/ui/skeleton';
+import CheckoutLoadingOverlay from '@/components/CheckoutLoadingOverlay';
+import CheckoutTrustSignals from '@/components/CheckoutTrustSignals';
 
 const categories = [
   { id: 'all', name: 'All Products', icon: Shield },
@@ -88,7 +90,8 @@ const Shop = () => {
       const checkoutUrl = await createStorefrontCheckout([cartItem]);
       
       if (checkoutUrl) {
-        openCheckoutUrl(checkoutUrl);
+        // Instant redirect to Shopify checkout
+        redirectToCheckout(checkoutUrl);
       } else {
         throw new Error('No checkout URL received');
       }
@@ -99,14 +102,15 @@ const Shop = () => {
       });
       // Fallback: add to cart
       handleAddToCart(product);
-    } finally {
       setBuyingProductId(null);
     }
+    // Note: don't reset buyingProductId on success since we're redirecting
   };
 
 
   return (
     <div className="min-h-screen bg-background">
+      <CheckoutLoadingOverlay isVisible={buyingProductId !== null} />
       <SEO 
         title="Premium Biohacking Supplements & Longevity Products | ARTLUX8"
         description="Shop the world's most premium biohacking supplements. Third-party tested NAD+ boosters, NMN, organic supplements, and performance optimization tools. Free shipping on orders over £60."
@@ -264,9 +268,10 @@ const Shop = () => {
                             {buyingProductId === product.node.id ? (
                               <Loader2 className="w-4 h-4 animate-spin" />
                             ) : (
-                              'Buy It Now'
-                            )}
-                          </Button>
+                            'Buy It Now'
+                          )}
+                        </Button>
+                        <CheckoutTrustSignals className="mt-2" />
                         </div>
                       </div>
                     </div>

@@ -5,13 +5,15 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ShoppingCart, Minus, Plus, Loader2 } from 'lucide-react';
 import { useCartStore } from '@/stores/cartStore';
-import { fetchProductByHandle, ShopifyProduct, createStorefrontCheckout, openCheckoutUrl } from '@/lib/shopify';
+import { fetchProductByHandle, ShopifyProduct, createStorefrontCheckout, redirectToCheckout } from '@/lib/shopify';
 import { toast } from 'sonner';
 import { useLocalizationStore } from '@/stores/localizationStore';
 import { getEnhancedContent, EnhancedProductContent } from '@/data/enhancedProductContent';
 import EnhancedProductContentSection from '@/components/product/EnhancedProductContent';
 import ProductReviews from '@/components/product/ProductReviews';
 import { getProductReviews, ProductReview } from '@/data/productReviews';
+import CheckoutLoadingOverlay from '@/components/CheckoutLoadingOverlay';
+import CheckoutTrustSignals from '@/components/CheckoutTrustSignals';
 
 const ShopifyProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
@@ -135,7 +137,8 @@ const ShopifyProductDetail = () => {
       const checkoutUrl = await createStorefrontCheckout([cartItem]);
       
       if (checkoutUrl) {
-        openCheckoutUrl(checkoutUrl);
+        // Instant redirect to Shopify checkout
+        redirectToCheckout(checkoutUrl);
       } else {
         throw new Error('No checkout URL received');
       }
@@ -146,9 +149,9 @@ const ShopifyProductDetail = () => {
       });
       // Fallback: add to cart
       handleAddToCart();
-    } finally {
       setIsBuying(false);
     }
+    // Note: don't reset isBuying on success since we're redirecting
   };
 
   // Early returns AFTER all hooks
@@ -183,6 +186,7 @@ const ShopifyProductDetail = () => {
   }
   return (
     <div className="min-h-screen bg-background">
+      <CheckoutLoadingOverlay isVisible={isBuying} />
       <Header />
       
       <div className="container mx-auto px-4 py-8 pt-32">
@@ -316,6 +320,9 @@ const ShopifyProductDetail = () => {
                 )}
               </Button>
             </div>
+
+            {/* Trust signals */}
+            <CheckoutTrustSignals className="mt-3" />
 
             {!selectedVariant?.availableForSale && (
               <p className="text-center text-muted-foreground mt-4">
