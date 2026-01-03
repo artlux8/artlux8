@@ -17,10 +17,10 @@ const Header = () => {
 
   const navLinks = [
     { href: "/shop", label: "Shop" },
+    { href: "/cart", label: "Cart" },
     { href: "/podcast", label: "Podcast" },
     { href: "/free-protocol", label: "Free Protocol" },
     { href: "/blog", label: "Blog" },
-    // Hidden for now: Bundles, Expert Biohacker, Genetic Test, Protocols
   ];
 
   useEffect(() => {

@@ -95,7 +95,11 @@ const PromotedHydrogenBottle = () => {
 
     toast.success("Added to cart!", {
       description: PRODUCT_TITLE,
-      position: 'top-center'
+      position: 'top-center',
+      action: {
+        label: "View Cart",
+        onClick: () => window.location.href = '/cart'
+      }
     });
   };
 
