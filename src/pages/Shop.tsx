@@ -250,7 +250,7 @@ const Shop = () => {
                             {buyingProductId === product.node.id ? (
                               <Loader2 className="w-4 h-4 animate-spin" />
                             ) : (
-                              'Buy Now'
+                              'Buy It Now'
                             )}
                           </Button>
                         </div>

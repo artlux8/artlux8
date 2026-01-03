@@ -30,11 +30,19 @@ const ShopifyProductDetail = () => {
     const loadProduct = async () => {
       if (!handle) return;
       setLoading(true);
-      const productData = await fetchProductByHandle(handle);
-      setProduct(productData);
-      setEnhancedContent(getEnhancedContent(handle));
-      setReviews(getProductReviews(handle));
-      setLoading(false);
+      try {
+        const productData = await fetchProductByHandle(handle);
+        setProduct(productData);
+        if (handle) {
+          setEnhancedContent(getEnhancedContent(handle));
+          setReviews(getProductReviews(handle));
+        }
+      } catch (error) {
+        console.error('Error loading product:', error);
+        setProduct(null);
+      } finally {
+        setLoading(false);
+      }
     };
     loadProduct();
   }, [handle]);
@@ -73,6 +81,8 @@ const ShopifyProductDetail = () => {
   const price = selectedVariant?.price || product.priceRange?.minVariantPrice;
   const priceAmount = price?.amount ? parseFloat(price.amount) : 0;
   const mainImage = product.images?.edges?.[0]?.node;
+  const variantEdges = product.variants?.edges || [];
+  const hasMultipleVariants = variantEdges.length > 1;
 
   const handleAddToCart = () => {
     if (!selectedVariant) {
@@ -98,7 +108,7 @@ const ShopifyProductDetail = () => {
     });
   };
 
-  const totalPrice = convertPrice(priceAmount) * quantity;
+  const totalPrice = priceAmount > 0 ? convertPrice(priceAmount) * quantity : 0;
 
   // Update meta tags for enhanced content
   useEffect(() => {
@@ -153,13 +163,13 @@ const ShopifyProductDetail = () => {
             </p>
 
             {/* Variant Selector */}
-            {product.variants.edges.length > 1 && (
+            {hasMultipleVariants && (
               <div className="mb-6">
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Select Option
                 </label>
                 <div className="flex flex-wrap gap-2">
-                  {product.variants.edges.map((variant, index) => (
+                  {variantEdges.map((variant, index) => (
                     <button
                       key={variant.node.id}
                       onClick={() => setSelectedVariantIndex(index)}
