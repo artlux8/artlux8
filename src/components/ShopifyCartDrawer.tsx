@@ -39,23 +39,10 @@ export const ShopifyCartDrawer = () => {
       setIsRedirecting(true);
       const checkoutUrl = await createCheckout();
       
-      console.log('=== CART DRAWER CHECKOUT ===');
-      console.log('Received checkout URL:', checkoutUrl);
-      
       if (checkoutUrl) {
-        // Verify the URL is correct before redirecting
-        if (checkoutUrl.includes('artlux8.com') && !checkoutUrl.includes('myshopify.com')) {
-          console.error('ERROR: URL still uses custom domain, fixing...');
-          const fixedUrl = checkoutUrl.replace(/https?:\/\/(www\.)?artlux8\.com/gi, 'https://artlux8-ypxf4.myshopify.com');
-          console.log('Fixed URL:', fixedUrl);
-          clearCart();
-          setIsOpen(false);
-          redirectToCheckout(fixedUrl);
-        } else {
-          clearCart();
-          setIsOpen(false);
-          redirectToCheckout(checkoutUrl);
-        }
+        clearCart();
+        setIsOpen(false);
+        redirectToCheckout(checkoutUrl);
       } else {
         setIsRedirecting(false);
         toast.error('Failed to create checkout. Please try again.');

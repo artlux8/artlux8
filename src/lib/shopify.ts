@@ -175,30 +175,11 @@ const CART_CREATE_MUTATION = `
       cart {
         id
         checkoutUrl
-        cost {
-          totalAmount {
-            amount
-            currencyCode
-          }
-        }
-        lines(first: 100) {
-          edges {
-            node {
-              id
-              quantity
-              merchandise {
-                ... on ProductVariant {
-                  id
-                  title
-                }
-              }
-            }
-          }
-        }
       }
       userErrors {
         field
         message
+        code
       }
     }
   }
@@ -272,9 +253,6 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
 
 // Create checkout using Cart API (cartCreate mutation) - for 2025-07 API
 export async function createStorefrontCheckout(items: CartItem[]): Promise<string> {
-  console.log('=== CHECKOUT DEBUG START ===');
-  console.log('Items received:', JSON.stringify(items, null, 2));
-  
   // Validate items before proceeding
   if (!items || items.length === 0) {
     throw new Error('No items to checkout');
@@ -297,78 +275,50 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
       merchandiseId: item.variantId, // Cart API uses merchandiseId
     }));
 
-    console.log('Creating cart with lines:', JSON.stringify(lines, null, 2));
-    console.log('Using mutation: CART_CREATE_MUTATION');
-
     const data = await storefrontApiRequest(CART_CREATE_MUTATION, {
       input: { lines },
     });
-
-    console.log('Shopify API raw response:', JSON.stringify(data, null, 2));
 
     if (!data) {
       throw new Error('Failed to create cart - no response from Shopify');
     }
 
     if (data.data?.cartCreate?.userErrors?.length > 0) {
-      const errorMessages = data.data.cartCreate.userErrors.map((e: { message: string }) => e.message).join(', ');
-      console.error('Shopify cart creation errors:', errorMessages);
+      const errorMessages = data.data.cartCreate.userErrors.map((e: { message: string; code?: string }) => 
+        e.code ? `${e.code}: ${e.message}` : e.message
+      ).join(', ');
       throw new Error(`Cart creation failed: ${errorMessages}`);
     }
 
     const cart = data.data?.cartCreate?.cart;
-    console.log('Cart object:', cart);
     
     if (!cart || !cart.checkoutUrl) {
-      console.error('No checkout URL in response:', data);
       throw new Error('No checkout URL returned from Shopify');
     }
 
-    console.log('Raw checkoutUrl from Shopify:', cart.checkoutUrl);
-    
-    // CRITICAL: Replace custom domain with myshopify.com domain
-    // Shopify returns URLs with custom domain (artlux8.com) but cart paths only work on myshopify.com
+    // The checkoutUrl from Cart API is the correct checkout path
+    // Just ensure it uses the myshopify.com domain and has the channel param
     let checkoutUrl = cart.checkoutUrl;
     
-    // Replace artlux8.com (custom domain) with the permanent myshopify.com domain
-    checkoutUrl = checkoutUrl.replace(/https?:\/\/(www\.)?artlux8\.com/gi, `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`);
-    checkoutUrl = checkoutUrl.replace(/https?:\/\/(www\.)?artlux8\.co\.uk/gi, `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`);
-    
-    console.log('After domain replacement:', checkoutUrl);
-    
-    // Add channel=online_store parameter for headless checkout
+    // Ensure URL uses the myshopify.com permanent domain
     const url = new URL(checkoutUrl);
+    url.hostname = SHOPIFY_STORE_PERMANENT_DOMAIN;
     url.searchParams.set('channel', 'online_store');
-    checkoutUrl = url.toString();
     
-    console.log('FINAL CHECKOUT URL:', checkoutUrl);
-    console.log('Domain used:', SHOPIFY_STORE_PERMANENT_DOMAIN);
-    console.log('=== CHECKOUT DEBUG END ===');
-    
-    return checkoutUrl;
+    return url.toString();
   } catch (error) {
     console.error('Error creating checkout:', error);
     throw error;
   }
 }
 
-// Helper to redirect to checkout URL - instant redirect, no popups
+// Helper to redirect to checkout URL - opens in new tab for Shopify checkout
 export function redirectToCheckout(url: string): void {
   if (!url) {
     console.error('No checkout URL provided');
     return;
   }
   
-  // CRITICAL DEBUG: Log the final URL before redirect
-  console.log('=== FINAL CHECKOUT REDIRECT ===');
-  console.log('FINAL CHECKOUT URL:', url);
-  console.log('Contains /checkouts/:', url.includes('/checkouts/'));
-  console.log('Contains /cart/:', url.includes('/cart/'));
-  
-  if (url.includes('/cart/')) {
-    console.error('ERROR: URL still contains /cart/ - checkout will fail!');
-  }
-  
-  // Use location.assign for instant redirect to myshopify.com checkout
-  window.location.assign(url);
+  // Open Shopify checkout in new tab (more reliable than same-page redirect)
+  window.open(url, '_blank');
 }
