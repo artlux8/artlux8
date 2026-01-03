@@ -31,6 +31,14 @@
     <priority>0.95</priority>
   </url>
   
+  <!-- Hydrogen Water Collection -->
+  <url>
+    <loc>https://artlux8.com/collections/hydrogen-water</loc>
+    <lastmod>2025-01-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
   <!-- Red Light Therapy - Core Product -->
   <url>
     <loc>https://artlux8.com/infrared-masks</loc>
