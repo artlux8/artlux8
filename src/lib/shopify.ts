@@ -304,18 +304,20 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
       throw new Error('No checkout URL returned from Shopify');
     }
 
-    // The checkoutUrl from Cart API is the correct checkout path
-    // Shopify returns the URL with the store's primary domain
-    // We just need to ensure it has the channel param for headless checkout
+    // The checkoutUrl from Cart API may be relative or use wrong domain
+    // Always normalize to artlux8.myshopify.com
     let checkoutUrl = cart.checkoutUrl;
     console.log('[Checkout] Raw checkoutUrl from Shopify:', checkoutUrl);
     
-    // Parse and add channel parameter
-    const url = new URL(checkoutUrl);
+    // Normalize to ensure correct Shopify domain
+    const normalizedUrl = normalizeCheckoutUrl(checkoutUrl);
+    
+    // Add channel parameter
+    const url = new URL(normalizedUrl);
     url.searchParams.set('channel', 'online_store');
     
     const finalUrl = url.toString();
-    console.log('[Checkout] Final checkout URL:', finalUrl);
+    console.log('FINAL CHECKOUT URL:', finalUrl);
     
     return finalUrl;
   } catch (error) {
@@ -324,15 +326,42 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
   }
 }
 
-// Helper to redirect to checkout URL - opens in new tab for Shopify checkout
-export function redirectToCheckout(url: string): void {
-  console.log('[Checkout] Redirecting to:', url);
+/**
+ * Normalize checkout URL to always use artlux8.myshopify.com domain
+ * Handles both relative URLs ("/cart/c/...") and absolute URLs
+ */
+export function normalizeCheckoutUrl(rawUrl: string): string {
+  const SHOPIFY_CHECKOUT_DOMAIN = 'https://artlux8.myshopify.com';
   
+  if (!rawUrl) {
+    throw new Error('No checkout URL provided');
+  }
+  
+  // If relative URL, prepend Shopify domain
+  if (rawUrl.startsWith('/')) {
+    return SHOPIFY_CHECKOUT_DOMAIN + rawUrl;
+  }
+  
+  // If absolute URL, force hostname to Shopify domain
+  try {
+    const url = new URL(rawUrl);
+    url.hostname = 'artlux8.myshopify.com';
+    url.protocol = 'https:';
+    return url.toString();
+  } catch {
+    // Fallback: treat as path
+    return SHOPIFY_CHECKOUT_DOMAIN + '/' + rawUrl.replace(/^\/+/, '');
+  }
+}
+
+// Helper to redirect to checkout URL
+export function redirectToCheckout(url: string): void {
   if (!url) {
     console.error('[Checkout] No checkout URL provided');
     return;
   }
   
-  // Open Shopify checkout in new tab (more reliable than same-page redirect)
-  window.open(url, '_blank');
+  const finalUrl = normalizeCheckoutUrl(url);
+  console.log('FINAL CHECKOUT URL:', finalUrl);
+  window.location.assign(finalUrl);
 }
