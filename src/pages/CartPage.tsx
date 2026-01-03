@@ -71,8 +71,8 @@ const CartPage = () => {
   return (
     <>
       <SEO 
-        title="Shopping Cart | ARTLUX∞"
-        description="Review your cart and proceed to checkout."
+        title="Cart | ARTLUX∞"
+        description="Review your cart and proceed to secure Shopify checkout."
       />
       <div className="min-h-screen bg-background flex flex-col">
         <Header />
@@ -168,6 +168,23 @@ const CartPage = () => {
                       </div>
                     </div>
                   ))}
+                  
+                  {/* Upsell Block - Conversion Focused */}
+                  <div className="mt-6 p-4 bg-accent/10 rounded-lg border border-accent/30">
+                    <p className="text-sm font-medium text-foreground mb-3">Complete Your Protocol</p>
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <Link to="/shop" className="flex-1">
+                        <Button variant="outline" size="sm" className="w-full border-accent/50 hover:bg-accent/20">
+                          + Add Hydrogen Tabs (30 tabs)
+                        </Button>
+                      </Link>
+                      <Link to="/shop" className="flex-1">
+                        <Button variant="outline" size="sm" className="w-full border-accent/50 hover:bg-accent/20">
+                          + Add Extra Bottle (Save 10%)
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Order Summary */}
