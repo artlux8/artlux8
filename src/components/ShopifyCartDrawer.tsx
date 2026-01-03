@@ -46,6 +46,7 @@ export const ShopifyCartDrawer = () => {
     try {
       setIsRedirecting(true);
       const rawCheckoutUrl = await createCheckout();
+      console.log("RAW CHECKOUT URL:", rawCheckoutUrl);
       
       if (rawCheckoutUrl) {
         // Normalize URL to always use Shopify domain
@@ -60,10 +61,8 @@ export const ShopifyCartDrawer = () => {
         }
         
         setIsOpen(false);
-        // Redirect FIRST, then clear cart (clearCart after navigation starts)
+        // Redirect to Shopify checkout
         window.location.assign(checkoutUrl);
-        // Clear cart after redirect initiated (page will navigate away)
-        clearCart();
       } else {
         setIsRedirecting(false);
         toast.error('Failed to create checkout. Please try again.');
