@@ -135,10 +135,14 @@ const PromotedHydrogenBottle = () => {
         ],
       };
 
-      const checkoutUrl = await createStorefrontCheckout([cartItem]);
+      let checkoutUrl = await createStorefrontCheckout([cartItem]);
       
       if (checkoutUrl) {
-        // Instant redirect to Shopify checkout
+        // CRITICAL: Ensure myshopify.com domain is used
+        if (checkoutUrl.includes('artlux8.com') && !checkoutUrl.includes('myshopify.com')) {
+          checkoutUrl = checkoutUrl.replace(/https?:\/\/(www\.)?artlux8\.com/gi, 'https://artlux8-ypxf4.myshopify.com');
+        }
+        console.log('Buy Now redirecting to:', checkoutUrl);
         redirectToCheckout(checkoutUrl);
       } else {
         throw new Error('No checkout URL received');

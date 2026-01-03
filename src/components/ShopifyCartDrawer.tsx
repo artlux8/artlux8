@@ -38,12 +38,24 @@ export const ShopifyCartDrawer = () => {
     try {
       setIsRedirecting(true);
       const checkoutUrl = await createCheckout();
+      
+      console.log('=== CART DRAWER CHECKOUT ===');
+      console.log('Received checkout URL:', checkoutUrl);
+      
       if (checkoutUrl) {
-        // CRITICAL: Use window.location.assign for instant redirect to myshopify.com
-        // NO window.open, NO popups, NO router navigation
-        clearCart();
-        setIsOpen(false);
-        redirectToCheckout(checkoutUrl);
+        // Verify the URL is correct before redirecting
+        if (checkoutUrl.includes('artlux8.com') && !checkoutUrl.includes('myshopify.com')) {
+          console.error('ERROR: URL still uses custom domain, fixing...');
+          const fixedUrl = checkoutUrl.replace(/https?:\/\/(www\.)?artlux8\.com/gi, 'https://artlux8-ypxf4.myshopify.com');
+          console.log('Fixed URL:', fixedUrl);
+          clearCart();
+          setIsOpen(false);
+          redirectToCheckout(fixedUrl);
+        } else {
+          clearCart();
+          setIsOpen(false);
+          redirectToCheckout(checkoutUrl);
+        }
       } else {
         setIsRedirecting(false);
         toast.error('Failed to create checkout. Please try again.');
@@ -51,7 +63,8 @@ export const ShopifyCartDrawer = () => {
     } catch (error) {
       console.error('Checkout failed:', error);
       setIsRedirecting(false);
-      toast.error('Checkout failed. Please try again.');
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      toast.error(`Checkout failed: ${errorMessage}`);
     }
   };
 
