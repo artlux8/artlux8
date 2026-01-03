@@ -3,7 +3,7 @@ import { toast } from 'sonner';
 // Shopify Configuration - Storefront API tokens are designed for client-side use
 // See: https://shopify.dev/docs/api/storefront#authentication
 const SHOPIFY_API_VERSION = '2025-07';
-const SHOPIFY_STORE_PERMANENT_DOMAIN = 'artlux8-ypxf4.myshopify.com';
+const SHOPIFY_STORE_PERMANENT_DOMAIN = 'artlux8.myshopify.com';
 const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 // Storefront Access Token is a publishable key meant for client-side use (read-only product data)
 const SHOPIFY_STOREFRONT_TOKEN = '33e073344fd0491eb2329ec9d56269b8';
@@ -344,7 +344,16 @@ export function redirectToCheckout(url: string): void {
     return;
   }
   
-  console.log('Redirecting to checkout:', url);
+  // CRITICAL DEBUG: Log the final URL before redirect
+  console.log('=== FINAL CHECKOUT REDIRECT ===');
+  console.log('FINAL CHECKOUT URL:', url);
+  console.log('Contains /checkouts/:', url.includes('/checkouts/'));
+  console.log('Contains /cart/:', url.includes('/cart/'));
+  
+  if (url.includes('/cart/')) {
+    console.error('ERROR: URL still contains /cart/ - checkout will fail!');
+  }
+  
   // Use location.assign for instant redirect to myshopify.com checkout
   window.location.assign(url);
 }
