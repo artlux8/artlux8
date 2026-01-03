@@ -47,6 +47,7 @@ import Terms from "./pages/Terms";
 import LongevityProtocol from "./pages/LongevityProtocol";
 import ThankYou from "./pages/ThankYou";
 import LongevityChat from "./components/LongevityChat";
+import ShopifyCartRedirect from "./pages/ShopifyCartRedirect";
 
 const queryClient = new QueryClient();
 
@@ -61,6 +62,8 @@ const App = () => (
             {/* <ExitIntentPopup /> */}
             <BrowserRouter>
             <Routes>
+              {/* IMPORTANT: Cart redirect must be FIRST to catch Shopify checkout URLs */}
+              <Route path="/cart/*" element={<ShopifyCartRedirect />} />
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/reset-password" element={<ResetPassword />} />

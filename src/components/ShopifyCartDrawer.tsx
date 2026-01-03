@@ -160,6 +160,7 @@ export const ShopifyCartDrawer = () => {
                   </div>
                   
                   <Button 
+                    type="button"
                     onClick={handleCheckout}
                     className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" 
                     size="lg"
