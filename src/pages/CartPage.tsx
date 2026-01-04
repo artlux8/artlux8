@@ -54,8 +54,10 @@ const CartPage = () => {
           return;
         }
         
-        // Redirect to Shopify checkout (do NOT clear cart)
-        window.location.assign(checkoutUrl);
+        // Open Shopify checkout in new tab to avoid SPA routing issues
+        window.open(checkoutUrl, '_blank');
+        setIsRedirecting(false);
+        toast.success('Checkout opened in new tab');
       } else {
         setIsRedirecting(false);
         toast.error('Failed to create checkout. Please try again.');
