@@ -47,32 +47,19 @@ import Terms from "./pages/Terms";
 import LongevityProtocol from "./pages/LongevityProtocol";
 import ThankYou from "./pages/ThankYou";
 import LongevityChat from "./components/LongevityChat";
-import CartRouter from "./components/CartRouter";
+import CartPage from "./pages/CartPage";
+import CartPermalinkRedirect from "./pages/CartPermalinkRedirect";
 
 const queryClient = new QueryClient();
 
-// IIFE: Run redirects immediately before React renders
+// Canonical host redirect - run immediately before React renders
+// Redirects artlux.com and www.artlux.com to www.artlux8.com
 (function() {
   const hostname = window.location.hostname;
-  const pathname = window.location.pathname;
-  const search = window.location.search;
-  
-  // Canonical host redirect: artlux.com -> www.artlux8.com
   if (hostname === 'artlux.com' || hostname === 'www.artlux.com') {
-    const newUrl = 'https://www.artlux8.com' + pathname + search;
+    const newUrl = 'https://www.artlux8.com' + window.location.pathname + window.location.search;
     console.log('[Canonical Redirect] Redirecting from', hostname, 'to www.artlux8.com');
     window.location.replace(newUrl);
-    return; // Stop execution after redirect
-  }
-  
-  // Shopify cart permalink redirect: /cart/c/* -> artlux8.myshopify.com/cart/c/*
-  // This MUST run before React Router to guarantee no 404
-  if (pathname.startsWith('/cart/c/')) {
-    const shopifyDomain = 'artlux8.myshopify.com';
-    const target = `https://${shopifyDomain}${pathname}${search}`;
-    console.log('[Cart Permalink Redirect] Redirecting to Shopify:', target);
-    window.location.replace(target);
-    return; // Stop execution after redirect
   }
 })();
 
@@ -87,8 +74,11 @@ const App = () => (
             {/* <ExitIntentPopup /> */}
             <BrowserRouter>
             <Routes>
-              {/* Cart routes - using nested routing to guarantee /cart/c/* never 404s */}
-              <Route path="/cart/*" element={<CartRouter />} />
+              {/* IMPORTANT: Shopify cart permalink redirect - must be FIRST and most specific */}
+              <Route path="/cart/c/*" element={<CartPermalinkRedirect />} />
+              {/* Cart page for viewing/editing cart */}
+              <Route path="/cart/*" element={<CartPage />} />
+              <Route path="/cart" element={<CartPage />} />
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/reset-password" element={<ResetPassword />} />
