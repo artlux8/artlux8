@@ -2,7 +2,7 @@ import { toast } from 'sonner';
 
 // Shopify Configuration - Storefront API tokens are designed for client-side use
 // See: https://shopify.dev/docs/api/storefront#authentication
-const SHOPIFY_API_VERSION = '2024-10';
+const SHOPIFY_API_VERSION = '2025-07';
 const SHOPIFY_STORE_PERMANENT_DOMAIN = 'artlux8.myshopify.com';
 const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 // Storefront Access Token is a publishable key meant for client-side use (read-only product data)
@@ -359,7 +359,7 @@ export function normalizeCheckoutUrl(rawUrl: string): string {
   }
 }
 
-// Helper to redirect to checkout URL
+// Helper to redirect to checkout URL - opens in new tab to avoid SPA issues
 export function redirectToCheckout(url: string): void {
   if (!url) {
     console.error('[Checkout] No checkout URL provided');
@@ -368,5 +368,6 @@ export function redirectToCheckout(url: string): void {
   
   const finalUrl = normalizeCheckoutUrl(url);
   console.log('FINAL CHECKOUT URL:', finalUrl);
-  window.location.assign(finalUrl);
+  // Use window.open to external domain to avoid SPA routing issues
+  window.open(finalUrl, '_blank');
 }
