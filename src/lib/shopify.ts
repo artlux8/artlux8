@@ -167,19 +167,24 @@ const PRODUCT_BY_HANDLE_QUERY = `
   }
 `;
 
-// Use checkoutCreate mutation for direct checkout URL (returns /checkouts/ path)
-// Cart API's checkoutUrl returns /cart/c/ which causes issues with SPA routing
-const CHECKOUT_CREATE_MUTATION = `
-  mutation checkoutCreate($input: CheckoutCreateInput!) {
-    checkoutCreate(input: $input) {
-      checkout {
+// Cart API mutation for checkout (replaces deprecated checkoutCreate in API 2025-07)
+const CART_CREATE_MUTATION = `
+  mutation cartCreate($input: CartInput!) {
+    cartCreate(input: $input) {
+      cart {
         id
-        webUrl
+        checkoutUrl
+        totalQuantity
+        cost {
+          totalAmount {
+            amount
+            currencyCode
+          }
+        }
       }
-      checkoutUserErrors {
+      userErrors {
         field
         message
-        code
       }
     }
   }
@@ -251,7 +256,7 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
   }
 }
 
-// Create checkout using checkoutCreate mutation - returns /checkouts/ URL
+// Create checkout using Cart API (cartCreate mutation)
 export async function createStorefrontCheckout(items: CartItem[]): Promise<string> {
   console.log('[Checkout] Starting checkout with items:', items.length);
   
@@ -271,16 +276,16 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
   }
 
   try {
-    // Format line items for checkoutCreate mutation
-    const lineItems = items.map(item => ({
+    // Format lines for cartCreate mutation (uses merchandiseId, not variantId)
+    const lines = items.map(item => ({
       quantity: item.quantity,
-      variantId: item.variantId,
+      merchandiseId: item.variantId, // Cart API uses merchandiseId
     }));
 
-    console.log('[Checkout] Calling Shopify checkoutCreate with lineItems:', JSON.stringify(lineItems));
+    console.log('[Checkout] Calling Shopify cartCreate with lines:', JSON.stringify(lines));
 
-    const data = await storefrontApiRequest(CHECKOUT_CREATE_MUTATION, {
-      input: { lineItems },
+    const data = await storefrontApiRequest(CART_CREATE_MUTATION, {
+      input: { lines },
     });
 
     console.log('[Checkout] Shopify response:', JSON.stringify(data));
@@ -289,23 +294,23 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
       throw new Error('Failed to create checkout - no response from Shopify');
     }
 
-    if (data.data?.checkoutCreate?.checkoutUserErrors?.length > 0) {
-      const errorMessages = data.data.checkoutCreate.checkoutUserErrors.map((e: { message: string; code?: string }) => 
-        e.code ? `${e.code}: ${e.message}` : e.message
+    if (data.data?.cartCreate?.userErrors?.length > 0) {
+      const errorMessages = data.data.cartCreate.userErrors.map((e: { message: string; field?: string[] }) => 
+        e.field ? `${e.field.join('.')}: ${e.message}` : e.message
       ).join(', ');
       console.error('[Checkout] User errors:', errorMessages);
-      throw new Error(`Checkout creation failed: ${errorMessages}`);
+      throw new Error(`Cart creation failed: ${errorMessages}`);
     }
 
-    const checkout = data.data?.checkoutCreate?.checkout;
+    const cart = data.data?.cartCreate?.cart;
     
-    if (!checkout || !checkout.webUrl) {
-      console.error('[Checkout] No checkout URL:', checkout);
+    if (!cart || !cart.checkoutUrl) {
+      console.error('[Checkout] No checkout URL:', cart);
       throw new Error('No checkout URL returned from Shopify');
     }
 
-    // webUrl from checkoutCreate is the correct /checkouts/ URL
-    let rawUrl = checkout.webUrl;
+    // checkoutUrl from cartCreate
+    let rawUrl = cart.checkoutUrl;
     console.log('RAW CHECKOUT URL:', rawUrl);
     
     // Normalize to ensure correct Shopify domain
@@ -317,12 +322,6 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
     
     const finalUrl = url.toString();
     console.log('FINAL CHECKOUT URL:', finalUrl);
-    
-    // Verify URL contains /checkouts/
-    if (!finalUrl.includes('/checkouts/')) {
-      console.error('[Checkout] URL does not contain /checkouts/:', finalUrl);
-      throw new Error('Invalid checkout URL format');
-    }
     
     return finalUrl;
   } catch (error) {
